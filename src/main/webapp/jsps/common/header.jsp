@@ -8,12 +8,14 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
-<title>首页</title>
+<title></title>
 
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
+<link rel="stylesheet" href="${pct}/static/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="${pct}/static/layuiadmin/style/admin.css" media="all">
 
 
 <link rel="stylesheet" href="${pct }/static/bootstrap/css/bootstrap.min.css">
@@ -30,6 +32,9 @@
 <script src="${pct}/static/bootstrap/js/bootstrap-table.js"></script>
 <script src="${pct}/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
 
+<%--引入layui--%>
+
+<script src="${pct}/static/layuiadmin/layui/layui.js"></script>
 <!-- 引入富文本 -->
 <script type="text/javascript" src="${pct}/static/ueditor/ueditor.config.js"></script>
 <link rel="stylesheet" href="${pct}/static/ueditor/themes/default/css/ueditor.min.css">
