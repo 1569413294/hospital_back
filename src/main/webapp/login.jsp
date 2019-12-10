@@ -18,6 +18,11 @@
     <script src="${pct}/static/js/img_ver.js"></script>
 
     <style>
+        body{
+            background:url(/static/images/bj.jpg);
+            -moz-background-size:100% 100%;
+            background-size:100% 100%
+        }
         .bxs-row {
             margin-bottom:12px;
         }
@@ -89,7 +94,7 @@
         }
     </style>
 </head>
-<body>
+<body >
 
 
 <div class="logo-box">
@@ -98,7 +103,7 @@
             <img id="logo" src="${pct}/static/images/logo.jpg" style="width:72px;"><span class="tips" style="color:red;">忍住不哭来段口技</span>
         </div>
         <div class="bxs-row">
-            <input type="text" class="username" placeholder="用户名" value="admin">
+            <input type="text" class="username" placeholder="用户名" value="">
             <p class=" err err-username"></p>
         </div>
         <div class="bxs-row">
@@ -125,7 +130,7 @@
             '/static/images/ver-3.png'
         ],
         success:function () {
-            //alert('执行登录函数');
+            alert('执行登录函数');
             $(".login").css({
                 "left":"0",
                 "opacity":"1"
