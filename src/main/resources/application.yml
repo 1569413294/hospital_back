@@ -1,0 +1,35 @@
+#配置视图解析器和数据库
+spring:
+  mvc:
+    view:
+      prefix: /jsps/
+      suffix: .jsp
+    static-path-pattern: /static/**
+  datasource:
+    url: jdbc:mysql://192.168.32.169:3306/wx_yiyuan?&allowMultiQueries=true&useSSL=false
+    password: 123456
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true
+#配置热部署
+server:
+  port: 8088
+  jsp-servlet:
+    init-parameters:
+      development: true
+#配置mybatis 扫描mapper配置文件   其别名  开启驼峰命名
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.qianquan.guoda.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+#打印sql语句
+logging:
+  level:
+    com.qianquan.guoda.mapper: debug
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+

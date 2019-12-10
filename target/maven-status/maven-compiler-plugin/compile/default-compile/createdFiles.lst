@@ -1,0 +1,4 @@
+com\buba\hospital_back\HospitalBackApplication.class
+com\buba\hospital_back\service\SecResService.class
+com\buba\hospital_back\controller\SecResController.class
+com\buba\hospital_back\service\TestService.class
