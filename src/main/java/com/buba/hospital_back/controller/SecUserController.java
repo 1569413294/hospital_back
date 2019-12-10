@@ -40,7 +40,7 @@ public class SecUserController {
         if(null == secUser){
             return null;
         }
-        List<SecRes> list=secUserService.selectRoleRes(secUser.getId());
+        List<SecRes> list=secUserService.selectRoleRes(1);
         return list;
     }
 
