@@ -22,13 +22,13 @@ server:
 #配置mybatis 扫描mapper配置文件   其别名  开启驼峰命名
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.qianquan.guoda.pojo
+  type-aliases-package: com.buba.hospital_back.bean
   configuration:
     map-underscore-to-camel-case: true
 #打印sql语句
 logging:
   level:
-    com.qianquan.guoda.mapper: debug
+    com.buba.hospital_back.mapper: debug
 pagehelper:
   reasonable: true
   helper-dialect: mysql
