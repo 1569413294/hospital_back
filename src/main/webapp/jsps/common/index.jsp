@@ -127,7 +127,7 @@
 </div>
 
 
-
+<script src="${pct}/static/layuiadmin/layui/layui.js"></script>
 <!-- 百度统计 -->
 <script>
     $(function () {
