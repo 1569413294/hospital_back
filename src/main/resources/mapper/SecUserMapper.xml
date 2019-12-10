@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.buba.hospital_back.mapper">
+<mapper namespace="com.buba.hospital_back.mapper.SecUserMapper">
 	<!--
    修改的sql片段
    -->
