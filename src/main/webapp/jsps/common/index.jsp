@@ -133,7 +133,7 @@
     $(function () {
         $.ajax({
             type:"POST",
-            url:"${pageContext.request.contextPath}/res_all",
+            url:"${pageContext.request.contextPath}/user/selectRoleRes",
             success:function (data) {
                 var str  = "       <li data-name=\"home\" class=\"layui-nav-item layui-nav-itemed\">\n" +
                     "                        <a lay-href=\"${pageContext.request.contextPath}/jsps/common/homepage.jsp\" lay-tips=\"主页\" lay-direction=\"2\">\n" +
