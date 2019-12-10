@@ -24,14 +24,14 @@ public class SecUserServiceImpl implements SecUserService {
     private SecUserMapper secUserMapper;
 
     /*
-     * 功能描述:权限菜单查询
+     * 功能描述:查询权限列表
      * @Param: []
      * @Return: java.util.List<com.buba.hospital_back.bean.SecRes>
      * @Author: ggx
      * @Date: 2019/12/10 0010 13:24
      */
     @Override
-    public List<SecRes> res_all() {
-        return secUserMapper.res_all();
+    public List<SecRes> selectRoleRes(Integer id) {
+        return secUserMapper.selectRoleRes(id);
     }
 }
