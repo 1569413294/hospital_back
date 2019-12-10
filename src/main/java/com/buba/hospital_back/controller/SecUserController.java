@@ -42,6 +42,8 @@ public class SecUserController {
             return null;
         }
         List<SecRes> list=secUserService.selectRoleRes(1);
+        System.out.println("111111111111111111111");
+        System.out.println(list.toString());
         return list;
     }
 
