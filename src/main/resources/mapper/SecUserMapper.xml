@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper">
+	<!--
+   修改的sql片段
+   -->
+	<sql id="update_user">
+         update rea_user set
+    </sql>
+
+	<!--
+	 //用户登录
+    ReaUser login(@Param("username") String username,@Param("password") String password);
+	-->
+	<select id="login" resultType="com.qianquan.guoda.pojo.ReaUser">
+		SELECT ru.*,rrp.id rg_id,rur.role_id roleId FROM rea_user ru,rea_user_role rur,rea_role rr,rea_rolegroup rrp
+		WHERE ru.id=rur.user_id
+		AND rur.role_id=rr.id
+		AND rr.rg_id=rrp.id
+		AND ru.user_name=#{username}
+		AND ru.password=#{password}
+		AND (rrp.name='root'
+		OR rrp.name ='BackgroundUser')
+	</select>
+	<!--
+          //修改登录IP地址和时间
+        int upIPandDate(@Param("id") Integer id, @Param("loginIp") String loginIp);
+        -->
+	<update id="upIPandDate">
+        update rea_user set login_ip=#{loginIp},last_login_ip=#{loginIp},login_date=now(),last_login_date=now() where id=#{id}
+    </update>
+
+
+
+	<resultMap id="selectRes" type="com.qianquan.guoda.pojo.ReaRes" autoMapping="true">
+		<id  column="id" property="id"></id>
+		<collection property="reares" ofType="com.qianquan.guoda.pojo.ReaRes">
+			<id column="rid" property="id"></id>
+			<result column="rinfo" property="info"></result>
+			<result column="rname" property="resName"></result>
+			<result column="rtype" property="type"></result>
+			<result column="rvalue" property="value"></result>
+		</collection>
+	</resultMap>
+	<!--
+	 //根据用户权限查看左树列表
+    List<ReaRes> selectRoleRes(int id);
+	-->
+
+	<select id="selectRoleRes" resultMap="selectRes">
+		SELECT FIRST.*,
+	            r.id rid,
+	            r.info rinfo,
+	            r.res_name rname,
+	            r.type rtype,
+                r.value rvalue FROM
+                (
+                SELECT * FROM
+                rea_res
+                WHERE
+                LENGTH(VALUE)=3
+                ) FIRST,
+                (
+                SELECT res.* FROM(
+                  select role_id from rea_user_role where user_id=#{id}
+                ) ur
+                LEFT JOIN rea_role_res  rr
+                ON  ur.`role_id`=rr.`role_id`
+                LEFT JOIN rea_res res
+                ON rr.`res_id` =res.`id`
+                ) r
+        WHERE r.VALUE LIKE CONCAT(FIRST.VALUE,'___')
+	</select>
+
+	<!--
+	 //获取手机号
+    String getMoblie(String mobile);
+	-->
+	<select id="getMoblie" resultType="string" parameterType="string">
+        select  mobile from rea_user where mobile=#{mobile}
+    </select>
+	<!--
+	//修改密码
+    int changePassword(ReaUser reaUser);
+	-->
+	<update id="changePassword" parameterType="com.qianquan.guoda.pojo.ReaUser">
+		<include refid="update_user"/> password=#{reaUser.password} where mobile=#{reaUser.mobile}
+	</update>
+</mapper>

@@ -17,7 +17,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Mapper
-public interface SecResMapper {
+public interface SecUserMapper {
     //查询权限列表
     @Select("select * from sec_res")
     List<SecRes> res_all();
