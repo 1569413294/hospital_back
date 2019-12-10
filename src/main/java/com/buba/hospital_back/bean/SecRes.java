@@ -86,4 +86,18 @@ public class SecRes {
     public void setSequence(Integer sequence) {
         this.sequence = sequence;
     }
+
+    @Override
+    public String toString() {
+        return "SecRes{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", disabled=" + disabled +
+                ", createtime=" + createtime +
+                ", resName='" + resName + '\'' +
+                ", resCode='" + resCode + '\'' +
+                ", resInfo='" + resInfo + '\'' +
+                ", sequence=" + sequence +
+                '}';
+    }
 }

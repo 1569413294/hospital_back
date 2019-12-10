@@ -35,15 +35,14 @@ public class SecUserController {
      * @Author: ggx
      * @Date: 2019/12/10 0010 13:25
      */
-    @RequestMapping("selectRoleRes")
+    @RequestMapping("/selectRoleRes")
     public List<SecRes> selectRoleRes(HttpSession session){
-        SecUser secUser = (SecUser) session.getAttribute("user");
+       /* SecUser secUser = (SecUser) session.getAttribute("user");
         if(null == secUser){
             return null;
-        }
+        }*/
         List<SecRes> list=secUserService.selectRoleRes(1);
-        System.out.println("111111111111111111111");
-        System.out.println(list.toString());
+
         return list;
     }
 
