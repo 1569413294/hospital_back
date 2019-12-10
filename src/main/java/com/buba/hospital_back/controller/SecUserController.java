@@ -1,7 +1,7 @@
 package com.buba.hospital_back.controller;
 
 import com.buba.hospital_back.bean.SecRes;
-import com.buba.hospital_back.service.SecResService;
+import com.buba.hospital_back.service.SecUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +19,10 @@ import java.util.List;
  * @Version: 1.0
  */
 @Controller
-public class SecResController {
+public class SecUserController {
 
     @Autowired
-    private SecResService secResService;
+    private SecUserService secUserService;
 
     /*
      * 功能描述:权限菜单查询
@@ -34,7 +34,7 @@ public class SecResController {
     @RequestMapping("res_all")
     @ResponseBody
     public List<SecRes> res_all(){
-        return secResService.res_all();
+        return secUserService.res_all();
     }
 
 }

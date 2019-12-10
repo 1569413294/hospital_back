@@ -1,8 +1,8 @@
 package com.buba.hospital_back.service.serviceImpl;
 
 import com.buba.hospital_back.bean.SecRes;
-import com.buba.hospital_back.mapper.SecResMapper;
-import com.buba.hospital_back.service.SecResService;
+import com.buba.hospital_back.mapper.SecUserMapper;
+import com.buba.hospital_back.service.SecUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,10 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
-public class SecResServiceImpl  implements SecResService {
+public class SecUserServiceImpl implements SecUserService {
 
     @Autowired
-    private SecResMapper secResMapper;
+    private SecUserMapper secUserMapper;
 
     /*
      * 功能描述:权限菜单查询
@@ -32,6 +32,6 @@ public class SecResServiceImpl  implements SecResService {
      */
     @Override
     public List<SecRes> res_all() {
-        return secResMapper.res_all();
+        return secUserMapper.res_all();
     }
 }

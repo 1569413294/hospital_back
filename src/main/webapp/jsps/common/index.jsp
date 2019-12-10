@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<%--<jsp:include page="header.jsp"></jsp:include>--%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css" media="all">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/style/admin.css" media="all">
+<jsp:include page="header.jsp"></jsp:include>
+
 <body class="layui-layout-body">
 
 <div id="LAY_app">
@@ -128,8 +127,7 @@
 </div>
 
 
-<script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.js"></script>
+
 <!-- 百度统计 -->
 <script>
     $(function () {
