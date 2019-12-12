@@ -1,5 +1,6 @@
 package com.buba.hospital_back.mapper;
 
+import com.buba.hospital_back.bean.HisOrder;
 import com.buba.hospital_back.bean.ReservationVo;
 
 import java.util.List;
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface ReservationMapper {
     List<ReservationVo> find_reservation();
+
+    List<HisOrder> find_hisOrder(HisOrder hisOrder);
 }

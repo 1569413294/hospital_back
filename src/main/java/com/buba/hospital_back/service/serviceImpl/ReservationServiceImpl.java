@@ -1,5 +1,6 @@
 package com.buba.hospital_back.service.serviceImpl;
 
+import com.buba.hospital_back.bean.HisOrder;
 import com.buba.hospital_back.bean.ReservationVo;
 import com.buba.hospital_back.mapper.ReservationMapper;
 import com.buba.hospital_back.service.ReservationService;
@@ -22,5 +23,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationVo> find_reservation() {
         return reservationMapper.find_reservation();
+    }
+
+    @Override
+    public List<HisOrder> find_hisOrder(HisOrder hisOrder) {
+        return reservationMapper.find_hisOrder(hisOrder);
+
     }
 }

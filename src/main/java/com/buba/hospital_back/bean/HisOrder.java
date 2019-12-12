@@ -16,7 +16,6 @@ public class HisOrder {
 
     private Integer orderPlacer;
 
-    private String status;
 
     private Date payStartTime;
 
@@ -26,6 +25,7 @@ public class HisOrder {
 
     private String payWay;
 
+    private String status;
     public Integer getId() {
         return id;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.buba.hospital_back.mapper.ReservationMapper">
-   <!--List<ReservationVo> find_reservation();-->
+    <!--List<ReservationVo> find_reservation();-->
     <select id="find_reservation" resultType="com.buba.hospital_back.bean.ReservationVo">
         SELECT
         p.id id,
@@ -12,7 +12,7 @@
         o.pay_start_time payStartTime,
         o.pay_money payMoney,
         o.pay_way payWay,
-        o.order_status orderStatus,
+        o.status orderStatus,
         t.timeframe timeframe,
          d.name doctorName,
          h.hospital_name hospitalName,
@@ -29,5 +29,30 @@
     LEFT JOIN sec_doctor d ON r.doctor_id=d.id
     LEFT JOIN sec_hospital h ON r.hospital_id=h.id
     LEFT JOIN sec_first_department f ON r.department_id=f.id
+    </select>
+    <!--List<HisOrder> find_hisOrder(HisOrder hisOrder);-->
+    <select id="find_hisOrder" resultType="com.buba.hospital_back.bean.HisOrder">
+        SELECT o.*,p.patient_medicalCardNumber medicalCardNumber from his_order o,sec_patient p where o.order_placer=p.id
+        <if test="payStartTime!=null and payStartTime!=''">
+            and pay_start_time = #{payStartTime}
+        </if>
+        <if test="payStartTime2!=null and payStartTime2!=''">
+            and pay_start_time = #{payStartTime2}
+        </if>
+        <if test="refundStartTime!=null and refundStartTime!=''">
+            and refund_start_time = #{refundStartTime}
+        </if>
+        <if test="refundStartTime2!=null and refundStartTime2!=''">
+            and refund_start_time = #{refundStartTime2}
+        </if>
+        <if test="payStartTime!=null and payStartTime!='' and payStartTime2!=null and payStartTime2!=''">
+            between pay_start_time = #{payStartTime} and pay_start_time = #{payStartTime2}
+        </if>
+        <if test="refundStartTime!=null and refundStartTime!='' and refundStartTime2!=null and refundStartTime2!=''">
+            between refund_start_time = #{refundStartTime} and refund_start_time = #{refundStartTime2}
+        </if>
+        <if test="orderName!=null and orderName!=''">
+            and order_name=#{orderName}
+        </if>
     </select>
 </mapper>

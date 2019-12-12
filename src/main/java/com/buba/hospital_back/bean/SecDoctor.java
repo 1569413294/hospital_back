@@ -35,11 +35,9 @@ public class SecDoctor {
 
     private Double price;
 
-<<<<<<< HEAD
-=======
     private Integer creator;
 
->>>>>>> origin/master
+
     public Integer getId() {
         return id;
     }
@@ -104,87 +102,11 @@ public class SecDoctor {
         this.tel = tel == null ? null : tel.trim();
     }
 
-<<<<<<< HEAD
+
     public String getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank == null ? null : rank.trim();
-=======
-    public Integer getRank() {
-        return rank;
-    }
 
-    public void setRank(Integer rank) {
-        this.rank = rank;
->>>>>>> origin/master
-    }
 
-    public String getVisitplaces() {
-        return visitplaces;
-    }
-
-    public void setVisitplaces(String visitplaces) {
-        this.visitplaces = visitplaces == null ? null : visitplaces.trim();
-    }
-
-    public String getVisitaddress() {
-        return visitaddress;
-    }
-
-    public void setVisitaddress(String visitaddress) {
-        this.visitaddress = visitaddress == null ? null : visitaddress.trim();
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce == null ? null : introduce.trim();
-    }
-
-    public String getAdeptat() {
-        return adeptat;
-    }
-
-    public void setAdeptat(String adeptat) {
-        this.adeptat = adeptat == null ? null : adeptat.trim();
-    }
-
-    public Boolean getOnlineconsultant() {
-        return onlineconsultant;
-    }
-
-    public void setOnlineconsultant(Boolean onlineconsultant) {
-        this.onlineconsultant = onlineconsultant;
-    }
-
-    public Boolean getIspremium() {
-        return ispremium;
-    }
-
-    public void setIspremium(Boolean ispremium) {
-        this.ispremium = ispremium;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-<<<<<<< HEAD
-=======
-
-    public Integer getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Integer creator) {
-        this.creator = creator;
-    }
->>>>>>> origin/master
 }
