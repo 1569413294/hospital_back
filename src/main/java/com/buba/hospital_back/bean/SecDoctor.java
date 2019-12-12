@@ -2,7 +2,7 @@ package com.buba.hospital_back.bean;
 
 import java.util.Date;
 
-public class secDoctor {
+public class SecDoctor {
     private Integer id;
 
     private String status;
