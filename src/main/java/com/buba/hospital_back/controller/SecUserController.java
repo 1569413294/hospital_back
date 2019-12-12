@@ -1,5 +1,6 @@
 package com.buba.hospital_back.controller;
 
+import com.buba.hospital_back.bean.SecHospital;
 import com.buba.hospital_back.bean.SecRes;
 import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.constant.Constants;
@@ -7,6 +8,7 @@ import com.buba.hospital_back.service.SecUserService;
 import com.buba.hospital_back.utils.MD5Util;
 import com.buba.hospital_back.utils.RedisUtils;
 import com.buba.hospital_back.utils.UUIDUtils;
+import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ProjectName: hospital_back
@@ -81,14 +85,14 @@ public class SecUserController {
                 session.setAttribute("user",secUser);
                 String uuid = UUIDUtils.getUUID();
                 Cookie cookie = new Cookie(Constants.CookieKey, uuid);
-                cookie.setMaxAge(60*60);
+                cookie.setMaxAge(60*60*24*30);
                 cookie.setPath("/");
                 response.addCookie(cookie);//返回客户端
                 //Redis 里保存当前cookie里对应的信息 key=UUIDUtils value=User
                 Object o = redisUtils.hget(Constants.RedisUserKey,uuid);
                 if(o==null){
                     redisUtils.hset(Constants.RedisUserKey,uuid,secUser);
-                    redisUtils.expire(Constants.RedisUserKey,60*60);
+                    redisUtils.expire(Constants.RedisUserKey,60*60*24*30);
                 }
                 return true;
             }else{
@@ -110,9 +114,16 @@ public class SecUserController {
            return true;
         }else{
             if(cookieValue!=null){
-                SecUser user = (SecUser)redisUtils.hget(Constants.RedisUserKey,cookieValue);
-                session.setAttribute("user",user);
-                return true;
+                try {
+                    SecUser user = (SecUser)redisUtils.hget(Constants.RedisUserKey,cookieValue);
+                    if(user!=null){
+                        session.setAttribute("user",user);
+                        return true;
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                    return false;
+                }
             }
             return false;
         }
@@ -162,6 +173,38 @@ public class SecUserController {
         return list;
     }
 
+    //根据权限获取医院列表
+    @ResponseBody
+    @RequestMapping("/getOfHospital")
+    public List<SecHospital> getOfHospital(HttpSession session){
+        SecUser secUser = (SecUser) session.getAttribute("user");
+        List<SecHospital> list = null;
+        if(secUser.getRoleId() == 1){
+            list = secUserService.getOfHospital();
+        }else{
+            list = secUserService.getOfHospitalById(secUser.getId());
+        }
+
+        Integer hos = (Integer) session.getAttribute("hospitalId");
+        if(hos==null){
+            SecHospital  secHospital= list.get(0);
+            session.setAttribute("hospitalId",secHospital.getId());
+        }
+
+        return list;
+    }
+    //选择不同的医院
+    @ResponseBody
+    @RequestMapping("/changeHospital")
+    public boolean changeHospital(Integer hospitalId,HttpSession session){
+        Integer hos = (Integer) session.getAttribute("hospitalId");
+        if(hos!=null){
+            session.removeAttribute("hospitalId");
+            session.setAttribute("hospitalId",hospitalId);
+            return true;
+        }
+        return false;
+    }
 
 
 }

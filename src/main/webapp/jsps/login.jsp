@@ -373,8 +373,9 @@
                     },success:function(data){
                         if(data){
                             window.location.href="common/index.jsp"
-                        }
-                        else{
+                        }else{
+                            // 这里删除操作其实是将expires过期时间设置为当前时间，使cookie立即过期
+                            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
                             window.location.href="/jsps/login.jsp"
                         }
                     }

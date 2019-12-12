@@ -1,5 +1,8 @@
 package com.buba.hospital_back.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class SecHospital {
@@ -8,7 +11,8 @@ public class SecHospital {
     private String status;
 
     private Boolean disabled;
-
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     private String hospitalName;

@@ -1,5 +1,6 @@
 package com.buba.hospital_back.service.serviceImpl;
 
+import com.buba.hospital_back.bean.SecHospital;
 import com.buba.hospital_back.bean.SecRes;
 import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.mapper.SecUserMapper;
@@ -39,5 +40,14 @@ public class SecUserServiceImpl implements SecUserService {
     @Override
     public SecUser login(String phone) {
         return secUserMapper.loadUserInfo(phone);
+    }
+    //根据权限获取医院列表
+    @Override
+    public List<SecHospital> getOfHospital() {
+        return secUserMapper.getOfHospital();
+    }
+    @Override
+    public List<SecHospital> getOfHospitalById(Integer id) {
+        return secUserMapper.getOfHospitalById(id);
     }
 }
