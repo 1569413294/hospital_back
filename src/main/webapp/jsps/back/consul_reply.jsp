@@ -22,7 +22,7 @@
     }
 </style>
 <body>
-<div class="layui-card" style="height: 97%;width: 97%;border: 10px;">
+<div class="layui-card" style="height: 97%;width: 99%;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
         <a><span style="font-size: 20px">首页</span></a>
         &nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;
@@ -30,7 +30,7 @@
         &nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;
         <a><span style="font-size: 20px">回答</span></a>
     </div>
-    <div class="layui-card-body" style="height: 94%;width: 100%;">
+    <div class="layui-card-body" style="height: 94%;width: 100%;overflow: auto">
         <div class="layui-container">
             <div class="layui-row">
                 <div class="layui-col-xs2">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="layui-col-xs10">
                     <div class="grid-demo">
-                        <span style="font-size: 15px;">555</span>
+                        <span style="font-size: 15px;" id="sex">555</span>
                     </div>
                 </div>
             </div>
@@ -146,4 +146,37 @@
     </div>
 </div>
 </body>
+<script>
+    $(function () {
+        answered();
+    })
+    //回答详情回显
+    function answered() {
+        var url = location.search; //获取url中"?"符后的字串 ?vm_id=2
+        var id;
+        if(url.indexOf("?") != -1) {
+            str = url.substr(1);
+            strs = str.split("=");
+            id = strs[1];
+        }
+        if (id){
+            $.ajax({
+                type : 'post',
+                data : {id:id,qf:1},
+                url : '${pageContext.request.contextPath }/consul/answered_xq',
+                dataType : 'json',
+                success : function(data) {
+                    if (data) {
+                        if (data.sex==2){
+                            $("#sex").html("女");
+                        }
+                        alert("成功！！");
+                    } else {
+                        alert("失败！！");
+                    }
+                }
+            });
+        }
+    }
+</script>
 </html>
