@@ -115,11 +115,12 @@
                     });
                     //如果b为true 说明全部不为空 校验一级科室名称
                     if (b) {
+                        //调用校验一级科室信息
                         let c = jy_departmentName(b);
                         alert(c+"最后");
+                        //如果c为ture 代表一级科室没有重复
                         if(c){
-
-
+                         let c2  =   jy_two_departmentName
                         }
                         return false;
 
@@ -302,8 +303,29 @@
         }
 
         //校验二级科室
-        function jy_two_departmentName() {
-
+        function jy_two_departmentName(b) {
+            let result = b;
+            alert(result + "第一次");
+            let secondDepartmentName = $("#form input[name='secondDepartmentName']");
+            $.ajax({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/SecFirstDepartment/is_have_secondDepartmentName",
+                async: false,
+                data: {"secondDepartmentName": secondDepartmentName.val()},
+                success: function (data) {
+                    //如果大于0 说明已经有同名的了
+                    if (data > 0) {
+                        //选中父类的下一个兄弟
+                        secondDepartmentName.parent().next().children("span").text("已经重名").css("color", "red");
+                        result = false;
+                        alert(result + "第二次")
+                    } else {
+                        result = true;
+                        alert(result + "第三次")
+                    }
+                }
+            });
+            return result;
         }
     </script>
 </head>
