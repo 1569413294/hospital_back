@@ -35,6 +35,11 @@ public class SecDoctor {
 
     private Double price;
 
+<<<<<<< HEAD
+=======
+    private Integer creator;
+
+>>>>>>> origin/master
     public Integer getId() {
         return id;
     }
@@ -99,12 +104,21 @@ public class SecDoctor {
         this.tel = tel == null ? null : tel.trim();
     }
 
+<<<<<<< HEAD
     public String getRank() {
         return rank;
     }
 
     public void setRank(String rank) {
         this.rank = rank == null ? null : rank.trim();
+=======
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
+>>>>>>> origin/master
     }
 
     public String getVisitplaces() {
@@ -162,4 +176,15 @@ public class SecDoctor {
     public void setPrice(Double price) {
         this.price = price;
     }
+<<<<<<< HEAD
+=======
+
+    public Integer getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Integer creator) {
+        this.creator = creator;
+    }
+>>>>>>> origin/master
 }

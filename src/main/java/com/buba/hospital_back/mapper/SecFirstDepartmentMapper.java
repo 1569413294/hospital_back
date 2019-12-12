@@ -3,6 +3,7 @@ package com.buba.hospital_back.mapper;
 
 import com.buba.hospital_back.bean.DepartmentVo;
 import com.buba.hospital_back.bean.SecFirstDepartment;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface SecFirstDepartmentMapper {
     //添加一级科室以及二级科室信息
     Integer add_office(SecFirstDepartment secFirstDepartment);
     //判断一级科室是否存在
-    Integer is_have_departmentName(String departmentName);
+    Integer is_have_departmentName(@Param("departmentName") String departmentName);
 }

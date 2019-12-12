@@ -18,6 +18,34 @@
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
 
     <script>
+        $(function () {
+            //调用查询科室方法
+            office_all();
+            //给所有表单元素添加聚焦时间 用于关闭样式
+            $("#form input,textarea").focus(function () {
+                //去除边框样式
+                $(this).css("border-color", "");
+                $(this).parent().next().children("span").text("");
+            });
+            //点击放弃 跳转到首页
+            $("#abandon").click(function () {
+                $("#add_one_department").css("display", "");
+                $("#office_add").hide();
+                $("#tableparent").show();
+            });
+            //给保存绑定点击事件
+            $("#save").click(function () {
+                is_one_two = 1;
+                is_all();
+            });
+
+            //继续添加二级科室
+            $("#continue_department").click(function () {
+                is_one_two = 2;
+                is_all();
+            })
+        });
+        var is_one_two = 1;
         //展示科室信息
         function office_all() {
             $("#table").bootstrapTable('destroy');
@@ -69,187 +97,110 @@
 
             });
         }
-
         //循环判断是否为空
-        function foris(b) {
+        function is_for(b) {
             $("#form input,textarea").each(function () {
                 //如果元素为空
                 if ($(this).val().trim() == "" && $(this).attr("name") != "id" && $(this).attr("name") != "sta" && $(this).attr("name") != "firstDepartmentId") {
                     $(this).css("border-color", "red");
                     b = false;
+                    return b;
+                }
+            });
+            return b;
+        }
+        //判断的方法
+        function is_all() {
+            let sta = $("#form input[name='sta']").val();
+            let b = true;
+            //如果等于1 代表是添加一级科室页面保存/或者一级页面继续添加二级
+            if (sta == 1) {
+                //校验表单元素是否为空
+                b = is_for(b);
+                //如果b为true 说明全部不为空 校验一级科室名称
+                if (b) {
+                    //调用校验一级科室信息
+                    b = jy_departmentName(b);
+                    //如果c为ture 代表一级科室没有重复
+                    if (b) {
+                        //如果is_one_two为2是继续添加二级科室
+                        if (is_one_two == 2) {
+                            add_two();
+                            return;
+                        }
+                        //1为添加
+                        if (is_one_two == 1) {
+                            add_office();
+                        }
+
+                    }
                     return false;
                 }
-            });
+                return false;
 
-        }
-
-        $(function () {
-            //调用查询科室方法
-            office_all();
-            //给所有表单元素添加聚焦时间 用于关闭样式
-            $("#form input,textarea").focus(function () {
-                //去除边框样式
-                $(this).css("border-color", "");
-                $(this).parent().next().children("span").text("");
-            });
-            //点击放弃 跳转到首页
-            $("#abandon").click(function () {
-                $("#add_one_department").css("display", "");
-                $("#office_add").hide();
-                $("#tableparent").show();
-            });
-            //给保存绑定点击事件
-            $("#save").click(function () {
-                let sta = $("#form input[name='sta']").val();
-                let b = true;
-                //如果等于1 代表是添加一级科室页面保存/或者一级页面继续添加二级
-                if (sta == 1) {
-                    //校验表单元素是否为空
-                    $("#form input,textarea").each(function () {
-                        //如果元素为空
-                        if ($(this).val().trim() == "" && $(this).attr("name") != "id" && $(this).attr("name") != "sta" && $(this).attr("name") != "firstDepartmentId") {
-                            $(this).css("border-color", "red");
-                            b = false;
-                            return false;
-                        }
-                    });
-                    //如果b为true 说明全部不为空 校验一级科室名称
-                    if (b) {
-                        //调用校验一级科室信息
-                        let c = jy_departmentName(b);
-                        alert(c+"最后");
-                        //如果c为ture 代表一级科室没有重复
-                        if(c){
-                         let c2  =   jy_two_departmentName
-                        }
-                        return false;
-
-                    }
-                    /*             $("#form input,textarea").each(function () {
-                                     //如果元素为空
-                                     if ($(this).val().trim() == "" && $(this).attr("name") != "id" && $(this).attr("name") != "sta" &&  $(this).attr("name") != "firstDepartmentId") {
-                                         $(this).css("border-color", "red");
-                                         b = false;
-                                         return false;
-                                     }
-                                 });
-                                 //代表所有数据都不为空
-                                 if(b==true){
-                                     let departmentName =   $("#form input[name='departmentName']");
-                                     $.ajax({
-                                         type: 'post',
-                                         url: "
-                    ${pageContext.request.contextPath}/SecFirstDepartment/is_have_departmentName",
-                            async:true,
-                            data: {"departmentName":departmentName.val()},
-                            success: function (data) {
-                                //如果大于0 说明已经有同名的了
-                                if (data>0) {
-                                    //选中父类的下一个兄弟
-                                    departmentName.parent().next().children("span").text("已经重名").css("color","red");
-                                    return false;
-                                }else {
-
-                                }
-                            }
-                        });
-                    }*/
-
-                }
-
-
-//                let b = true;
-                //循环校验form表单下所有的元素
-                /*      $("#form input,textarea").each(function () {
-                          //如果元素为空
-                          if ($(this).val().trim() == "" && $(this).attr("name") != "id" && $(this).attr("name") != "sta" &&  $(this).attr("name") != "firstDepartmentId") {
-                              $(this).css("border-color", "red");
-                              b = false;
-                              return false;
-                          }
-                      });
-                      let departmentName =  $("#form input[name='departmentName']").val().trim();
-                      //校验一级科室是否重名
-                      if(b){
-                          if($("#form input[name='sta']").val()==1){
-                              $.ajax({
-                                  type: 'post',
-                                  url: "
-                ${pageContext.request.contextPath}/SecFirstDepartment/is_have_departmentName",
-                            async:true,
-                            data: {"departmentName":departmentName},
-                            success: function (data) {
-                                //如果大于0 说明已经有同名的了
-                                if (data>0) {
-                                    //选中父类的下一个兄弟
-                                    $("#form input[name='departmentName']").parent().next().children("span").text("已经重名").css("color","red");
-                                    return false;
-                                }
-                            }
-                        });
-                    }
-                    if($("#form input[name='sta']").val()>1){
-                        $.ajax({
-                            type: 'post',
-                            url: "
-                ${pageContext.request.contextPath}/SecFirstDepartment/add_office",
-                            data: $("#form").serialize(),
-                            success: function (data) {
-                                if (data) {
-                                    alert("保存成功");
-                                    window.location.reload();
-                                    return;
-                                }
-                                alert("保存失败");
-
-                            }
-                        })
-                    }
-                }*/
-                //如果全部不为空 进行校验
-
-
-            });
-
-            //继续添加二级科室
-            $("#continue_department").click(function () {
-                var b = true;
-                //循环校验form表单下所有的元素
-                $("#form input,textarea").each(function () {
-                    //如果元素为空
-                    if ($(this).val().trim() == "" && $(this).attr("name") != "id" && $(this).attr("name") != "sta" && $(this).attr("name") != "firstDepartmentId") {
-                        $(this).css("border-color", "red");
-                        b = false;
-                        return false;
-                    }
-                });
-                //如果全部不为空 进行添加
+            }
+            //2为修改信息
+            if (sta == 2) {
+                //校验表单元素是否为空
+                b = is_for(b);
+                //如果b为true 说明全部不为空 校验一级科室名称
                 if (b) {
-                    var dname = $("#form input[name='departmentName']").val();
-                    var ds = $("#form input[name='sequence']").val();
-                    //调用添加方法
-                    $.ajax({
-                        type: 'post',
-                        url: "${pageContext.request.contextPath}/SecFirstDepartment/add_office",
-                        data: $("#form").serialize(),
-                        success: function (data) {
-                            if (data > 0) {
-                                $("#form input,textarea").val("");
-                                $("#form input[name='firstDepartmentId']").val(data);
-                                $("#form input[name='sta']").val(3);
-                                $("#form input[name='departmentName']").val(dname).attr('disabled', 'disabled');
-                                $("#form input[name='sequence']").val(ds).attr('disabled', 'disabled');
-                                alert("保存成功,请继续添加二级科室");
-                                return;
-                            }
-                            alert("保存失败");
+                    //调用校验一级科室信息
+                    b = jy_two_departmentName(b);
+                    //如果c为ture 代表一级科室没有重复
+                    if (b) {
+                        if(is_one_two==2){
+                            add_two();
+                            return;
                         }
-                    })
+                        add_office();
+                    }
+                }
+            }
+            //3代表继续添加二级科室操作
+            if (sta == 3) {
+                //校验表单元素是否为空
+                b = is_for(b);
+                //如果b为true 说明全部不为空 校验一级科室名称
+                if (b) {
+                    //调用校验一级科室信息
+                    b = jy_two_departmentName(b);
+                    //如果c为ture 代表一级科室没有重复
+                    if (b) {
+                        add_two();
+                    }
+                }
+            }
+        }
+        //添加二级科室信息
+        function add_two() {
+            //如果全部不为空 进行添加
+            let dname = $("#form input[name='departmentName']").val();
+            let ds = $("#form input[name='sequence']").val();
+            //调用添加方法
+            $.ajax({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/SecFirstDepartment/add_office",
+                data: $("#form").serialize(),
+                success: function (data) {
+                    if (data > 0) {
+                        $("#form input,textarea").val("");
+                        $("#form input[name='firstDepartmentId']").val(data);
+                        $("#form input[name='sta']").val(3);
+                        $("#form input[name='departmentName']").val(dname).attr('disabled', 'disabled');
+                        $("#form input[name='sequence']").val(ds).attr('disabled', 'disabled');
+                        if(is_one_two==1){
+                            alert("保存成功");
+                            window.location.reload();
+                            return;
+                        }
+                        alert("保存成功,请继续添加二级科室");
+                        return;
+                    }
+                    alert("保存失败");
                 }
             })
-        });
-
-
+        }
         //点击添加科室 展示出form表单 隐藏科室信息
         function update_and_add(row) {
             $("#form span").text("");
@@ -275,11 +226,28 @@
             $("#form input[name='sequence']").val("").removeAttr("disabled");
 
         }
+        //添加科室
+        function add_office() {
+            $.ajax({
+                type: 'post',
+                url: "${pageContext.request.contextPath}/SecFirstDepartment/add_office",
+                data: $("#form").serialize(),
+                success: function (data) {
+                    if (data) {
+                        if (is_one_two == 1) {
+                            alert("保存成功");
+                            window.location.reload();
+                        }
+                        return;
+                    }
+                    alert("保存失败");
 
+                }
+            })
+        }
         //校验一级科室信息
         function jy_departmentName(b) {
             let result = b;
-            alert(result + "第一次");
             let departmentName = $("#form input[name='departmentName']");
             $.ajax({
                 type: 'post',
@@ -290,22 +258,18 @@
                     //如果大于0 说明已经有同名的了
                     if (data > 0) {
                         //选中父类的下一个兄弟
-                        departmentName.parent().next().children("span").text("已经重名").css("color", "red");
+                        departmentName.parent().next().children("span").text("一级科室名称已经重复").css("color", "red");
                         result = false;
-                        alert(result + "第二次")
                     } else {
                         result = true;
-                        alert(result + "第三次")
                     }
                 }
             });
             return result;
         }
-
         //校验二级科室
         function jy_two_departmentName(b) {
             let result = b;
-            alert(result + "第一次");
             let secondDepartmentName = $("#form input[name='secondDepartmentName']");
             $.ajax({
                 type: 'post',
@@ -316,12 +280,10 @@
                     //如果大于0 说明已经有同名的了
                     if (data > 0) {
                         //选中父类的下一个兄弟
-                        secondDepartmentName.parent().next().children("span").text("已经重名").css("color", "red");
+                        secondDepartmentName.parent().next().children("span").text("二级科室名称已经重复").css("color", "red");
                         result = false;
-                        alert(result + "第二次")
                     } else {
                         result = true;
-                        alert(result + "第三次")
                     }
                 }
             });
@@ -380,6 +342,9 @@
                             <label class="col-sm-2 control-label">二级科室名称</label>
                             <div class="col-sm-4">
                                 <input type="text" name="secondDepartmentName" class="form-control"/>
+                            </div>
+                            <div style="margin-top: 5px">
+                                <span></span>
                             </div>
                         </div>
                         <div class="form-group">
