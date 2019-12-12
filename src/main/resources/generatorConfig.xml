@@ -38,7 +38,7 @@
                         <property name="enableSubPackages" value="false" />
                     </javaClientGenerator>-->
 
-        <table tableName="sec_res" domainObjectName="SecRes"
+        <table tableName="sec_second_department" domainObjectName="SecSecondDepartment"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
