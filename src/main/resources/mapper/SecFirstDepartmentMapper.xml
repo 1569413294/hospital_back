@@ -8,7 +8,7 @@
     -->
 	<select id="is_have_departmentName" resultType="Integer">
 		select id from sec_first_department where department_name = #{departmentName}
-		/*and */
+		/*and  */
 	</select>
 
     <!--查询所有科室信息,以及对应医院的医生数量-->

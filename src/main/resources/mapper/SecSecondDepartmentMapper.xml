@@ -16,7 +16,7 @@
     <!--添加一级科室以及二级科室信息-->
     <!--ps：医院id无 一级科室简介无-->
     <insert id="add_office">
-        insert into sec_second_department(status,disabled,createtime,
+         insert into sec_second_department(status,disabled,createtime,
         first_department_id,second_department_name,sequence,
         second_department_address,second_department_commont)
         values (0,0,now(),#{firstDepartmentId},#{secondDepartmentName},#{sequence2},
