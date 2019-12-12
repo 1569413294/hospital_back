@@ -4,6 +4,8 @@
 <%--<jsp:include page="header.jsp"></jsp:include>--%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/style/admin.css" media="all">
+<script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.js"></script>
 <body class="layui-layout-body">
 
 <div id="LAY_app">
@@ -80,17 +82,14 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
-                <div class="layui-logo" lay-href="home/console.html">
-                    <span>layuiAdmin</span>
+                <div class="layui-logo" lay-href="/jsps/common/homepage.jsp">
+                    <span>医院后台</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
                 </ul>
             </div>
         </div>
-
-
-
 
         <!-- 页面标签 -->
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
@@ -126,10 +125,6 @@
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
 </div>
-
-
-<script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.js"></script>
 <!-- 百度统计 -->
 <script>
     $(function () {
@@ -155,6 +150,7 @@
                         "                    </li>";
                 }
                 $("#LAY-system-side-menu").html(str);
+
                 $(".iframe").on("click",function () {
                     var s = $(this).attr("lay-href  ");
                     $(".layadmin-iframe").attr("src",s);

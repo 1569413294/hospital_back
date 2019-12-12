@@ -6,10 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="${pageContext.request.contextPath }/static/js/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap/table/bootstrap-table.css">
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/table/bootstrap-table.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+<jsp:include page="/jsps/common/header.jsp"></jsp:include>
 <html>
 <head>
     <title>预约挂号订单管理</title>
@@ -54,28 +51,28 @@
                     }
 
                 }, {
-                    field: 'housingName',
-                    title: '订单名称'
+                    field: 'patientName',
+                    title: '就诊人'
                 }, {
-                    field: 'housingType',
+                    field: 'patientMedicalcardnumber',
+                    title: '就诊卡号'
+                }, {
+                    field: 'orderId',
                     title: '订单号'
                 }, {
-                    field: 'address',
-                    title: '就诊卡号/手机号'
-                }, {
                     field: 'realname',
-                    title: '支付时间'
+                    title: '手机号'
                 }, {
                     field: 'phone',
-                    title: '退款时间'
+                    title: '挂号时间'
                 }, {
-                    field: 'way',
-                    title: '支付金额',
+                    field: 'docctorName',
+                    title: '医生',
                 }, {
-                    field: 'way',
-                    title: '退款金额',
+                    field: 'price',
+                    title: '金额',
                 }, {
-                    field: 'way',
+                    field: 'orderStatus',
                     title: '订单状态',
                     formatter:function(value,row,index){
                         if(value=='zu'){
