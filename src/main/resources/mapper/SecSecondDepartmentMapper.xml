@@ -4,9 +4,13 @@
 
 
     <!--  //判断二级科室是否存在
-    Integer is_have_secondDepartmentName(String secondDepartmentName);-->
+    Integer is_have_secondDepartmentName(String secondDepartmentName);
+    ps:缺少医院id
+    -->
+    <!--select s1.id from sec_second_department s1,sec_first_department s2 where s1.first_department_id = s2.id and     s1.second_department_name = #{secondDepartmentName} and s2.hospital_id = #{hospitalId}  limit 0,1
+-->
     <select id="is_have_secondDepartmentName" resultType="Integer">
-       select id from sec_second_department where second_department_name = #{secondDepartmentName}
+       select id from sec_second_department where second_department_name = #{secondDepartmentName}  limit 0,1
     </select>
 
 

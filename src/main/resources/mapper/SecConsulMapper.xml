@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecConsulMapper">
+
+    <!--//是医生获取所有未回答
+    List<SecConsultation> unanswered_all();-->
+    <select id="unanswered_all" resultType="secConsultation">
+       SELECT cs.*,dc.`name` `name`,
+oc.order_num orderNum,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='1'
+and cs.doctor_id in(SELECT seda.assistant_id assistant_id
+from sec_doctor_assistant seda,sec_doctor secd
+WHERE seda.doctor_id=secd.id and
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+))
+    </select>
+
+
+    <!-- //是医生助理获取所有未回答
+   List<SecConsultation> unanswered_all();-->
+    <select id="unanswered_all1" resultType="secConsultation">
+       SELECT cs.*,dc.`name` `name`,
+oc.order_num orderNum,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='1'
+and cs.doctor_id in(SELECT seda.doctor_id doctor_id
+from sec_doctor_assistant seda,sec_doctor secd
+WHERE seda.assistant_id=secd.id and
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+))
+    </select>
+
+</mapper>

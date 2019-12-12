@@ -22,7 +22,7 @@
     }
 </style>
 <body>
-<div class="layui-card" style="height: 97%;width: 97%;border: 10px;">
+<div class="layui-card" style="height: 97%;width: 99%;border: 10px;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
         <a><span style="font-size: 20px">首页</span></a>
         &nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;

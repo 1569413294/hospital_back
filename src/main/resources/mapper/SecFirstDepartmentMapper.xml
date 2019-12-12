@@ -7,11 +7,11 @@
     ps:缺少医院id
     -->
 	<select id="is_have_departmentName" resultType="Integer">
-		select id from sec_first_department where department_name = #{departmentName}
-		/*
-		ps:缺少医院id
-		and hospital_id = #{hospitalId} */
+		select id from sec_first_department  where department_name = #{departmentName} limit 0,1
 	</select>
+<!--	/*
+		ps:缺少医院id
+		and hospital_id = #{hospitalId} */-->
 
     <!--查询所有科室信息,以及对应医院的医生数量-->
     <select id="office_all" resultType="com.buba.hospital_back.bean.DepartmentVo">
