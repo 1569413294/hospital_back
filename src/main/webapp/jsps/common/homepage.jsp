@@ -10,13 +10,15 @@
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md6">
-            <div class="layui-card layui-form" lay-filter="component-form-element">
+            <div class="layui-card layui-form">
                 <div class="layui-card-header">选择医院</div>
                 <div class="layui-card-body layui-row layui-col-space10">
                     <div class="layui-col-md6">
-                        <select name="hospital" lay-verify="required" lay-search>
-                            <%--<option value="">带搜索的选择框</option>--%>
+                        <input type="hidden" id="hospitalId" value="${hospitalId}">
+                        <select  id="hospital" lay-verify="required" lay-filter="changeHospital" lay-search>
+
                         </select>
+
                     </div>
 
                 </div>
@@ -28,7 +30,7 @@
 
     </div>
 </div>
-<script src="${pct}/static/layuiadmin/layui/layui.js"></script>
+<script src="${pct}/static/js/common/homepage.js"></script>
 <script>
     layui.config({
         base: '/static/layuiadmin/' //静态资源所在路径
@@ -48,6 +50,64 @@
             return false;
         });
     });
+
+    $(function () {
+        $.ajax({
+            type: "post",
+            url: '/user/getOfHospital',
+            data:{},
+            dataType: "json",
+            success: function (data) {
+                if(data){
+                    for(var i=0;i<data.length;i++){
+                        var hospitalId = $("#hospitalId").val();
+                        if(data[i].id == hospitalId){
+                            $("#hospital").append("<option value='"+data[i].id+"' selected='selected'>"+data[i].hospitalName+"</option>");
+                        }else{
+                            $("#hospital").append("<option value='"+data[i].id+"'>"+data[i].hospitalName+"</option>");
+                        }
+                    }
+                    layui.use('form', function(){
+                        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+                        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+                        form.render('select');
+                    });
+
+                }
+            },
+            error: function (data) {
+            }
+        });
+
+        layui.use('form', function(){
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+           /* $("#hospital").change(function () {
+                alert(1)
+            })*/
+            form.on('select(changeHospital)', function(data){
+                $.ajax({
+                    type: "post",
+                    url: '/user/changeHospital',
+                    data:{
+                        hospitalId:data.value
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                       if(data){
+                           window.location.reload();
+                       }
+                    }
+                });
+                form.render('select');
+            });
+
+        });
+
+
+
+
+    })
 </script>
 </body>
 </html>
