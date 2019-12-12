@@ -6,23 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="${pageContext.request.contextPath }/static/js/jquery-3.2.1.min.js"></script>
+<jsp:include page="/jsps/common/header.jsp"></jsp:include>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap/table/bootstrap-table.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/bootstrap/css/bootstrap-tab.css">
-
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/js/bootstrap-closable-tab.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/js/closable-tab-div.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/table/bootstrap-table.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css">
+<script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 
 
-<link rel="stylesheet" href="${pageContext.request.contextPath }/static/layui/css/layui.css">
-
-<script src="${pageContext.request.contextPath }/static/layui/layui.all.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/static/layui/layui.js"></script>
 
 <html>
 <head>

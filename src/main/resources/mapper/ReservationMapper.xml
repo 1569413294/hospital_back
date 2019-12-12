@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.ReservationMapper">
+   <!--List<ReservationVo> find_reservation();-->
+    <select id="find_reservation" resultType="com.buba.hospital_back.bean.ReservationVo">
+        SELECT
+        p.id id,
+        p.patient_name patientName,
+        p.patient_medicalCardNumber patientMedicalcardnumber,
+        p.patient_tel patientTel,
+        o.order_name orderName,
+        o.pay_start_time payStartTime,
+        o.pay_money payMoney,
+        o.pay_way payWay,
+        o.order_status orderStatus,
+        t.timeframe timeframe,
+         d.name doctorName,
+         h.hospital_name hospitalName,
+         f.department_name departmentName,
+            (SELECT  sec_doctor_appointmenttime.appointment_time from sec_doctor_appointmenttime where id=(
+        SELECT t.appointmenttime_id from sec_reservation r,sec_doctor_appointmenttime_timeframe t where r.timeframe_id=t.id)
+        ) as appointmentTime
+
+    FROM
+        sec_reservation r
+    LEFT JOIN sec_patient p ON r.patient_id = p.id
+    LEFT JOIN his_order o ON r.order_id = o.id
+    LEFT JOIN  sec_doctor_appointmenttime_timeframe t ON r.timeframe_id=t.id
+    LEFT JOIN sec_doctor d ON r.doctor_id=d.id
+    LEFT JOIN sec_hospital h ON r.hospital_id=h.id
+    LEFT JOIN sec_first_department f ON r.department_id=f.id
+    </select>
+</mapper>
