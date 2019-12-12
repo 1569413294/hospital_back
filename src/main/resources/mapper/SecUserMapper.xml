@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.buba.hospital_back.mapper.SecUserMapper">
+    <!--
+       //查看用户信息
+      SecUser loadUserInfo(String mobile);
+      -->
+    <select id="loadUserInfo" resultType="com.buba.hospital_back.bean.SecUser">
+            select * from sec_user where phone=#{mobile}
+    </select>
 
     <!--
      //查询权限列表
@@ -13,4 +20,5 @@
             and sr2.id=srr.res_id
             and su.id=#{id}
     </select>
+
 </mapper>
