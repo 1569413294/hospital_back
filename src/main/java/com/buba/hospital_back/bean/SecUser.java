@@ -2,10 +2,9 @@ package com.buba.hospital_back.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
-public class SecUser {
+public class SecUser   {
     private Integer id;
 
     private String status;
@@ -15,8 +14,8 @@ public class SecUser {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     //创建时间
     private Date createtime;
-    //名称
-    private String name;
+    //用户名
+    private String username;
     //电话
     private String phone;
     //密码
@@ -56,12 +55,13 @@ public class SecUser {
         this.createtime = createtime;
     }
 
-    public String getName() {
-        return name;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhone() {
@@ -86,5 +86,21 @@ public class SecUser {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "SecUser{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", disabled=" + disabled +
+                ", createtime=" + createtime +
+                ", username='" + username + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", roleId=" + roleId +
+                '}';
     }
 }

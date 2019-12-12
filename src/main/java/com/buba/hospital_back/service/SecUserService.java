@@ -1,6 +1,7 @@
 package com.buba.hospital_back.service;
 
 import com.buba.hospital_back.bean.SecRes;
+import com.buba.hospital_back.bean.SecUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface SecUserService {
 
     //查询权限列表
     List<SecRes> selectRoleRes(Integer id);
+    //登录
+    SecUser login(String phone);
 }

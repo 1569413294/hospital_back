@@ -1,6 +1,7 @@
 package com.buba.hospital_back.mapper;
 
 import com.buba.hospital_back.bean.SecRes;
+import com.buba.hospital_back.bean.SecUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,6 @@ public interface SecUserMapper {
 
     //查询权限列表
     List<SecRes> selectRoleRes(Integer id);
+    //登录 查看用户信息
+    SecUser loadUserInfo(String mobile);
 }

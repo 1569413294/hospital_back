@@ -1,6 +1,7 @@
 package com.buba.hospital_back.service.serviceImpl;
 
 import com.buba.hospital_back.bean.SecRes;
+import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.mapper.SecUserMapper;
 import com.buba.hospital_back.service.SecUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,10 @@ public class SecUserServiceImpl implements SecUserService {
     @Override
     public List<SecRes> selectRoleRes(Integer id) {
         return secUserMapper.selectRoleRes(id);
+    }
+    //登录
+    @Override
+    public SecUser login(String phone) {
+        return secUserMapper.loadUserInfo(phone);
     }
 }

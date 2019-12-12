@@ -25,12 +25,12 @@
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"
-                           layadmin-event="serach" lay-action="template/search.html?keywords=">
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin-top: 5px;">
+                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
 
                 <li class="layui-nav-item" lay-unselect>
                     <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
@@ -57,7 +57,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>${user.userName}</cite>
+                        <cite>${user.username}</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a lay-href="${pct}/jsps/personalCenter/personalInfo/personalInfo.jsp" href="#">基本资料</a></dd>
@@ -87,10 +87,6 @@
                 </ul>
             </div>
         </div>
-
-
-
-
         <!-- 页面标签 -->
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
@@ -129,6 +125,13 @@
 
 <script src="${pct}/static/layuiadmin/layui/layui.js"></script>
 <!-- 百度统计 -->
+<%
+    session=request.getSession();
+    Object obj=session.getAttribute("user");
+    if(obj==null){
+        response.sendRedirect(request.getContextPath()+"/jsps/login.jsp");
+    }
+%>
 <script>
     $(function () {
         $.ajax({
@@ -162,7 +165,7 @@
         })
 
     })
-    layui.config({
+  layui.config({
         base: '${pageContext.request.contextPath}/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
