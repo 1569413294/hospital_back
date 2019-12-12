@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecFirstDepartmentMapper">
+
+<!--  //判断一级科室是否存在
+    Integer is_have_departmentName(String departmentName);
+    ps:缺少医院id
+    -->
+	<select id="is_have_departmentName" resultType="Integer">
+		select id from sec_first_department where department_name = #{departmentName}
+		/*and */
+	</select>
+
+    <!--查询所有科室信息,以及对应医院的医生数量-->
+    <select id="office_all" resultType="com.buba.hospital_back.bean.DepartmentVo">
+         SELECT
+	f1.id,
+	f2.id as id2,
+	f2.sequence as sequence2,
+	f1.sequence,
+	f1.department_name,
+	f2.*,
+	(
+		SELECT
+			count(*)
+		FROM
+			sec_doctor_multipoint s1
+		WHERE
+			s1.department_id = f2.id
+	) AS count
+FROM
+	sec_first_department f1
+LEFT JOIN sec_second_department f2 ON f1.id = f2.first_department_id    ORDER BY f1.sequence
+    </select>
+
+    <!--添加一级科室以及二级科室信息-->
+    <!--ps：医院id无 一级科室简介无-->
+    <insert id="add_office" useGeneratedKeys="true" keyProperty="id">
+        insert into sec_first_department(status,disabled,createtime,
+        hospital_id,department_name,department_info,sequence)
+        values (0,0,now(),#{hospitalId},#{departmentName},'',#{sequence})
+    </insert>
+</mapper>
