@@ -5,12 +5,14 @@ import com.buba.hospital_back.bean.SecRes;
 import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.constant.Constants;
 import com.buba.hospital_back.service.SecUserService;
+import com.buba.hospital_back.utils.JSONUtils;
 import com.buba.hospital_back.utils.MD5Util;
 import com.buba.hospital_back.utils.RedisUtils;
 import com.buba.hospital_back.utils.UUIDUtils;
 import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -164,12 +166,22 @@ public class SecUserController {
     @ResponseBody
     @RequestMapping("/selectRoleRes")
     public List<SecRes> selectRoleRes(HttpSession session){
-       /* SecUser secUser = (SecUser) session.getAttribute("user");
+        SecUser secUser = (SecUser) session.getAttribute("user");
         if(null == secUser){
             return null;
-        }*/
-        List<SecRes> list=secUserService.selectRoleRes(1);
-
+        }
+        List<SecRes> list = null;
+        //1.从Redis中获取数据
+        Object obj=redisUtils.get(Constants.RedisResKey+"_"+secUser.getId());
+        if(null == obj){//如果查询的结果为空
+            //先去数据库查询
+            list=secUserService.selectRoleRes(secUser.getId());
+            //查询的结果存入redis
+            redisUtils.set(Constants.RedisResKey+"_"+secUser.getId(), JSONUtils.list2Json(list));
+        }else{
+            //如果redis里有值
+            list=JSONUtils.json2List(JSONUtils.object2Json(obj),SecRes.class);
+        }
         return list;
     }
 

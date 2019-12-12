@@ -26,7 +26,8 @@
                     </a>
                 </li>
                 <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin-top: 5px;">
-                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
+                    <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"
+                           layadmin-event="serach" lay-action="template/search.html?keywords=">
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
@@ -82,6 +83,7 @@
                 <div class="layui-logo" lay-href="home/console.html">
                     <span>layuiAdmin</span>
                 </div>
+
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
                 </ul>
@@ -113,6 +115,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
+
                 <iframe src="${pageContext.request.contextPath}/jsps/common/homepage.jsp" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
