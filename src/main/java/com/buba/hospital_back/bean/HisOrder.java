@@ -2,6 +2,7 @@ package com.buba.hospital_back.bean;
 
 import java.util.Date;
 //订单表
+
 public class HisOrder {
     private Integer id;
 
