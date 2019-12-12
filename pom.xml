@@ -106,6 +106,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <!--poi-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
         <!--  第三方发短信依赖（云通讯平台）-->
         <dependency>
             <groupId>xxx</groupId>
