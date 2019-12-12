@@ -196,8 +196,7 @@
                 "left":"404px",
                 "opacity":"0"
             });
-            $(".tips").html('你是不是不知道账号密码！？？？');
-            $("#logo").attr("src",'/static/images/login-err.png')
+
             var  phone = $("#phone").val();
             var auto_login = $("input[name='auto_login']").is(":checked");
             $.ajax({
@@ -208,7 +207,12 @@
                     },
                     dataType: "json",
                     success: function (data) {
-                        window.location.href="common/index.jsp"
+                        if(data){
+                            window.location.href="common/index.jsp"
+                        } else{
+                            $(".tips").html('你是不是忘了手机号了！？？？');
+                            $("#logo").attr("src",'/static/images/login-err.png')
+                        }
                     },
                     error: function (res, status) {
 
@@ -227,9 +231,13 @@
             $(".tips").html('老兄！！你手机号呢！？？？');
             $("#logo").attr("src",'/static/images/null-password.jpg')
         } else if($("#messageCode").val() == '') {
+
             $(".tips").html('老兄！！你验证码呢！？？？');
             $("#logo").attr("src",'/static/images/null-password.jpg')
-        } else {
+        } else  if($("#messageCode").hasClass("has-error")){
+            $(".tips").html('老兄！！！验证码错误了！！！');
+            $("#logo").attr("src",'/static/images/null-password.jpg')
+        }else {
             $(".login").css({
                 "left":"-404px",
                 "opacity":"0"
