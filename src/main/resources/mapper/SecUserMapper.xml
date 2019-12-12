@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecUserMapper">
+
+    <!--
+     //查询权限列表
+    List<SecRes> selectRoleRes(Integer id);
+    -->
+    <select id="selectRoleRes" resultType="com.buba.hospital_back.bean.SecRes">
+            select sr2.* from sec_user su,sec_role sr,sec_role_res srr,sec_res sr2
+            where su.role_id=sr.id
+            and sr.id=srr.role_id
+            and sr2.id=srr.res_id
+            and su.id=#{id}
+    </select>
+</mapper>

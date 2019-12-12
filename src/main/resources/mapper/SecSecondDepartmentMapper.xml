@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecSecondDepartmentMapper">
+
+    <!--   //修改二级科室信息
+    Boolean update_department(SecSecondDepartment secSecondDepartment);-->
+    <update id="update_department">
+        UPDATE sec_second_department
+        SET second_department_name = #{secondDepartmentName},
+        sequence=#{sequence2},
+        second_department_address=#{secondDepartmentAddress},
+        second_department_commont=#{secondDepartmentCommont} where id=#{id}
+    </update>
+
+
+    <!--添加一级科室以及二级科室信息-->
+    <!--ps：医院id无 一级科室简介无-->
+    <insert id="add_office">
+         insert into sec_second_department(status,disabled,createtime,
+        first_department_id,second_department_name,sequence,
+        second_department_address,second_department_commont)
+        values (0,0,now(),#{firstDepartmentId},#{secondDepartmentName},#{sequence2},
+        #{secondDepartmentAddress},#{secondDepartmentCommont})
+    </insert>
+</mapper>
