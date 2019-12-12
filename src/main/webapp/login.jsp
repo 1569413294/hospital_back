@@ -14,10 +14,15 @@
 <head>
     <title>登录页面</title>
     <link type="text/css" rel="stylesheet" href="${pct}/static/css/style.css">
-    <script src="${pct}/static/js/jquery-1.7.2.js"></script>
+    <script src="${pct}/static/js/jquery-3.3.1.min.js"></script>
     <script src="${pct}/static/js/img_ver.js"></script>
 
     <style>
+        body{
+            background:url(/static/images/bj.jpg);
+            -moz-background-size:100% 100%;
+            background-size:100% 100%
+        }
         .bxs-row {
             margin-bottom:12px;
         }
@@ -38,7 +43,7 @@
             padding: 42px 42px 36px;
             transition:all 0.8s;
         }
-        .username,.password,.btn {
+        .phone,.btn {
             height: 44px;
             width: 100%;
             padding: 0 10px;
@@ -61,6 +66,56 @@
             font-weight: 400;
             direction: ltr;
             font-size:13px;
+        }
+        .messageCode{
+            height: 44px;
+            width: 60%;
+            padding: 0 10px;
+            border: 1px solid #9da3a6;
+            background: #fff;
+            text-overflow: ellipsis;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            -khtml-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            color: #000;
+            font-size: 1em;
+            font-family: Helvetica,Arial,sans-serif;
+            font-weight: 400;
+            direction: ltr;
+            font-size:13px;
+        }
+        .fsyzm{
+
+            height: 44px;
+            width: 37%;
+            padding: 0 10px;
+            border: 1px solid #9da3a6;
+            background-color: #8383D4;
+            text-overflow: ellipsis;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            -khtml-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            color: #000;
+            font-size: 1em;
+            font-family: Helvetica,Arial,sans-serif;
+            font-weight: 400;
+            direction: ltr;
+            font-size:13px;
+
         }
         .submit {
             background-color: #0070ba;
@@ -89,21 +144,22 @@
         }
     </style>
 </head>
-<body>
+<body >
 
 
 <div class="logo-box">
     <div class="login" style="">
         <div class="bxs-row" style="text-align:center;">
-            <img id="logo" src="${pct}/static/images/logo.jpg" style="width:72px;"><span class="tips" style="color:red;">忍住不哭来段口技</span>
+            <img id="logo" src="${pct}/static/images/logo.jpg" style="width:72px;"><span class="tips" style="color:red;">用户请登录</span>
         </div>
         <div class="bxs-row">
-            <input type="text" class="username" placeholder="用户名" value="admin">
-            <p class=" err err-username"></p>
+            <input type="text" class="phone" placeholder="手机号" value="">
+            <p class="err err-phone"></p>
         </div>
         <div class="bxs-row">
-            <input type="password" class="password" placeholder="密码">
-            <p class="err err-password"></p>
+            <input type="text" class="messageCode" placeholder="验证码">
+            <input type="button" class="fsyzm" value="点击获取">
+            <p class="err err-messageCode"></p>
         </div>
         <div class="bxs-row">
             <input type="submit" class="submit btn" value="登录">
@@ -125,7 +181,7 @@
             '/static/images/ver-3.png'
         ],
         success:function () {
-            //alert('执行登录函数');
+            alert('执行登录函数');
             $(".login").css({
                 "left":"0",
                 "opacity":"1"
@@ -142,10 +198,10 @@
         }
     });
     $(".submit").on('click',function () {
-        if($(".username").val() == '') {
+        if($(".phone").val() == '') {
             $(".tips").html('老兄！！你用户名呢！？？？');
-            $("#logo").attr("src",'/static/images/null-username.jpg')
-        } else if($(".password").val() == '') {
+            $("#logo").attr("src",'/static/images/null-password.jpg')
+        } else if($(".messageCode").val() == '') {
             $(".tips").html('老兄！！你密码呢！？？？');
             $("#logo").attr("src",'/static/images/null-password.jpg')
         } else {
