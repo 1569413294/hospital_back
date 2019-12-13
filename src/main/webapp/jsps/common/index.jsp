@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<jsp:include page="header.jsp"></jsp:include>
-
+<%--<jsp:include page="header.jsp"></jsp:include>--%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/style/admin.css" media="all">
+<script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.js"></script>
 <body class="layui-layout-body">
 
 <div id="LAY_app">
@@ -25,13 +28,12 @@
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin-top: 5px;">
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
                     <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"
                            layadmin-event="serach" lay-action="template/search.html?keywords=">
                 </li>
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
 
                 <li class="layui-nav-item" lay-unselect>
                     <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
@@ -58,7 +60,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>${user.username}</cite>
+                        <cite>${user.userName}</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a lay-href="${pct}/jsps/personalCenter/personalInfo/personalInfo.jsp" href="#">基本资料</a></dd>
@@ -80,15 +82,15 @@
         <!-- 侧边菜单 -->
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
-                <div class="layui-logo" lay-href="home/console.html">
-                    <span>layuiAdmin</span>
+                <div class="layui-logo" lay-href="/jsps/common/homepage.jsp">
+                    <span>医院后台</span>
                 </div>
-
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
 
                 </ul>
             </div>
         </div>
+
         <!-- 页面标签 -->
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
@@ -115,7 +117,6 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-
                 <iframe src="${pageContext.request.contextPath}/jsps/common/homepage.jsp" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
@@ -124,24 +125,13 @@
         <div class="layadmin-body-shade" layadmin-event="shade"></div>
     </div>
 </div>
-
-
-<script src="${pct}/static/layuiadmin/layui/layui.js"></script>
 <!-- 百度统计 -->
-<%
-    session=request.getSession();
-    Object obj=session.getAttribute("user");
-    if(obj==null){
-        response.sendRedirect(request.getContextPath()+"/jsps/login.jsp");
-    }
-%>
 <script>
     $(function () {
         $.ajax({
             type:"POST",
-            url:"/user/selectRoleRes",
+            url:"${pageContext.request.contextPath}/user/selectRoleRes",
             success:function (data) {
-
                 var str  = "       <li data-name=\"home\" class=\"layui-nav-item layui-nav-itemed\">\n" +
                     "                        <a lay-href=\"${pageContext.request.contextPath}/jsps/common/homepage.jsp\" lay-tips=\"主页\" lay-direction=\"2\">\n" +
                     "                            <i class=\"layui-icon layui-icon-home\"></i>\n" +
@@ -160,6 +150,7 @@
                         "                    </li>";
                 }
                 $("#LAY-system-side-menu").html(str);
+
                 $(".iframe").on("click",function () {
                     var s = $(this).attr("lay-href  ");
                     $(".layadmin-iframe").attr("src",s);
@@ -168,7 +159,7 @@
         })
 
     })
-  layui.config({
+    layui.config({
         base: '${pageContext.request.contextPath}/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
