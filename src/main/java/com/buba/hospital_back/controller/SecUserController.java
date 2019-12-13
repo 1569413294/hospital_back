@@ -106,6 +106,7 @@ public class SecUserController {
             return false;
         }
     }
+
     //自动登录
     @ResponseBody
     @RequestMapping("/auto_login")

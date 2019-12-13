@@ -40,6 +40,7 @@ public class LoginInterceptor  implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception {
 
+
         try {
             //先判断，现在session中还有没有那个userBean.
             SecUser secUser = (SecUser) request.getSession().getAttribute("user");

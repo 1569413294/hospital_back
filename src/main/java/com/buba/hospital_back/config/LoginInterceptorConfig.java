@@ -26,6 +26,7 @@ public  class LoginInterceptorConfig  implements WebMvcConfigurer {
         return new LoginInterceptor();
     }
 
+
     //增加拦截器方法
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(createLoginInterceptor());
