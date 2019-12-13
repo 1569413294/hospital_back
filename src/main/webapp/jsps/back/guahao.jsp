@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="/jsps/common/header.jsp"></jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/static/layuiadmin/layui/css/layui.css">
+<script src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/static/layuiadmin/layui/layui.js"></script>
 <html>
 <head>
     <title>预约挂号订单管理</title>
@@ -36,7 +39,7 @@
     function billQuery_find() {
         $('#appointment_register_table').bootstrapTable('destroy');
         $("#appointment_register_table").bootstrapTable({
-            //url:"/housing/Housinglibrary_find?housingType="+housingType+"&way="+way+"&userName="+userName,//请求的路径
+            url:"/reservation/find_reservation",//请求的路径
             pagination:true,//分页的开关，默认是关闭的
             sidePagination:"client",//client客户端分  server服务器
             pageNumber:1,//分页起始行，默认第一行
@@ -57,37 +60,32 @@
                     field: 'patientMedicalcardnumber',
                     title: '就诊卡号'
                 }, {
-                    field: 'orderId',
+                    field: 'orderNum',
                     title: '订单号'
                 }, {
-                    field: 'realname',
+                    field: 'patientTel',
                     title: '手机号'
                 }, {
-                    field: 'phone',
-                    title: '挂号时间'
+                    field: '',
+                    title: '挂号时间',
+                    formatter:function(value,row,index){
+                        return row.appointmentTime+row.timeframe
+                    }
                 }, {
-                    field: 'docctorName',
+                    field: 'doctorName',
                     title: '医生',
                 }, {
-                    field: 'price',
+                    field: 'payMoney',
                     title: '金额',
                 }, {
                     field: 'orderStatus',
                     title: '订单状态',
-                    formatter:function(value,row,index){
-                        if(value=='zu'){
-                            return '出租'
-                        }
-                        if(value=='mai'){
-                            return '售卖'
-                        }
-                    }
                 }, {
                     field: '',
                     title: '订单操作',
                     formatter: function (value, row,index) {
                         var str="";
-                        str+="<button onclick='picture_find("+row.id+")' title='审核' class='layui-btn layui-btn-normal'>审核</button>"
+                        str+="<button onclick='picture_find("+row.id+")' title='查看' class='layui-btn layui-btn-normal'>审核</button>"
                         return str
 
                     }

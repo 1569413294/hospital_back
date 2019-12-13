@@ -18,7 +18,7 @@
          d.name doctorName,
          h.hospital_name hospitalName,
          f.department_name departmentName,
-            (SELECT  sec_doctor_appointmenttime.appointment_time from sec_doctor_appointmenttime where id=(
+            (SELECT  sec_doctor_appointmenttime.appointment_time from sec_doctor_appointmenttime where id in (
         SELECT t.appointmenttime_id from sec_reservation r,sec_doctor_appointmenttime_timeframe t where r.timeframe_id=t.id)
         ) as appointmentTime
 

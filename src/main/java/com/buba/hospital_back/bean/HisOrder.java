@@ -1,5 +1,8 @@
 package com.buba.hospital_back.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 //订单表
 
@@ -16,15 +19,26 @@ public class HisOrder {
 
     private Integer orderPlacer;
 
+    private String medicalCardNumber;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date payStartTime;
-
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date payStartTime2;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date refundStartTime;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date refundStartTime2;
 
     private Double payMoney;
 
     private String payWay;
 
     private String status;
+
 
     public Integer getId() {
         return id;
@@ -112,5 +126,29 @@ public class HisOrder {
 
     public void setPayWay(String payWay) {
         this.payWay = payWay == null ? null : payWay.trim();
+    }
+
+    public String getMedicalCardNumber() {
+        return medicalCardNumber;
+    }
+
+    public void setMedicalCardNumber(String medicalCardNumber) {
+        this.medicalCardNumber = medicalCardNumber;
+    }
+
+    public Date getPayStartTime2() {
+        return payStartTime2;
+    }
+
+    public void setPayStartTime2(Date payStartTime2) {
+        this.payStartTime2 = payStartTime2;
+    }
+
+    public Date getRefundStartTime2() {
+        return refundStartTime2;
+    }
+
+    public void setRefundStartTime2(Date refundStartTime2) {
+        this.refundStartTime2 = refundStartTime2;
     }
 }

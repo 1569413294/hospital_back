@@ -1,5 +1,8 @@
 package com.buba.hospital_back.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -14,6 +17,8 @@ public class ReservationVo {
     private String patientTel;//手机号
     private String patientMedicalcardnumber;//就诊卡号
     private String timeframe;//时间段
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date appointmentTime;//预约时间
     private String doctorName;//医生
     private String departmentName;//科室名称
@@ -144,30 +149,4 @@ public class ReservationVo {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
-/*SELECT
-	p.patient_name patientName,
-	p.patient_medicalCardNumber patientMedicalcardnumber,
-	p.patient_tel patientTel,
-	o.order_name orderName,
-	o.pay_start_time payStartTime,
-	o.pay_money payMoney,
-	o.pay_way payWay,
-	o.order_status orderStatus,
-	t.timeframe timeframe,
-	 d.name doctorName,
-     h.hospital_name hospitalName,
-     f.department_name departmentName,
-        (SELECT  sec_doctor_appointmenttime.appointment_time from sec_doctor_appointmenttime where id=(
-    SELECT t.appointmenttime_id from sec_reservation r,sec_doctor_appointmenttime_timeframe t where r.timeframe_id=t.id)
-    ) as appointmentTime
-
-FROM
-	sec_reservation r
-LEFT JOIN sec_patient p ON r.patient_id = p.id
-LEFT JOIN his_order o ON r.order_id = o.id
-LEFT JOIN  sec_doctor_appointmenttime_timeframe t ON r.timeframe_id=t.id
-LEFT JOIN sec_doctor d ON r.doctor_id=d.id
-LEFT JOIN sec_hospital h ON r.hospital_id=h.id
-LEFT JOIN sec_first_department f ON r.department_id=f.id*/
-
 }

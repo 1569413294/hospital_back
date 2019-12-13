@@ -24,12 +24,15 @@
         height: 50px;
         text-align: center;
     }
-.select_orderItem{
-    width: 100%;
-    padding-left: 10px;
-    height: 38px;
-    border-color: #e6e6e6;
-}
+    .select_orderItem{
+        width: 100%;
+        padding-left: 10px;
+        height: 38px;
+        border-color: #e6e6e6;
+    }
+    td {
+        height: 30px;
+    }
 </style>
 <body>
 <div class="panel panel-default">
@@ -39,29 +42,29 @@
         </h3>
     </div>
     <div class="panel-body">
-        <form>
+        <form id="order_form">
             <table align="center">
                 <tr>
                     <td class="td1">支付开始时间：</td>
-                    <td><input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input type="text" name="payStartTime" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
                     <td class="td1">退款开始时间：</td>
-                    <td><input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
-                    <td class="td1"><button class="layui-btn layui-btn-radius layui-btn-normal">查询</button></td>
+                    <td><input type="text" name="refundStartTime" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td class="td1"><button onclick="billQuery_onclick()" class="layui-btn layui-btn-radius layui-btn-normal">查询</button></td>
                 </tr>
                 <tr>
                     <td class="td1">支付结束时间：</td>
-                    <td><input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input type="text" name="payStartTime2" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
                     <td class="td1">退款结束时间：</td>
-                    <td><input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input type="text" name="refundStartTime2" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
                 </tr>
                 <tr>
                     <td class="td1">订单项目：</td>
                     <td>
                         <select name="city" lay-verify="required" class="select_orderItem">
-                            <option value="">请选择一个城市</option>
-                            <option value="010">北京</option>
-                            <option value="021">上海</option>
-                            <option value="0571">杭州</option>
+                            <option value="预约挂号">预约挂号</option>
+                            <option value="在线咨询">在线咨询</option>
+                            <option value="门诊缴费">门诊缴费</option>
+                            <option value="就诊卡充值">就诊卡充值</option>
                         </select>
                     </td>
                 </tr>
@@ -69,18 +72,38 @@
         </form>
     </div>
 </div>
-  <table id="billQuery_table">
-  </table>
+<div style="margin-left:1100px">
+    <button onclick="order_excel()" class="layui-btn layui-btn-primary">
+        导出excel
+    </button>
+</div>
+<div style="height: 10px;"></div>
+<table id="billQuery_table">
+</table>
 </body>
 <script>
     $(function () {
         billQuery_find();
     })
+    function billQuery_onclick() {
+        billQuery_find();
+    }
+    function order_excel() {
+        $.ajax({
+            url:"/reservation/outExecel",
+            type:"post",
+            dataType:"json",
+            data:$("#order_form").serialize(),
+            success:function (data) {
+                alert(data);
+            }
+        })
+    }
     //查看订单
     function billQuery_find() {
         $('#billQuery_table').bootstrapTable('destroy');
         $("#billQuery_table").bootstrapTable({
-            //url:"/housing/Housinglibrary_find?housingType="+housingType+"&way="+way+"&userName="+userName,//请求的路径
+            url:"/reservation/find_hisOrder?"+$("#order_form").serialize(),//请求的路径
             pagination:true,//分页的开关，默认是关闭的
             sidePagination:"client",//client客户端分  server服务器
             pageNumber:1,//分页起始行，默认第一行
@@ -95,46 +118,34 @@
                     }
 
                 }, {
-                    field: 'housingName',
+                    field: 'orderName',
                     title: '订单名称'
                 }, {
-                    field: 'housingType',
+                    field: 'orderNum',
                     title: '订单号'
                 }, {
-                    field: 'address',
+                    field: 'medicalCardNumber',
                     title: '就诊卡号/手机号'
                 }, {
-                    field: 'realname',
+                    field: 'payStartTime',
                     title: '支付时间'
                 }, {
-                    field: 'phone',
+                    field: 'refundStartTime',
                     title: '退款时间'
                 }, {
-                    field: 'way',
+                    field: 'payMoney',
                     title: '支付金额',
                 }, {
-                    field: 'way',
-                    title: '退款金额',
-                }, {
-                    field: 'way',
-                    title: '订单状态',
-                    formatter:function(value,row,index){
-                        if(value=='zu'){
-                            return '出租'
-                        }
-                        if(value=='mai'){
-                            return '售卖'
-                        }
-                    }
-                }, {
                     field: '',
-                    title: '订单操作',
-                    formatter: function (value, row,index) {
-                        var str="";
-                        str+="<button onclick='picture_find("+row.id+")' title='审核' class='layui-btn layui-btn-normal'>审核</button>"
-                        return str
-
+                    title: '退款金额',
+                    formatter:function(value,row,index){
+                        if(row.status=='已退款'){
+                            return row.payMoney
+                        }
                     }
+                }, {
+                    field: 'status',
+                    title: '订单状态'
                 }
             ]
         })
