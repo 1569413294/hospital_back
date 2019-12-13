@@ -78,6 +78,7 @@ public class ReservationController {
         pro.add("refundStartTime");
         pro.add("payMoney");
         pro.add("medicalCardNumber");
+        System.out.println("sss");
         return pro;
     }
 
