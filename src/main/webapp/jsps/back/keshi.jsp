@@ -46,6 +46,7 @@
             })
         });
         var is_one_two = 1;
+
         //展示科室信息
         function office_all() {
             $("#table").bootstrapTable('destroy');
@@ -97,6 +98,7 @@
 
             });
         }
+
         //循环判断是否为空
         function is_for(b) {
             $("#form input,textarea").each(function () {
@@ -109,6 +111,7 @@
             });
             return b;
         }
+
         //判断的方法
         function is_all() {
             let sta = $("#form input[name='sta']").val();
@@ -149,7 +152,7 @@
                     b = jy_two_departmentName(b);
                     //如果c为ture 代表一级科室没有重复
                     if (b) {
-                        if(is_one_two==2){
+                        if (is_one_two == 2) {
                             add_two();
                             return;
                         }
@@ -172,6 +175,7 @@
                 }
             }
         }
+
         //添加二级科室信息
         function add_two() {
             //如果全部不为空 进行添加
@@ -189,7 +193,7 @@
                         $("#form input[name='sta']").val(3);
                         $("#form input[name='departmentName']").val(dname).attr('disabled', 'disabled');
                         $("#form input[name='sequence']").val(ds).attr('disabled', 'disabled');
-                        if(is_one_two==1){
+                        if (is_one_two == 1) {
                             alert("保存成功");
                             window.location.reload();
                             return;
@@ -201,8 +205,13 @@
                 }
             })
         }
+
         //点击添加科室 展示出form表单 隐藏科室信息
         function update_and_add(row) {
+            $("#form input[name='secondDepartmentName'] ").val("");
+            $("#form input[name='sequence2'] ").val("");
+            $("#form input[name='secondDepartmentAddress'] ").val("");
+            $("#form textarea[name='secondDepartmentCommont'] ").val("");
             $("#form span").text("");
             $("#add_one_department").css("display", "none");
             if (row != null && row != '') {
@@ -226,6 +235,7 @@
             $("#form input[name='sequence']").val("").removeAttr("disabled");
 
         }
+
         //添加科室
         function add_office() {
             $.ajax({
@@ -245,6 +255,7 @@
                 }
             })
         }
+
         //校验一级科室信息
         function jy_departmentName(b) {
             let result = b;
@@ -267,6 +278,7 @@
             });
             return result;
         }
+
         //校验二级科室
         function jy_two_departmentName(b) {
             let result = b;
@@ -291,7 +303,7 @@
         }
     </script>
 </head>
-<body>
+<body style="overflow-x: hidden">
 
 <div class="container" style="padding: 0px;margin:0px;width: 100%">
     <div class="row clearfix">
@@ -389,7 +401,7 @@
 
 
 <%--底部--%>
-<ul class="breadcrumb" style="width:100%;height: 30px;position: fixed;bottom: 0px;margin-bottom: 0px;
+<ul class="breadcrumb" style="width:100%;height: 36px;position: fixed;bottom: 0px;margin-bottom: 0px;
 text-align: center">
     <li>
         <a href="#">©巢内科技</a>

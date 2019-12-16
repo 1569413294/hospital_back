@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecDoctorMapper">
+    <!--查询每个医生对应的多个医院-->
+    <resultMap id="hospitals" type="com.buba.hospital_back.bean.DoctorVo">
+        <id column="id" property="id"/>
+        <collection property="hospitals" ofType="String " select="get_hospitals" column="id">
+        </collection>
+    </resultMap>
+
+
+    <!--    //添加医生信息
+      Integer add_doctor(SecDoctor secDoctor);-->
+    <insert id="add_doctor" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sec_doctor (
+                STATUS,
+                disabled,
+                createtime,
+                NAME,
+                assistant,
+                display,
+                tel,
+                rank,
+                visitplaces,
+                visitaddress,
+                introduce,
+                adeptat,
+                onlineconsultant,
+                IsPremium,
+                price,
+                creator
+                    )
+        VALUES
+            (
+                1,
+                0,
+                now(),
+                #{name},
+                #{assistant},
+                #{display},
+                #{tel},
+                #{rank},
+                #{visitplaces},
+                #{visitaddress},
+                #{introduce},
+                #{adeptat},
+                #{onlineconsultant},
+                #{ispremium},
+                #{price},
+                #{creator}
+            )
+    </insert>
+
+    <!-- //查询所有医生信息
+    List<DoctorVo> doctor_all();-->
+    <select id="doctor_all" resultMap="hospitals">
+        select id,tel,name from sec_doctor
+    </select>
+
+
+    <!--查询医生对应的医院-->
+    <select id="get_hospitals" resultType="String">
+        select distinct c2.hospital_address from sec_doctor_multipoint c1,sec_hospital c2 where c1.hospital_id = c2.id and c1.doctor_id =#{id}
+    </select>
+
+
+    <!--  //查询所有医院信息
+    List<DoctorVo> hospital_all();-->
+    <select id="hospital_all" resultType="com.buba.hospital_back.bean.SecHospital">
+        select id,hospital_name from sec_hospital where id!=#{hospitalId}
+
+    </select>
+</mapper>

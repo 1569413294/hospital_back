@@ -1,5 +1,8 @@
 package com.buba.hospital_back.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class SecDoctor {
@@ -8,7 +11,8 @@ public class SecDoctor {
     private String status;
 
     private Boolean disabled;
-
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     private String name;
@@ -37,6 +41,73 @@ public class SecDoctor {
 
     private Integer creator;
 
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getVisitplaces() {
+        return visitplaces;
+    }
+
+    public void setVisitplaces(String visitplaces) {
+        this.visitplaces = visitplaces;
+    }
+
+    public String getVisitaddress() {
+        return visitaddress;
+    }
+
+    public void setVisitaddress(String visitaddress) {
+        this.visitaddress = visitaddress;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getAdeptat() {
+        return adeptat;
+    }
+
+    public void setAdeptat(String adeptat) {
+        this.adeptat = adeptat;
+    }
+
+    public Boolean getOnlineconsultant() {
+        return onlineconsultant;
+    }
+
+    public void setOnlineconsultant(Boolean onlineconsultant) {
+        this.onlineconsultant = onlineconsultant;
+    }
+
+    public Boolean getIspremium() {
+        return ispremium;
+    }
+
+    public void setIspremium(Boolean ispremium) {
+        this.ispremium = ispremium;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Integer creator) {
+        this.creator = creator;
+    }
 
     public Integer getId() {
         return id;

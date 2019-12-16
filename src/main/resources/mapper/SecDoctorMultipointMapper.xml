@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecDoctorMultipointMapper">
+
+<!-- //添加医生医院科室关联表
+    Integer add_ho_de(SecDoctorMultipoint secDoctorMultipoint);-->
+    <insert id="add_ho_de">
+        insert into sec_doctor_multipoint(status,disabled,createtime,doctor_id,hospital_id,department_id)
+        values (1,0,now(),#{doctorId},#{hospitalId},#{departmentId})
+    </insert>
+
+</mapper>

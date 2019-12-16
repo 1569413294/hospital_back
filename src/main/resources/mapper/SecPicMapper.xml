@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecPicMapper">
+
+    <!--    //添加头像信息
+    void insert_head(SecPic secPic);-->
+    <insert id="insert_head">
+        insert into sec_pic(status,disabled,createtime,type,obj_id,obj_type,pic_name,pic_size,pic_path
+        ) values (1,0,now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath})
+    </insert>
+
+</mapper>
