@@ -12,7 +12,6 @@ public class SecConsultation {
 
     private Boolean disabled;
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    @JsonFormat(pattern ="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date createtime;
 
     private Integer orderId;
@@ -33,18 +32,17 @@ public class SecConsultation {
 
     private String response;
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    @JsonFormat(pattern ="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date responseTime;
 
     private double payMoney;//支付金额
 
     private String name;//署名医生
+    private String name1;//回答医生
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    @JsonFormat(pattern ="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date payStartTime;//支付时间
+    private String payWay;//支付方式
 
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    @JsonFormat(pattern ="yyyy-MM-dd hh:mm:ss",timezone="GMT+8")
     private Date refundStartTime;//退款时间
 
     private String orderNum;//订单号
@@ -184,7 +182,6 @@ public class SecConsultation {
     public void setPayStartTime(Date payStartTime) {
         this.payStartTime = payStartTime;
     }
-
     public Date getRefundStartTime() {
         return refundStartTime;
     }
@@ -199,5 +196,21 @@ public class SecConsultation {
 
     public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public String getName1() {
+        return name1;
+    }
+
+    public void setName1(String name1) {
+        this.name1 = name1;
+    }
+
+    public String getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(String payWay) {
+        this.payWay = payWay;
     }
 }

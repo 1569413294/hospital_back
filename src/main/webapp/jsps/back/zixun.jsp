@@ -19,7 +19,8 @@
 <body>
 <div class="layui-card" style="height: 97%;width: 99%;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
-        <a><span style="font-size: 20px">首页</span></a>&nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;<a><span style="font-size: 20px">在线咨询订单管理</span></a>
+        <a><span style="font-size: 20px;color: #1094fa">首页</span></a>&nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;
+        <a><span style="font-size: 20px;color: #1094fa">在线咨询订单管理</span></a>
     </div>
     <div class="layui-card-body" style="height: 80%;width: 100%;">
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
@@ -99,19 +100,31 @@
                         if (status=="0"){
                             str+=payMoney+"";
                         }
+                        if (status=="2"){
+                            str+=payMoney+"";
+                        }
                         return str
                     }
                 },{
                     title: "退款倒计时",
                     field: '',
                     formatter: function (value, row, index) {
+                        var time=changeDateFormat(row.refundStartTime);
                         var str="";
-                        if (row.refundStartTime!=null){
-                            str=TimeDown(row.refundStartTime);
+                        if (time!=null){
+                            str=TimeDown(time);
+                            var t=1;
                             //延迟一秒执行自己
-                            setTimeout(function () {
+                            t=setTimeout(function () {
                                 $("#unanswered_table").bootstrapTable('refresh');
                             }, 10000)
+                            if (str==0){
+                                clearTimeout(t);
+                            }
+                            if (str==0&&row.paymentStatus=="0"){
+                                updestatus(row.id)
+                            }
+
                         }
                         return str;
                     },
@@ -123,7 +136,7 @@
                         var status = row.paymentStatus;
                         var str = "";
                         if (status=="2"){
-                            str += " <button class='btn btn-primary' type='button' onclick=\"fabu(\'" + row.id + "\')\">查看</button>";
+                            str += " <button class='btn btn-primary' type='button' onclick=\"look_unanswered(\'" + row.id + "\')\">查看</button>";
                         }
                         if (status=="0") {
                             str += " <button class='btn btn-primary' type='button' onclick=\"answered(\'" + row.id + "\')\">回答</button>";
@@ -139,7 +152,7 @@
     function answered_all() {
         $("#answered_table").bootstrapTable('destroy');
         $("#answered_table").bootstrapTable({ // 对应table标签的id
-            url:"${pageContext.request.contextPath}/rent/findErAll",
+            url:"${pageContext.request.contextPath}/consul/answered_all",
             sidePagination:"client",//client客户端分  server服务器
             pagination: true, // 在表格底部显示分页组件，默认false
             pageList: [5, 10, 15, 20], // 设置页面可以显示的数据条数
@@ -149,7 +162,7 @@
             columns: [
                 {
                     align:'center',
-                    field:'',
+                    field:'id',
                     title:'序号',
                     formatter:function(value,row,index){
                         return index+1
@@ -157,43 +170,62 @@
                 },
                 {
                     title: "订单号",
-                    field: '',
+                    field: 'orderNum',
                     align: 'center' // 居中显示
                 },
                 {
                     title: "问题",
-                    field: '',
+                    field: 'questionTitle',
                     align: 'center' // 居中显示
                 },
                 {
                     title: "提问时间",
-                    field: '',
+                    field: 'createtime',
+                    formatter: function (value, row, index) {
+                        var time = changeDateFormat(value);
+                        return time;
+                    },
                     align: 'center' // 居中显示
                 },{
                     title: "回答时间",
-                    field: '',
+                    field: 'responseTime',
+                    formatter: function (value, row, index) {
+                        var time = changeDateFormat(value);
+                        return time;
+                    },
+                    align: 'center' // 居中显示
+                },{
+                    title: "回答医生",
+                    field: 'name',
                     align: 'center' // 居中显示
                 },
                 {
                     title: "署名医生",
-                    field: '',
+                    field: 'name',
                     align: 'center' // 居中显示
                 },
                 {
                     title: "已支付金额",
-                    field: '',
+                    field: 'payMoney',
+                    formatter: function (value, row, index) {
+                        var status = row.paymentStatus;
+                        var payMoney = row.payMoney;
+                        var str = "";
+                        if (status=="0"){
+                            str+=payMoney+"";
+                        }
+                        if (status=="2"){
+                            str+=payMoney+"";
+                        }
+                        return str
+                    },
                     align: 'center' // 居中显示
                 },{
                     title: "操作",
                     field: 'id',
                     formatter: function (value, row, index) {
-                        var status = row.status;
                         var str = "";
-                        if(status=="unreleased"){
-                            str += " <button class='btn btn-primary' type='button' onclick=\"fabu(\'" + row.id + "\')\">查看</button>";
-                        }else {
-
-                        }
+                        str += " <button class='btn btn-primary' type='button' onclick=\"look_answered(\'" + row.id + "\')\">查看</button>";
                         return str;
                     },
                     align: 'center' // 居中显示
@@ -205,6 +237,16 @@
     function answered(id){
         location.href="${pageContext.request.contextPath}/jsps/back/consul_reply.jsp?uid="+id+"";
     }
+    /*查看*/
+    function look_unanswered(id){
+        location.href="${pageContext.request.contextPath}/jsps/back/reply_details.jsp?uid="+id+"";
+    }
+    /*查看已回答详情*/
+    function look_answered(id){
+        location.href="${pageContext.request.contextPath}/jsps/back/consult_datails.jsp?uid="+id+"";
+    }
+
+
     layui.use('element', function(){
         $('.site-demo-active').on('click', function(){
             var othis = $(this), type = othis.data('type');
@@ -239,7 +281,34 @@
         }
     }
 
+    /*未回答。退款*/
+    function updestatus(id) {
+        if (id){
+            $.ajax({
+                type : 'post',
+                data : {id:id},
+                url : '${pageContext.request.contextPath }/consul/updestatus',
+                dataType : 'json',
+                success : function(data) {
+                    if (data) {
+                        unanswered_all();
+                    } else {
 
+                    }
+                }
+            });
+        }
+    }
+    //修改——转换日期格式(时间戳转换为datetime格式)
+    function changeDateFormat(cellval) {
+        if (cellval != null) {
+            var d = new Date(cellval);
+            var times=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+            return times;
+        } else {
+            return cellval;
+        }
+    }
 </script>
 
 </html>
