@@ -3,7 +3,7 @@
 <mapper namespace="com.buba.hospital_back.mapper.SecConsulMapper">
 
     <!--//是医生获取所有未回答
-    List<SecConsultation> unanswered_all();-->
+    List<SecConsultation> unanswered_all(phone);-->
     <select id="unanswered_all" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
@@ -20,14 +20,14 @@ and cs.`status`='1'
 and cs.doctor_id in(SELECT seda.assistant_id assistant_id
 from sec_doctor_assistant seda,sec_doctor secd
 WHERE seda.doctor_id=secd.id and
-secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
-) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
 ))
     </select>
 
 
     <!-- //是医生助理获取所有未回答
-   List<SecConsultation> unanswered_all();-->
+   List<SecConsultation> unanswered_all(phone);-->
     <select id="unanswered_all1" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
@@ -44,9 +44,78 @@ and cs.`status`='1'
 and cs.doctor_id in(SELECT seda.doctor_id doctor_id
 from sec_doctor_assistant seda,sec_doctor secd
 WHERE seda.assistant_id=secd.id and
-secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
-) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone='18659576507'
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
 ))
     </select>
 
+    <!-- //回答问题
+    boolean answered_hd(@Param("id") Integer id,@Param("response") String response);-->
+    <update id="answered_hd">
+        update sec_consultation set response=#{response},response_id=1,response_time=now(),status=0 where id=#{id}
+    </update>
+
+    <!--//修改退款状态
+    boolean updestatus(Integer id);-->
+    <update id="updestatus">
+        update sec_consultation set payment_status=2 where id=#{id}
+    </update>
+
+
+    <!-- //是医生获取所有已回答
+    List<SecConsultation> answered_all1(phone);-->
+    <select id="answered_all1" resultType="secConsultation">
+       SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
+oc.order_num orderNum,
+oc.pay_way payWay,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,sec_doctor dc1,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='0'
+and cs.response_id=dc1.id
+and cs.doctor_id in(SELECT seda.assistant_id assistant_id
+from sec_doctor_assistant seda,sec_doctor secd
+WHERE seda.doctor_id=secd.id and
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+))
+    </select>
+
+
+    <!--  //是医生助理获取所有已回答
+    List<SecConsultation> answered_all(phone);-->
+    <select id="answered_all" resultType="secConsultation">
+      SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
+oc.order_num orderNum,
+oc.pay_way payWay,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,sec_doctor dc1,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='0'
+and cs.response_id=dc1.id
+and cs.doctor_id in(SELECT seda.doctor_id doctor_id
+from sec_doctor_assistant seda,sec_doctor secd
+WHERE seda.assistant_id=secd.id and
+secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+) UNION (SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and su.phone=#{phone}
+))
+    </select>
+
+    <!--/*查询当前用户的职称*/
+    SecDoctor find_assistant(String phone);-->
+    <select id="find_assistant" resultType="secDoctor">
+      select assistant from sec_doctor where tel=#{phone}
+    </select>
 </mapper>
