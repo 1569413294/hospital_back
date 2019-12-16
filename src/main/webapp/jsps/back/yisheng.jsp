@@ -258,13 +258,13 @@
             });
         }
         //修改医生信息
-        function update_doctor(id) {
+      /*  function update_doctor(id) {
             $.ajax({
                 type:"post",
                 url:"${pageContext.request.contextPath}/"
             })
 
-        }
+        }*/
 
 
         //删除多点
