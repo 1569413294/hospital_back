@@ -15,4 +15,10 @@ public interface ReservationMapper {
     List<ReservationVo> find_reservation();
 
     List<HisOrder> find_hisOrder(HisOrder hisOrder);
+
+    ReservationVo picture_find(Integer id);
+
+    boolean updataOrder(Integer id);
+
+    boolean updataReservatio(Integer id);
 }

@@ -81,5 +81,18 @@ public class ReservationController {
         System.out.println("sss");
         return pro;
     }
-
+//预约详情
+    @ResponseBody
+    @RequestMapping("picture_find")
+    public ReservationVo picture_find(Integer id){
+        ReservationVo r=reservationService.picture_find(id);
+        return r;
+    }
+//退号
+    @ResponseBody
+    @RequestMapping("back_mark")
+    public boolean back_mark(Integer id){
+        boolean r=reservationService.back_mark(id);
+        return r;
+    }
 }
