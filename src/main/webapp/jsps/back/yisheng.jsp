@@ -261,7 +261,7 @@
       /*  function update_doctor(id) {
             $.ajax({
                 type:"post",
-                url:"${pageContext.request.contextPath}/"
+                url:""
             })
 
         }*/
