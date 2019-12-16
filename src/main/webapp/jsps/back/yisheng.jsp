@@ -24,12 +24,7 @@
         $(function () {
             //调用查询所有医院
             doctor_all();
-            //查询所有医生
-            do_all();
-            //调用医院信息
-            hospital_all();
-            //展示职称
-            rank_all();
+
             //回显图片
             $("#uploadImgBtn").click(function () {
                 //触发上传图片点击
@@ -60,6 +55,12 @@
             });
             //添加医生
             $("#add_doctor").click(function () {
+                //查询所有医生
+                do_all();
+                //调用医院信息
+                hospital_all();
+                //展示职称
+                rank_all();
                 $.ajax({
                     type: "post",
                     url: "${pageContext.request.contextPath}/SecHospital/now_hospital",
@@ -249,13 +250,22 @@
                         field: 'id',
                         title: '操作',
                         formatter: function (value, row, index) {
-                            return "<button type=\"button\" onclick='update_and_add(" + JSON.stringify(row) + ")' class=\"btn btn-primary\">编辑</button>"
+                            return "<button type=\"button\" onclick='update_doctor(" + row.id + ")' class=\"btn btn-primary\">编辑</button>"
                         }
                     }
 
                 ]
             });
         }
+        //修改医生信息
+      /*  function update_doctor(id) {
+            $.ajax({
+                type:"post",
+                url:"${pageContext.request.contextPath}/"
+            })
+
+        }*/
+
 
         //删除多点
         function delete_di(th) {

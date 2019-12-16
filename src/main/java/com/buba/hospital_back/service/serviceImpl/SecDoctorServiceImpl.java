@@ -33,10 +33,10 @@ public class SecDoctorServiceImpl implements SecDoctorService {
     /*
      * 功能描述: <br>
      * 添加医生信息
-     * @Param: [hos_de, zhucc, secDoctor]
+     * @Param: [hos_de, zhucc, secDoctor, file]
      * @Return: java.lang.Boolean
      * @Author: Admin
-     * @Date: 2019/12/16 0016 9:20
+     * @Date: 2019/12/16 0016 14:28
      */
     @Override
     @Transactional
@@ -97,7 +97,7 @@ public class SecDoctorServiceImpl implements SecDoctorService {
                     secPic.setType("头像");
                     secPic.setObjId(secDoctor.getId());
                     secPic.setObjType("医生");
-                    secPic.setObjType(file.getOriginalFilename());
+                    secPic.setPicName(file.getOriginalFilename());
                     secPic.setPicSize(file.getSize()+"");
                     secPic.setPicPath(s);
                     secPicMapper.insert_head(secPic);

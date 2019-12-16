@@ -71,15 +71,23 @@ public class SecDoctorController {
         return null;
     }
 
-
+    /*
+     * 功能描述: <br>
+     * 添加医生信息
+     * @Param: [hos_de, zhucc, secDoctor, session, file]
+     * @Return: java.lang.Boolean
+     * @Author: Admin
+     * @Date: 2019/12/16 0016 14:28
+     */
     @RequestMapping("add_doctor")
     public Boolean add_doctor(String[] hos_de, Integer[] zhucc, SecDoctor secDoctor, HttpSession session, MultipartFile file){
         //获取当前医院id
         SecUser secUser = (SecUser) session.getAttribute("user");
-
-
+        //如果session未过期 并不为空
         if(secUser!=null  && secDoctor!=null){
+            //修改创建人信息
             secDoctor.setCreator(secUser.getId());
+            //添加医生信息
             return secDoctorService.add_doctor(hos_de,zhucc,secDoctor,file);
         }
         return null;
