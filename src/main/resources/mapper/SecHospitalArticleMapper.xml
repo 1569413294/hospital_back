@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecHospitalArticleMapper">
+
+    <!--
+     //根据关键字获取医院所属的所有文章并进行分页
+    List<SecHospitalArticleVo> queryAllData(int page, int limit, String keyWord, Integer hospitalId);
+    -->
+    <select id="queryAllData" resultType="com.buba.hospital_back.bean.SecHospitalArticleVo">
+        <bind name="page" value="(page-1)*limit"></bind>
+
+        SELECT s.id,s.`article_title`,s.`article_type` FROM sec_hospital_article s
+        WHERE s.hospital_id = #{hospitalId}
+        AND s.`disabled`='0'
+        <if test="keyWord != null and keyWord != ''">
+            and s.article_title like '%${keyWord}%'
+        </if>
+        AND (s.`article_type`='1'
+        OR s.`article_type` ='2'
+        OR s.`article_type`='4'
+        )
+        limit #{page},#{limit}
+    </select>
+    <!--
+     //获取总条数
+    int queryAllCount(Integer hospitalId);
+    -->
+    <select id="queryAllCount" resultType="int">
+        select count(*) from sec_hospital_article
+         where hospital_id=#{hospitalId}
+        AND disabled='0'
+        <if test="keyWord != null and keyWord != ''">
+            and article_title like '%${keyWord}%'
+        </if>
+        AND (article_type='1'
+        OR article_type ='2'
+        OR article_type='4'
+        )
+    </select>
+    <!--
+     //删除医院文章
+    int delHospitalArticle(Integer id);
+    -->
+    <update id="delHospitalArticle">
+        update sec_hospital_article set disabled=true where id=#{id}
+    </update>
+
+    <!--
+      //查询文章栏目
+    List<SecHospitalArticleType> selectHospitalArticleType();
+    -->
+    <select id="selectHospitalArticleType" resultType="com.buba.hospital_back.bean.SecHospitalArticleType">
+            select id, code, name from sec_article_dic
+    </select>
+    <!--
+      //添加文章
+    int uploadArticle(SecHospitalArticle secHospitalArticle);
+    -->
+    <insert id="uploadArticle" parameterType="com.buba.hospital_back.bean.SecHospitalArticle" useGeneratedKeys="true" keyProperty="id">
+            insert into sec_hospital_article ( createtime, article_title, article_type, hospital_id) values
+            (now(),#{articleTitle},#{articleType},#{hospitalId})
+    </insert>
+    <!--
+     //添加文字具体内容
+    void addArticleInfo(SecHospitalArticleInfo secHospitalArticleInfo);
+    -->
+    <insert id="addArticleInfo" parameterType="com.buba.hospital_back.bean.SecHospitalArticleInfo">
+        insert into sec_hospital_article_info ( createtime, article_id, article_info, sequence) VALUES
+        (now(),#{articleId},#{articleInfo},#{sequence})
+    </insert>
+    <!--
+     //添加文章图片
+    void uploadImgArticle(SecPic secPic);
+    -->
+    <insert id="uploadImgArticle" parameterType="com.buba.hospital_back.bean.SecPic">
+            insert into sec_pic( createtime, type, obj_id, obj_type, pic_name, pic_size, pic_path, sequence) VALUES
+            (now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath},#{sequence})
+    </insert>
+</mapper>

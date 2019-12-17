@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecHomeFocusMapper">
+
+    <!--
+     //分页查询所有首页焦点图
+    List<SecPic> queryAllFocusPic(@Param("page") int page, @Param("limit")int limit, @Param("hospitalId")Integer hospitalId);
+    -->
+    <select id="queryAllFocusPic" resultType="com.buba.hospital_back.bean.SecPic">
+        <bind name="page" value="(page-1)*limit"></bind>
+        SELECT * FROM sec_pic
+        WHERE obj_id = #{hospitalId}
+        and obj_type='hospital'
+        and type='focus'
+        AND disabled='0'
+        ORDER BY createtime ASC
+        limit #{page},#{limit}
+    </select>
+
+    <!--
+      //查询首页焦点图总数
+    int queryCountFocusPic(Integer hospitalId);
+    -->
+    <select id="queryCountFocusPic" resultType="int">
+         select count(*) from sec_pic
+        WHERE obj_id = #{hospitalId}
+        and obj_type='hospital'
+        and type='focus'
+        AND disabled='0'
+    </select>
+
+    <!--
+      //获取展示顺序
+    int getSequence(Integer hospitalId);
+    -->
+    <select id="getSequence" resultType="int">
+        select IFNULL(MAX(sequence),0) from sec_pic
+        WHERE obj_id = #{hospitalId}
+        and obj_type='hospital'
+        and type='focus'
+    </select>
+    <!--
+    //上传首页焦点图
+    int uploadHomeFocusPic(SecPic secPic);
+    -->
+    <insert id="uploadHomeFocusPic" parameterType="com.buba.hospital_back.bean.SecPic">
+            insert into sec_pic ( createtime, type, obj_id, obj_type, pic_name, pic_size, pic_path, pic_info, sequence) VALUES
+            (now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath},#{picInfo},#{sequence})
+    </insert>
+    <!--
+    //删除首页焦点图
+    int delHomeFocusPic(Integer id);
+    -->
+    <update id="delHomeFocusPic">
+        update sec_pic set disabled=true where id=#{id}
+    </update>
+</mapper>
