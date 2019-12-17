@@ -139,7 +139,7 @@ public class SecDoctorServiceImpl implements SecDoctorService {
             try {
                 if (file.getSize() >100) {
                     secPic = new SecPic();
-                    if(pid>0){
+                    if(pid!=null){
                         secPic.setId(pid);
                         //如果pid>0 说明是修改
                         String url = secPicMapper.picselectgetone(pid);
@@ -152,9 +152,9 @@ public class SecDoctorServiceImpl implements SecDoctorService {
                     //添加头像信息
                     secPic.setStatus("1");
                     secPic.setDisabled(true);
-                    secPic.setType("头像");
+                    secPic.setType("head");
                     secPic.setObjId(secDoctor.getId());
-                    secPic.setObjType("医生");
+                    secPic.setObjType("doctor");
                     secPic.setPicName(file.getOriginalFilename());
                     secPic.setPicSize(file.getSize() + "");
                     secPic.setPicPath(s);
