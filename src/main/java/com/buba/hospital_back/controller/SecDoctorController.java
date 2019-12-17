@@ -1,11 +1,9 @@
 package com.buba.hospital_back.controller;
 
 
-import com.buba.hospital_back.bean.DoctorVo;
-import com.buba.hospital_back.bean.SecDoctor;
-import com.buba.hospital_back.bean.SecHospital;
-import com.buba.hospital_back.bean.SecUser;
+import com.buba.hospital_back.bean.*;
 import com.buba.hospital_back.service.SecDoctorService;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,17 +78,61 @@ public class SecDoctorController {
      * @Date: 2019/12/16 0016 14:28
      */
     @RequestMapping("add_doctor")
-    public Boolean add_doctor(String[] hos_de, Integer[] zhucc, SecDoctor secDoctor, HttpSession session, MultipartFile file){
-        //获取当前医院id
+    public Boolean add_doctor(Integer pid,String[] hos_de, String[] zhucc, SecDoctor secDoctor, HttpSession session, MultipartFile file){
+        //获取当前用户id
         SecUser secUser = (SecUser) session.getAttribute("user");
+        //获取医院id
+        Integer ho_id = (Integer) session.getAttribute("hospitalId");
         //如果session未过期 并不为空
-        if(secUser!=null  && secDoctor!=null){
+        if(secUser!=null  && secDoctor!=null && ho_id!=null){
             //修改创建人信息
             secDoctor.setCreator(secUser.getId());
             //添加医生信息
-            return secDoctorService.add_doctor(hos_de,zhucc,secDoctor,file);
+            return secDoctorService.add_doctor(pid,hos_de,zhucc,secDoctor,file);
         }
         return null;
+    }
+    /*
+     * 功能描述: <br>
+     * 修改医生前 回显数据
+     * @Param: [id]
+     * @Return: java.lang.Boolean
+     * @Author: Admin
+     * @Date: 2019/12/16 0016 14:36
+     */
+    @RequestMapping("doctor_xq")
+    public   DoctorVo2 doctor_xq(Integer id){
+        if(id>0){
+         return  secDoctorService.doctor_xq(id);
+        }
+
+        return null;
+    }
+
+
+    /*
+     * 功能描述: <br>
+     * 删除医生对应的医院以及科室信息
+     * @Param: [id]
+     * @Return: java.lang.Boolean
+     * @Author: Admin
+     * @Date: 2019/12/17 0017 13:34
+     */
+    @RequestMapping("delete_h_d")
+    public Boolean delete_h_d(Integer id){
+        return secDoctorService.delete_h_d(id);
+    }
+    /*
+     * 功能描述: <br>
+     * 删除助理
+     * @Param: [id]
+     * @Return: java.lang.Boolean
+     * @Author: Admin
+     * @Date: 2019/12/17 0017 14:06
+     */
+    @RequestMapping("delete_zhu")
+    public Boolean delete_zhu(Integer id){
+        return secDoctorService.delete_zhu(id);
     }
 
 

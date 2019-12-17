@@ -2,6 +2,7 @@ package com.buba.hospital_back.mapper;
 
 
 import com.buba.hospital_back.bean.DoctorVo;
+import com.buba.hospital_back.bean.DoctorVo2;
 import com.buba.hospital_back.bean.SecDoctor;
 import com.buba.hospital_back.bean.SecHospital;
 import org.apache.ibatis.annotations.Select;
@@ -18,4 +19,6 @@ public interface SecDoctorMapper {
     List<DoctorVo> doctor_al(Integer hospitalId);
     //添加医生信息
     Integer add_doctor(SecDoctor secDoctor);
+    //查询医生回显数据
+    DoctorVo2 doctor_xq(Integer id);
 }
