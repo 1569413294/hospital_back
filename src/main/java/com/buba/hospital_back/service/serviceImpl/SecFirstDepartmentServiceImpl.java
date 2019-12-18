@@ -60,8 +60,10 @@ public class SecFirstDepartmentServiceImpl implements SecFirstDepartmentService 
     public Integer add_office_two(SecSecondDepartment secSecondDepartment) {
         if(secSecondDepartment!=null){
             Integer integer = secSecondDepartmentMapper.add_office(secSecondDepartment);
-            System.out.println(secSecondDepartment.getFirstDepartmentId());
-            return secSecondDepartment.getFirstDepartmentId();
+            if(integer>0){
+                return secSecondDepartment.getFirstDepartmentId();
+            }
+            return null;
         }
         return null;
     }

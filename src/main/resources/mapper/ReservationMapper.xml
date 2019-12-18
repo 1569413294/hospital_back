@@ -4,32 +4,42 @@
     <!--List<ReservationVo> find_reservation();-->
 
     <select id="find_reservation" resultType="com.buba.hospital_back.bean.ReservationVo">
-        SELECT
-        p.id id,
-        p.patient_name patientName,
-        p.patient_medicalCardNumber patientMedicalcardnumber,
-        p.patient_tel patientTel,
-        o.order_name orderName,
-        o.pay_start_time payStartTime,
-        o.pay_money payMoney,
-        o.pay_way payWay,
-        o.status orderStatus,
-        t.timeframe timeframe,
-         d.name doctorName,
-         h.hospital_name hospitalName,
-         f.department_name departmentName,
-            (SELECT  sec_doctor_appointmenttime.appointment_time from sec_doctor_appointmenttime where id in (
-        SELECT t.appointmenttime_id from sec_reservation r,sec_doctor_appointmenttime_timeframe t where r.timeframe_id=t.id)
-        ) as appointmentTime
+              SELECT
+            r.id id,
+            p.patient_name patientName,
+            p.patient_medicalCardNumber patientMedicalcardnumber,
+            p.patient_tel patientTel,
+            o.order_num orderNum,
+            o.order_name orderName,
+            o.pay_start_time payStartTime,
+            o.pay_money payMoney,
+            o.pay_way payWay,
+            o. STATUS orderStatus,
+            t.timeframe timeframe,
+            d. NAME doctorName,
+            h.hospital_name hospitalName,
+            f.department_name departmentName,
+            (
+                SELECT
+                    sec_doctor_appointmenttime.appointment_time
+                FROM
+                    sec_doctor_appointmenttime
+                WHERE
+                    id in(
+                        SELECT
+                            t.appointmenttime_id
+                        FROM
+                            sec_reservation r,
+                            sec_doctor_appointmenttime_timeframe t
+                        WHERE
+                            r.timeframe_id = t.id
+                    )
+            ) AS appointmentTime
+        FROM
+            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor d, sec_hospital h,sec_first_department f
+        where r.patient_id = p.id and r.order_id = o.id and o.`status` !='已取消'
+        and r.timeframe_id = t.id and r.doctor_id = d.id and r.hospital_id = h.id and r.department_id = f.id
 
-    FROM
-        sec_reservation r
-    LEFT JOIN sec_patient p ON r.patient_id = p.id
-    LEFT JOIN his_order o ON r.order_id = o.id
-    LEFT JOIN  sec_doctor_appointmenttime_timeframe t ON r.timeframe_id=t.id
-    LEFT JOIN sec_doctor d ON r.doctor_id=d.id
-    LEFT JOIN sec_hospital h ON r.hospital_id=h.id
-    LEFT JOIN sec_first_department f ON r.department_id=f.id
     </select>
     <!--List<HisOrder> find_hisOrder(HisOrder hisOrder);-->
     <select id="find_hisOrder" resultType="com.buba.hospital_back.bean.HisOrder">
@@ -56,4 +66,53 @@
             and order_name=#{orderName}
         </if>
     </select>
+
+    <!--ReservationVo picture_find(Integer id);-->
+    <select id="picture_find" resultType="com.buba.hospital_back.bean.ReservationVo">
+        SELECT
+            r.id id,
+            p.patient_name patientName,
+            p.patient_medicalCardNumber patientMedicalcardnumber,
+            p.patient_tel patientTel,
+            o.order_num orderNum,
+            o.order_name orderName,
+            o.pay_start_time payStartTime,
+            o.pay_money payMoney,
+            o.pay_way payWay,
+            o. STATUS orderStatus,
+            t.timeframe timeframe,
+            d. NAME doctorName,
+            h.hospital_name hospitalName,
+            f.department_name departmentName,
+            (
+                SELECT
+                    sec_doctor_appointmenttime.appointment_time
+                FROM
+                    sec_doctor_appointmenttime
+                WHERE
+                    id in(
+                        SELECT
+                            t.appointmenttime_id
+                        FROM
+                            sec_reservation r,
+                            sec_doctor_appointmenttime_timeframe t
+                        WHERE
+                            r.timeframe_id = t.id
+                    )
+            ) AS appointmentTime
+        FROM
+            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor d, sec_hospital h,sec_first_department f
+        where r.patient_id = p.id and r.id=#{id} and r.order_id = o.id
+        and r.timeframe_id = t.id and r.doctor_id = d.id and r.hospital_id = h.id and r.department_id = f.id
+    </select>
+<!--boolean updataOrder(Integer id);
+
+    boolean updataReservatio(Integer id);-->
+    <update id="updataOrder">
+        update his_order set status='已取消' where id=#{id}
+    </update>
+
+    <update id="updataReservatio">
+        update sec_reservation set order_status=4  where id=#{id}
+    </update>
 </mapper>

@@ -116,7 +116,7 @@
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
 
-                <iframe src="${pageContext.request.contextPath}/jsps/common/homepage.jsp" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe  src="${pageContext.request.contextPath}/jsps/common/homepage.jsp" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
 

@@ -39,7 +39,7 @@ LEFT JOIN sec_second_department f2 ON f1.id = f2.first_department_id    ORDER BY
     <!--ps：医院id无 一级科室简介无-->
     <insert id="add_office" useGeneratedKeys="true" keyProperty="id">
         insert into sec_first_department(status,disabled,createtime,
-        hospital_id,department_name,department_info,sequence)
-        values (0,0,now(),#{hospitalId},#{departmentName},'',#{sequence})
+        hospital_id,department_name,sequence)
+        values (0,0,now(),#{hospitalId},#{departmentName},#{sequence})
     </insert>
 </mapper>

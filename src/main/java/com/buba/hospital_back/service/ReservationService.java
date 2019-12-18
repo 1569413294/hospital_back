@@ -16,4 +16,8 @@ public interface ReservationService {
     List<ReservationVo> find_reservation();
 
     List<HisOrder> find_hisOrder(HisOrder hisOrder);
+
+    ReservationVo picture_find(Integer id);
+
+    boolean back_mark(Integer id);
 }

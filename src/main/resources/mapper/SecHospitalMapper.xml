@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecHospitalMapper">
+
+    <!--  //查询指定医院下所有的二级科室
+    List<SecFirstDepartment> hospital_change(Integer hospitalId);-->
+    <select id="hospital_change" resultType="com.buba.hospital_back.bean.SecSecondDepartment">
+        select * from sec_second_department s1, sec_first_department s2 where s1.first_department_id = s2.id and s2.hospital_id  =#{hospitalId}
+    </select>
+</mapper>

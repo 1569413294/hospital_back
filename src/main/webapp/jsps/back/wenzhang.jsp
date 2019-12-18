@@ -11,6 +11,12 @@
 <html>
 <head>
     <title>文章管理</title>
+    <style>
+        .layui-table-cell{
+            height:36px;
+            line-height: 36px;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-card">
@@ -21,7 +27,23 @@
          </span>
     </div>
     <div class="layui-card-body">
-        <table id="wenzhangList" lay-filter="wenzhangList"></table>
+        <div>
+
+            <button  class="layui-btn" id="addArticle" data-type="addArticle"><i class="layui-icon">&#xe654;</i>写新文章</button>
+
+
+            <span style="margin-top: 17px;margin-left: 1150px;margin-bottom: 8px">
+
+                <span>文章搜索：</span>
+                <div class="layui-inline">
+                    <input class="layui-input" style="width: 240px;" id="sear1" placeholder="请输入文章标题进行模糊查询">
+                </div>
+                <button class="layui-btn" id="btn">搜索</button>
+
+                <%-- <input type="text" style="height: 27px;width: 220px;" id="sear1" placeholder="请输入文章标题进行模糊查询"/>--%>
+            </span>
+        </div>
+        <table  class="layui-hide" id="wenzhangList"></table>
     </div>
 
 </div>
@@ -42,41 +64,104 @@
         element.on('nav(component-nav-active)', function(elem){
             layer.msg(elem.text());
         });
+
+        var active = {
+            addArticle: function(){
+                layer.open({
+                    type: 2
+                    ,content: '/jsps/back/wenzhang_add.jsp'
+                    ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;文章内容管理&nbsp;&nbsp;>&nbsp;&nbsp;文章编辑页'
+                    ,shadeClose: false
+                    ,area: admin.screen() < 2 ? ['100%', '100%'] : ['810px', '720px']
+                    ,maxmin: true
+                    ,end:function () {
+                        window.location.reload();
+                    }
+                });
+            }
+
+        }
+       /* $('#delBtn').on('click', function(){*/
+        $(document).on('click','#addArticle',function(){
+            var type = $(this).data('type');
+            active[type] && active[type].call(this);
+        });
     });
-
-    layui.config({
-        base: '/static/layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'table'], function(){
-        var admin = layui.admin
-            ,table = layui.table;
-
+    var kwx='';
+    layui.use('table', function(){
+        loadData();
+    });
+    function loadData() {
+        var   table = layui.table;
         table.render({
-        elem: '#wenzhangList',
-        url : '',
-        cellMinWidth : 95,
-        page : true,
-        height : "full-125",
-        limits : [10,15,20,25],
-        limit : 10,
-        id : "wenzhangListTable",
-        cols : [[
-            {type: "checkbox", fixed:"left", width:50},
-            {field: 'userName', title: '用户名', minWidth:100, align:"center"},
-            {field: 'userEmail', title: '用户邮箱', minWidth:200, align:'center',templet:function(d){
-                    return '<a class="layui-blue" href="mailto:'+d.userEmail+'">'+d.userEmail+'</a>';
-                }},
-            {field: 'userSex', title: '用户性别', align:'center'},
-            {field: 'userStatus', title: '用户状态',  align:'center',templet:function(d){
-                    return  d.userStatus == '0' ? "正常使用":"<span class='layui-red'>限制使用</span>";
-                }},
-            {field: 'userGrade', title: '用户等级', align:'center'},
-            {field: 'userEndTime', title: '最后登录时间', align:'center',minWidth:150},
-            {title: '操作', minWidth:175, templet:'#userListBar',fixed:"right",align:"center"}
-        ]]
+            elem: '#wenzhangList',
+            url : '/hospitalArticle/getHospitalArticle?keyWord='+kwx,
+            cellMinWidth : 95,
+            page : true,
+            limits : [2,3,4,5],
+            limit : 10,
+            cols : [[
+                {type: "checkbox", fixed:"left", width:50},
+                {field:'id', title: '序号',align:"center", width:80, sort: true, fixed: true},
+                {field: 'articleTitle', title: '文章标题', minWidth:175, align:"center"},
+                {field: 'articleType', title: '文章对应栏目',minWidth:150,  align:'center',templet:function(d){
+                       if(d.articleType=='1'){
+                            return "就诊指南";
+                       }else if(d.articleType=='2'){
+                           return "医院动态";
+                       }else if(d.articleType=='4'){
+                           return "医院通知";
+                       }else{
+                           return "无";
+                       }
+                    }},
+                {title: '操作', align:"center",templet:function(d){
+                        return " <div class=\"layui-btn-group\">\n" +
+                           /* "                <button  class=\"layui-btn \" onclick='redactArticle("+d.id+','+d.articleType+")'>编辑</button>" +*/
+                            "                <button  class=\"layui-btn\" onclick='deldata("+d.id+")' >删除</button>\n" +
+                            "              </div>";
+                    }
+                }
+            ]]
+        });
+    }
+
+    $("#btn").click(function(){
+        var keyWord=$("#sear1").val();
+        kwx=keyWord;
+        loadData();
     });
-    });
+
+
+    function redactArticle(id,articleType) {
+
+        layer.open({
+            type: 2
+            ,content: '/jsps/back/wenzhang_redact.jsp?id='+id+"&articleType="+articleType
+            ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;文章内容管理&nbsp;&nbsp;>&nbsp;&nbsp;文章编辑页'
+            ,shadeClose: false
+            ,area: ['810px', '720px']
+            ,maxmin: true
+            ,end:function () {
+                window.location.reload();
+            }
+        });
+    }
+
+
+    function deldata(id) {
+        $.post("/hospitalArticle/delHospitalArticle",{id:id},function(data){
+
+            if(data){
+                layer.msg("删除成功！");
+                  loadData();
+            } else{
+                layer.msg("删除失败！");
+            }
+        },"json");
+    }
+
+
 
 </script>
 </body>

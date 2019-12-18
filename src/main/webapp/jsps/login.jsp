@@ -183,7 +183,7 @@
         height:'116',
         img:[
             '/static/images/ver.png',
-            '/static/images/ver-1.png',
+            '/static/images/ver-1.jpg',
             '/static/images/ver-2.png',
             '/static/images/ver-3.png'
         ],
