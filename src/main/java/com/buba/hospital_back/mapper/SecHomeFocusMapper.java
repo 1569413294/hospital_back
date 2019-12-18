@@ -16,4 +16,6 @@ public interface SecHomeFocusMapper {
     int uploadHomeFocusPic(SecPic secPic);
     //删除首页焦点图
     int delHomeFocusPic(Integer id);
+    //根据焦点图id查询
+    SecPic getHomeFocusPicById(Integer id);
 }

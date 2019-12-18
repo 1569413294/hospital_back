@@ -45,4 +45,9 @@ public class SecHomeFocusServiceImpl implements SecHomeFocusService {
     public int delHomeFocusPic(Integer id) {
         return secHomeFocusMapper.delHomeFocusPic(id);
     }
+    //根据焦点图id查询
+    @Override
+    public SecPic getHomeFocusPicById(Integer id) {
+        return secHomeFocusMapper.getHomeFocusPicById(id);
+    }
 }

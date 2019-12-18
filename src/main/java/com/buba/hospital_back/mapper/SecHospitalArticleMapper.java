@@ -21,4 +21,10 @@ public interface SecHospitalArticleMapper {
     void addArticleInfo(SecHospitalArticleInfo secHospitalArticleInfo);
     //添加文章图片
     void uploadImgArticle(SecPic secPic);
+    //根据文章id查询
+    SecHospitalArticle getHospitalArticleById(Integer id);
+    //根据文章id查询文章内容
+    List<SecHospitalArticleInfo> getHospitalArticleInfo(Integer id);
+    //根据文章id查询文章照片
+    List<SecPic> getHospitalArticlePic(Integer id);
 }

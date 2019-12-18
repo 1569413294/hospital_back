@@ -69,7 +69,7 @@
             addArticle: function(){
                 layer.open({
                     type: 2
-                    ,content: '/jsps/back/wenzhang_compile.jsp'
+                    ,content: '/jsps/back/wenzhang_add.jsp'
                     ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;文章内容管理&nbsp;&nbsp;>&nbsp;&nbsp;文章编辑页'
                     ,shadeClose: false
                     ,area: admin.screen() < 2 ? ['100%', '100%'] : ['810px', '720px']
@@ -95,7 +95,7 @@
         var   table = layui.table;
         table.render({
             elem: '#wenzhangList',
-            url : '/hospitalArticle/getHospitalArticleById?keyWord='+kwx,
+            url : '/hospitalArticle/getHospitalArticle?keyWord='+kwx,
             cellMinWidth : 95,
             page : true,
             limits : [2,3,4,5],
@@ -117,7 +117,7 @@
                     }},
                 {title: '操作', align:"center",templet:function(d){
                         return " <div class=\"layui-btn-group\">\n" +
-                            "                <button  class=\"layui-btn \">编辑</button>" +
+                           /* "                <button  class=\"layui-btn \" onclick='redactArticle("+d.id+','+d.articleType+")'>编辑</button>" +*/
                             "                <button  class=\"layui-btn\" onclick='deldata("+d.id+")' >删除</button>\n" +
                             "              </div>";
                     }
@@ -131,6 +131,24 @@
         kwx=keyWord;
         loadData();
     });
+
+
+    function redactArticle(id,articleType) {
+
+        layer.open({
+            type: 2
+            ,content: '/jsps/back/wenzhang_redact.jsp?id='+id+"&articleType="+articleType
+            ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;文章内容管理&nbsp;&nbsp;>&nbsp;&nbsp;文章编辑页'
+            ,shadeClose: false
+            ,area: ['810px', '720px']
+            ,maxmin: true
+            ,end:function () {
+                window.location.reload();
+            }
+        });
+    }
+
+
     function deldata(id) {
         $.post("/hospitalArticle/delHospitalArticle",{id:id},function(data){
 

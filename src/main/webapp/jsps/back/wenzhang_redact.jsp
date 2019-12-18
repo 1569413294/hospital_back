@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2019/12/14
-  Time: 15:07
+  Date: 2019/12/17
+  Time: 14:27
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -83,7 +83,6 @@
 </head>
 <body>
 
-
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body" style="padding: 15px;">
@@ -107,7 +106,7 @@
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">内容</label>
                     <div class="layui-input-block" id="infoList">
-                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                       <%-- <div style="margin-top: 20px;margin-bottom: 20px;">
                             <textarea name="articleInfo" placeholder="请输入内容" class="layui-textarea" maxlength="300" rows="9" style="width: 620px;height: 210px"></textarea>
                             <i class="layui-icon layui-icon-delete"   style="position:relative;float: left;margin-top: -28px;font-size:30px;color: red"></i>
                             <i style="position:relative;float: left;margin-top: -24px;margin-left: 575px;"><span class="count-change">0</span>/300</i>
@@ -121,10 +120,6 @@
                                 <img  class="preview" alt="" name="pic" width="620" height="210">
                             </div>
                             <img class="delete" onclick="deleteImg(this)" src="/static/images/delete.png">
-                        </div>
-                     <%--  <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <textarea name="articleInfo" placeholder="请输入内容" class="layui-textarea" maxlength="300" rows="9" style="width: 620px;height: 210px"></textarea>
-                            <i style="position:relative;float: left;margin-top: -24px;margin-left: 570px;"><span class="count-change">0</span>/300</i>
                         </div>--%>
 
                     </div>
@@ -145,6 +140,15 @@
     <button  class="layui-btn layui-btn-danger" style="width: 150px;" >放弃</button>
 </div>
 <script>
+    var paras = location.search;			//search获得地址中的参数，内容为'?itemId=12'
+    var result = paras.match(/[^\?&]*=[^&]*/g); 	//match是字符串中符合的字段一个一个取出来，result中的值为['login=xx','table=admin']
+    paras = {};					//让paras变成没有内容的json对象
+    for(var i=0;i<result.length;i++){
+        var temp = result[i].split('=');	//split()将一个字符串分解成一个数组,两次遍历result中的值分别为['itemId','xx']
+        paras[temp[0]] = temp[1];
+    }
+    var id = paras.id;     //根据参数名"houseId"，获取参数值
+    var articleType = paras.articleType;
     layui.config({
         base: '/static/layuiadmin/' //静态资源所在路径
     }).extend({
@@ -163,7 +167,7 @@
             success: function (data) {
                 if(data){
                     for(var i=0;i<data.length;i++){
-                        if(data[i].id == '0'){
+                        if(data[i].id == articleType){
                             $("select[name='articleType']").append("<option value='"+data[i].id+"' selected='selected'>"+data[i].name+"</option>");
                         }else{
                             $("select[name='articleType']").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
@@ -181,8 +185,28 @@
         form.render();
     });
 
+    function showArticle(){
+        $.post("/hospitalArticle/getHospitalArticleById",{id:id},function(data){
+            if(data){
+                $("input[name='articleTitle']").val(data.articleTitle);
+                $.post("/hospitalArticle/getHospitalArticleInfo",{id:id},function(data){
+                    if(data.status){
+                        if(data.articleInfo){
+                            for(var i=0;i<data.articleInfo.length;i++){
 
+                            }
+                        }
+                    } else{
+                        layer.msg("查询文章内容失败！");
+                    }
+                },"json");
+            } else{
+                layer.msg("查询失败！");
+            }
+        },"json");
+    }
     $(function () {
+        showArticle();
         var text = $("textarea[name='articleInfo']").val();
         var len = text.length;
         $("textarea[name='articleInfo']").nextAll().find('span').html(len);

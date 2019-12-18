@@ -28,8 +28,8 @@ public class SecHospitalArticleController {
     @Autowired
     private SecHospitalArticleService secHospitalArticleService;
     //查看医院所属文章
-    @RequestMapping("getHospitalArticleById")
-    public Map<String, Object> getHospitalArticleById(
+    @RequestMapping("getHospitalArticle")
+    public Map<String, Object> getHospitalArticle(
             @RequestParam(required=false,defaultValue="1") int page,
             @RequestParam(required=false,defaultValue="15") int limit,
             String keyWord,
@@ -126,6 +126,35 @@ public class SecHospitalArticleController {
         return map;
     }
 
+    //根据文章id查询
+    @RequestMapping("getHospitalArticleById")
+    public SecHospitalArticle getHospitalArticleById(Integer id){
+        SecHospitalArticle secHospitalArticle = secHospitalArticleService.getHospitalArticleById(id);
+        if(secHospitalArticle!=null){
+            return secHospitalArticle;
+        }
+        return  null;
+    }
+    //根据文章id查询文章内容
+    @RequestMapping("getHospitalArticleInfo")
+    public Map<String,Object> getHospitalArticleInfo(Integer id){
+        Map<String,Object> map = new HashMap<>();
+        List<SecHospitalArticleInfo> list = secHospitalArticleService.getHospitalArticleInfo(id);
+        if(id!=null){
+            map.put("status",true);
+            if(list!=null){
+                map.put("articleInfo",list);
+            }
+            List<SecPic> list2 = secHospitalArticleService.getHospitalArticlePic(id);
+            if(list2!=null){
+                map.put("articlePic",list2);
+            }
+        }else{
+            map.put("status",false);
+        }
+
+        return  map;
+    }
 
 
 }

@@ -76,4 +76,25 @@
             insert into sec_pic( createtime, type, obj_id, obj_type, pic_name, pic_size, pic_path, sequence) VALUES
             (now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath},#{sequence})
     </insert>
+    <!--
+    //根据文章id查询
+    SecHospitalArticle getHospitalArticleById(Integer id);
+    -->
+    <select id="getHospitalArticleById" resultType="com.buba.hospital_back.bean.SecHospitalArticle">
+            select * from sec_hospital_article where id=#{id}
+    </select>
+    <!--
+     //根据文章id查询文章内容
+    List<SecHospitalArticleInfo> getHospitalArticleInfo(Integer id);
+    -->
+    <select id="getHospitalArticleInfo" resultType="com.buba.hospital_back.bean.SecHospitalArticleInfo">
+            select * from sec_hospital_article_info where article_id=#{id}
+    </select>
+    <!--
+     //根据文章id查询文章照片
+    List<SecPic> getHospitalArticlePic(Integer id);
+    -->
+    <select id="getHospitalArticlePic" resultType="com.buba.hospital_back.bean.SecPic">
+        select * from sec_pic where obj_type='article' and obj_id=#{id}
+    </select>
 </mapper>
