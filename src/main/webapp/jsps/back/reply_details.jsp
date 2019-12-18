@@ -200,6 +200,7 @@
     function xiayitiao() {
         var id=$("#id").val();
         answered(id,3);
+
     }
     //修改——转换日期格式(时间戳转换为datetime格式)
     function changeDateFormat(cellval) {

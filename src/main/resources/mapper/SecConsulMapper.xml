@@ -7,6 +7,7 @@
     <select id="unanswered_all" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
 oc.refund_start_time refundStartTime
@@ -31,6 +32,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="unanswered_all1" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
 oc.refund_start_time refundStartTime
@@ -58,7 +60,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <!--//修改退款状态
     boolean updestatus(Integer id);-->
     <update id="updestatus">
-        update sec_consultation set payment_status=2 where id=#{id}
+        update his_order set status1=2 where id=#{id}
     </update>
 
 
@@ -67,6 +69,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="answered_all1" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_way payWay,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
@@ -93,6 +96,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="answered_all" resultType="secConsultation">
       SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_way payWay,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,

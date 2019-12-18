@@ -230,6 +230,7 @@
     function xiayitiao() {
         var id=$("#id").val();
         answered(id,2);
+
     }
 
 </script>

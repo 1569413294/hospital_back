@@ -54,13 +54,12 @@ public class SecConsulServiceimpl implements SecConsulService {
     public List<SecConsultation> answered_all(String phone) {
         /*查询当前用户的职称*/
         SecDoctor secDoctor=secConsulMapper.find_assistant(phone);
-        System.out.println(secDoctor.getAssistant()+"dadadsds");
         if (secDoctor!=null){
             List<SecConsultation> list=new ArrayList<>();
-            if (secDoctor.getAssistant()==true){
+            if (secDoctor.getAssistant()==false){
                 //是医生助理获取所有已回答
                 list=secConsulMapper.answered_all(phone);
-            }else if (secDoctor.getAssistant()==false){
+            }else if (secDoctor.getAssistant()==true){
                 //是医生获取所有已回答
                 list=secConsulMapper.answered_all1(phone);
             }

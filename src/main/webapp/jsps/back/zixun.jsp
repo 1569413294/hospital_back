@@ -133,12 +133,12 @@
                     title: "操作",
                     field: 'id',
                     formatter: function (value, row, index) {
-                        var status = row.paymentStatus;
+                        var status = row.status1;
                         var str = "";
-                        if (status=="2"){
+                        if (status=="5"){
                             str += " <button class='btn btn-primary' type='button' onclick=\"look_unanswered(\'" + row.id + "\')\">查看</button>";
                         }
-                        if (status=="0") {
+                        if (status=="1") {
                             str += " <button class='btn btn-primary' type='button' onclick=\"answered(\'" + row.id + "\')\">回答</button>";
                         }
                         return str;
@@ -208,13 +208,13 @@
                     title: "已支付金额",
                     field: 'payMoney',
                     formatter: function (value, row, index) {
-                        var status = row.paymentStatus;
+                        var status = row.status1;
                         var payMoney = row.payMoney;
                         var str = "";
-                        if (status=="0"){
+                        if (status=="1"){
                             str+=payMoney+"";
                         }
-                        if (status=="2"){
+                        if (status=="5"){
                             str+=payMoney+"";
                         }
                         return str
@@ -225,7 +225,7 @@
                     field: 'id',
                     formatter: function (value, row, index) {
                         var str = "";
-                        str += " <button class='btn btn-primary' type='button' onclick=\"look_answered(\'" + row.id + "\')\">查看</button>";
+                        str += " <button class='btn btn-primary' type='button' onclick=\"look_answered(\'" + row.orderId + "\')\">查看</button>";
                         return str;
                     },
                     align: 'center' // 居中显示

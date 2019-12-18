@@ -41,7 +41,7 @@ public class SecConsultation {
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date payStartTime;//支付时间
     private String payWay;//支付方式
-
+    private String status1;//订单状态
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date refundStartTime;//退款时间
 
@@ -212,5 +212,13 @@ public class SecConsultation {
 
     public void setPayWay(String payWay) {
         this.payWay = payWay;
+    }
+
+    public String getStatus1() {
+        return status1;
+    }
+
+    public void setStatus1(String status1) {
+        this.status1 = status1;
     }
 }
