@@ -56,7 +56,7 @@
             addArticle: function(){
                 layer.open({
                     type: 2
-                    ,content: '/jsps/back/jiaodiantu_compile.jsp'
+                    ,content: '/jsps/back/jiaodiantu_add.jsp'
                     ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;首页焦点图管理&nbsp;&nbsp;>&nbsp;&nbsp;编辑焦点图'
                     ,shadeClose: false
                     ,area: admin.screen() < 2 ? ['100%', '100%'] : ['780px', '540px']
@@ -73,6 +73,7 @@
             var type = $(this).data('type');
             active[type] && active[type].call(this);
         });
+
     });
     layui.use('table', function(){
         loadData();
@@ -85,7 +86,7 @@
             cellMinWidth : 95,
             page : true,
             limits : [2,3,4,5],
-            limit : 10,
+            limit : 5,
             cols : [[
                 {type: "checkbox", fixed:"left", width:50},
                 {field:'sequence', title: '展示顺序',align:"center", width:130, sort: true, fixed: true},
@@ -97,13 +98,26 @@
                     }},
                 {title: '操作', align:"center",templet:function(d){
                         return " <div class=\"layui-btn-group\">\n" +
-                            "                <button  class=\"layui-btn \">编辑</button>" +
+                            "                <button  class=\"layui-btn \" onclick='redactFocusPic("+d.id+")'>编辑</button>" +
                             "                <button  class=\"layui-btn\" onclick='deldata("+d.id+")' >删除</button>\n" +
                             "              </div>";
                     }
                 }
             ]]
         });
+    }
+    function redactFocusPic(id) {
+            layer.open({
+                type: 2
+                ,content: '/jsps/back/jiaodiantu_redact.jsp?id='+id
+                ,title:'首页&nbsp;&nbsp;>&nbsp;&nbsp;首页焦点图管理&nbsp;&nbsp;>&nbsp;&nbsp;编辑焦点图'
+                ,shadeClose: false
+                ,area: ['780px', '540px']
+                ,maxmin: true
+                ,end:function () {
+                    window.location.reload();
+                }
+            });
     }
 
     function deldata(id) {

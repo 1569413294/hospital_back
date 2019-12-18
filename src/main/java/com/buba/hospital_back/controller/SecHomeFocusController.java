@@ -38,7 +38,7 @@ public class SecHomeFocusController {
     @RequestMapping("getHomeFocus")
     public Map<String, Object> getHomeFocus(
             @RequestParam(required=false,defaultValue="1") int page,
-            @RequestParam(required=false,defaultValue="10") int limit,
+            @RequestParam(required=false,defaultValue="4") int limit,
             HttpSession session){
         Integer hospitalId = (Integer) session.getAttribute("hospitalId");
         if(hospitalId!=null){
@@ -108,5 +108,14 @@ public class SecHomeFocusController {
             return true;
         }
         return  false;
+    }
+    //根据焦点图id查询
+    @RequestMapping("getHomeFocusPicById")
+    public SecPic getHomeFocusPicById(Integer id){
+       SecPic secPic = secHomeFocusService.getHomeFocusPicById(id);
+        if(secPic!=null){
+            return secPic;
+        }
+        return  null;
     }
 }

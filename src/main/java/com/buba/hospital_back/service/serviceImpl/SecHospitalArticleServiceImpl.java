@@ -55,4 +55,19 @@ public class SecHospitalArticleServiceImpl implements SecHospitalArticleService 
     public void uploadImgArticle(SecPic secPic) {
         secHospitalArticleMapper.uploadImgArticle(secPic);
     }
+    //根据文章id查询
+    @Override
+    public SecHospitalArticle getHospitalArticleById(Integer id) {
+        return secHospitalArticleMapper.getHospitalArticleById(id);
+    }
+    //根据文章id查询文章内容
+    @Override
+    public List<SecHospitalArticleInfo> getHospitalArticleInfo(Integer id) {
+        return secHospitalArticleMapper.getHospitalArticleInfo(id);
+    }
+    //根据文章id查询文章照片
+    @Override
+    public List<SecPic> getHospitalArticlePic(Integer id) {
+        return secHospitalArticleMapper.getHospitalArticlePic(id);
+    }
 }
