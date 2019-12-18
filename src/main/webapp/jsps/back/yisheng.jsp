@@ -10,6 +10,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/add_office.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap-table.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/jquery-2.2.1.min.js"></script>
@@ -17,6 +18,8 @@
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap-table.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.all.js"></script>
+
     <script>
         var doctor_al;
         //储存医院信息
@@ -560,6 +563,12 @@
             formdata.append("file", document.getElementById("file"));
             formdata.append("hos_de", hos_de);
             formdata.append("zhucc", zhucc);
+
+            layer.msg(' 信息保存中...', {
+                icon: 11,
+                shade: 0.01,
+                time: 0
+            });
             $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath}/SecDoctor/add_doctor",
@@ -567,7 +576,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    alert("添加成功");
+                    alert("保存成功");
                     window.location.reload();
                 }
             })

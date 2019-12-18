@@ -138,6 +138,8 @@ public class SecDoctorServiceImpl implements SecDoctorService {
             }
             try {
                 if (file.getSize() >100) {
+
+
                     secPic = new SecPic();
                     if(pid!=null){
                         secPic.setId(pid);
