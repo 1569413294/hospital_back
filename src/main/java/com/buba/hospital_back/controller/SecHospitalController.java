@@ -8,6 +8,7 @@ import com.buba.hospital_back.service.SecHospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -50,6 +51,19 @@ public class SecHospitalController {
         Integer hospitalId = (Integer) session.getAttribute("hospitalId");
         if (hospitalId > 0) {
             return secHospitalService.hospital_change(hospitalId);
+        }
+        return null;
+    }
+    @RequestMapping("/allhospital")
+    @ResponseBody
+    public List<SecHospital> allhospital(){
+        List<SecHospital> hospitalList = secHospitalService.allHospital();
+        for (SecHospital h:hospitalList
+                ) {
+            System.out.println("所属医院："+h);
+        }
+        if (hospitalList!=null){
+            return hospitalList;
         }
         return null;
     }

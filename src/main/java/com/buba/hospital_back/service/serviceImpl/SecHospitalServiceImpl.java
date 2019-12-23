@@ -39,4 +39,9 @@ public class SecHospitalServiceImpl implements SecHospitalService {
         }
         return null;
     }
+
+    @Override
+    public List<SecHospital> allHospital() {
+        return secHospitalMapper.allHospital();
+    }
 }
