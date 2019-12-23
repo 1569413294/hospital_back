@@ -2,11 +2,16 @@ package com.buba.hospital_back.controller;
 
 
 import com.buba.hospital_back.bean.*;
+import com.buba.hospital_back.service.SecDoctorMultipointService;
 import com.buba.hospital_back.service.SecDoctorService;
+import com.buba.hospital_back.service.SecHospitalUserService;
+import com.buba.hospital_back.service.SecUserService;
 import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,8 +26,12 @@ public class SecDoctorController {
 
     @Autowired
     private SecDoctorService secDoctorService;
-
-
+    @Autowired
+    private SecUserService secUserService;
+    @Autowired
+    private SecDoctorMultipointService secDoctorMultipointService;
+    @Autowired
+    private SecHospitalUserService secHospitalUserService;
     /*
      * 功能描述: <br>
      * 所有医生信息
@@ -135,5 +144,28 @@ public class SecDoctorController {
         return secDoctorService.delete_zhu(id);
     }
 
+    @Transactional
+    @RequestMapping("/addDoctors")
+    @ResponseBody
+    public boolean addDoctors(AddDoctor addDoctor) {
 
+        int i = secDoctorService.addDoctors(addDoctor);
+        System.out.println("添加医生表："+addDoctor);
+        if (i!=0){
+            int i2 = secDoctorMultipointService.addSecDoctorMultipointMapper(addDoctor);
+            System.out.println("添加医生医院关联表："+addDoctor);
+            if (i2!=0){
+                int i1 = secUserService.addDoctor(addDoctor);
+                System.out.println("添加用户表："+addDoctor+"状态码："+i1);
+                if (i1!=0){
+                    int i3 = secHospitalUserService.addDoctor(addDoctor);
+                    System.out.println("添加用户医院表："+addDoctor+"状态码："+i3);
+                    if (i3!=0){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

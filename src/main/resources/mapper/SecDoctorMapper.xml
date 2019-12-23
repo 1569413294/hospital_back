@@ -139,4 +139,9 @@ WHERE
     <select id="hospital_all" resultType="com.buba.hospital_back.bean.SecHospital">
         select id,hospital_name from sec_hospital where id!=#{hospitalId}
     </select>
+    <!--添加-->
+
+    <insert id="addDoctors" useGeneratedKeys="true" keyProperty="id" >
+        insert into  sec_doctor(createtime,name,tel) values (now(),#{name},#{phone})
+    </insert>
 </mapper>

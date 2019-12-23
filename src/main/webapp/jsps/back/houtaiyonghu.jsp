@@ -255,7 +255,7 @@
             var name=$("#names").val()
             var phone=$("#phone").val();
             var juese=  $("select[name='jse']").change().val();
-            alert("角色")
+            alert(juese);
             var seleyy=  $("select[name='seleyy']").change().val();
            if(juese!=3){
                $.ajax({
@@ -275,7 +275,7 @@
            }else if(juese==3) {
                //添加医生
                $.ajax({
-                   url:"${pageContext.request.contextPath}/doctor/addDoctor",
+                   url:"${pageContext.request.contextPath}/SecDoctor/addDoctors",
                    dataType:"json",
                    type:"post",
                    data:{"roleId":juese,"hospitalId":seleyy,"name":name,"phone":phone},

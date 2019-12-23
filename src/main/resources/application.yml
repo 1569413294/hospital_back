@@ -10,8 +10,8 @@ spring:
       suffix: .jsp
     static-path-pattern: /static/**
   datasource:
-    url: jdbc:mysql://192.168.32.74:3306/hospital?&allowMultiQueries=true&useSSL=false
-    password: 123456
+    url: jdbc:mysql://59.110.139.4:3306/hospital?&allowMultiQueries=true&useSSL=false
+    password: root
     username: root
     driver-class-name: com.mysql.jdbc.Driver
   devtools:

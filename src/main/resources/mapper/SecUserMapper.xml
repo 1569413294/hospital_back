@@ -48,4 +48,35 @@
         set disabled= #{disabled}
         WHERE id=#{id};
     </update>
+    <insert id="addUser" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO sec_user (createtime,username,role_id,phone,id)
+        VALUES(now(),#{username},#{roleId},#{phone},#{id})
+        ON DUPLICATE KEY UPDATE
+        createtime=now(),username=#{username},role_id=#{roleId},phone=#{phone},id=#{id}
+    </insert>
+    <!--
+      //修改
+   int updateUser(SecUser secuser);
+  -->
+    <update id="updateUser">
+        update  sec_user
+        set username=#{username}
+             ,phone=#{phone},
+               role_id=#{roleId}
+               where id=#{id}
+    </update>
+    <!---
+      /* *
+       * 功能概述：添加医生<br>
+       * <>
+       * @Param: [addDoctor]
+       * @Return: int
+       * @Author: Administrator
+       * @Date: 2019/12/18 14:00
+       */
+    int addDoctor(AddDoctor addDoctor);
+-->
+    <insert id="addDoctor" useGeneratedKeys="true" keyProperty="id">
+        insert into sec_user(username,phone,role_id) values (#{name},#{phone},#{roleId})
+    </insert>
 </mapper>

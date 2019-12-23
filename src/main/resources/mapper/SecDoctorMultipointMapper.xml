@@ -32,5 +32,10 @@
     <delete id="delete_h_d">
         delete from sec_doctor_multipoint  where id=#{id}
     </delete>
+    <!--添加-->
+
+    <insert id="addSecDoctorMultipointMapper" useGeneratedKeys="true" keyProperty="id" >
+        insert into  sec_doctor_multipoint(doctor_id,hospital_id) values (#{id},#{hospitalId})
+    </insert>
 
 </mapper>

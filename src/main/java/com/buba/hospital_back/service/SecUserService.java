@@ -1,9 +1,6 @@
 package com.buba.hospital_back.service;
 
-import com.buba.hospital_back.bean.SecHospital;
-import com.buba.hospital_back.bean.SecRes;
-import com.buba.hospital_back.bean.SecUser;
-import com.buba.hospital_back.bean.SelectUrhdm;
+import com.buba.hospital_back.bean.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +36,31 @@ public interface SecUserService {
      * @Date: 2019/12/12 10:30
      */
     int updateUserDisabled (@Param("id") Integer id, @Param("disabled") Integer disabled);
+    /* *   
+       * 功能概述：后台管理  用户管理/添加<br>
+       * <>
+       * @Param: [secUser]     
+       * @Return: int  
+       * @Author: Administrator 
+       * @Date: 2019/12/23 15:41
+       */
+    int  addUser(SecUser secUser);
+    /* *
+     * 功能概述：修改<br>
+     * <>
+     * @Param: [secuser]
+     * @Return: int
+     * @Author: Administrator
+     * @Date: 2019/12/12 19:44
+     */
+    int updateUser(SelectUrhdm selectUrhdm);
+    /* *
+     * 功能概述：添加医生<br>
+     * <>
+     * @Param: [addDoctor]
+     * @Return: int
+     * @Author: Administrator
+     * @Date: 2019/12/18 14:00
+     */
+    int addDoctor(AddDoctor addDoctor);
 }

@@ -1,9 +1,6 @@
 package com.buba.hospital_back.service.serviceImpl;
 
-import com.buba.hospital_back.bean.SecHospital;
-import com.buba.hospital_back.bean.SecRes;
-import com.buba.hospital_back.bean.SecUser;
-import com.buba.hospital_back.bean.SelectUrhdm;
+import com.buba.hospital_back.bean.*;
 import com.buba.hospital_back.mapper.SecUserMapper;
 import com.buba.hospital_back.service.SecUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +57,27 @@ public class SecUserServiceImpl implements SecUserService {
     @Override
     public int updateUserDisabled(Integer id, Integer disabled) {
         return secUserMapper.updateUserDisabled(id,disabled);
+    }
+
+    @Override
+    public int addUser(SecUser secUser) {
+        return secUserMapper.addUser(secUser);
+    }
+
+    @Override
+    public int updateUser(SelectUrhdm selectUrhdm) {
+        return secUserMapper.updateUser(selectUrhdm);
+    }
+    /* *
+     * 功能概述：添加医生<br>
+     * <>
+     * @Param: [addDoctor]
+     * @Return: int
+     * @Author: Administrator
+     * @Date: 2019/12/18 14:30
+     */
+    @Override
+    public int addDoctor(AddDoctor addDoctor) {
+        return secUserMapper.addDoctor(addDoctor);
     }
 }

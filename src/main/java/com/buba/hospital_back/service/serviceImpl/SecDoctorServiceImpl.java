@@ -43,6 +43,11 @@ public class SecDoctorServiceImpl implements SecDoctorService {
         return secDoctorAssistantMapper.delete_zhu(id);
     }
 
+    @Override
+    public int addDoctors(AddDoctor addDoctor) {
+        return secDoctorMapper.addDoctors(addDoctor);
+    }
+
     /*
      * 功能描述: <br>
      * 删除医生对应的医院以及科室信息
@@ -210,4 +215,5 @@ public class SecDoctorServiceImpl implements SecDoctorService {
     public List<DoctorVo> doctor_all() {
         return secDoctorMapper.doctor_all();
     }
+
 }
