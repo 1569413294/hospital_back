@@ -55,7 +55,7 @@
         createtime=now(),username=#{username},role_id=#{roleId},phone=#{phone},id=#{id}
     </insert>
     <!--
-      //修改
+      //修改 用户管理
    int updateUser(SecUser secuser);
   -->
     <update id="updateUser">
@@ -67,7 +67,7 @@
     </update>
     <!---
       /* *
-       * 功能概述：添加医生<br>
+       * 功能概述：添加  医生<br>
        * <>
        * @Param: [addDoctor]
        * @Return: int

@@ -143,7 +143,14 @@ public class SecDoctorController {
     public Boolean delete_zhu(Integer id){
         return secDoctorService.delete_zhu(id);
     }
-
+/* *   
+   * 功能概述：<br>
+   * <>
+   * @Param: 后台管理---用户管理-->添加用户（角色==医生）[addDoctor]     
+   * @Return: boolean  
+   * @Author: Administrator 
+   * @Date: 2019/12/23 19:58
+   */
     @Transactional
     @RequestMapping("/addDoctors")
     @ResponseBody

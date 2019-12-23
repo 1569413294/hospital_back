@@ -6,7 +6,7 @@ public class AddDoctor {
     private  Integer id;
     private String name;
     private String phone;
-    private Integer hospitalId;
+    private Integer hospitalId;//医院id
     private Integer roleId;
 
     public Integer getId() {

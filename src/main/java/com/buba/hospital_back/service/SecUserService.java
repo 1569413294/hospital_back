@@ -28,7 +28,7 @@ public interface SecUserService {
     //后台管理-->用户管理
     List<SelectUrhdm> selectUrhdm();
     /* *
-     * 功能概述：//设置是否有效<br>
+     * 功能概述：设置是否有效<br>
      * <>
      * @Param: [id, disabled]
      * @Return: int

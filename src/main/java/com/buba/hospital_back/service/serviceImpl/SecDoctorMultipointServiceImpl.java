@@ -14,7 +14,7 @@ public class SecDoctorMultipointServiceImpl implements SecDoctorMultipointServic
     private SecDoctorMultipointMapper secDoctorMultipointMapper;
 
 /* *   
-   * 功能概述：添加医生与医院的关联 <br>
+   * 功能概述：添加医生 与医院的关联 <br>
    * <>
    * @Param: [secDoctorMultipoint]     
    * @Return: int  
@@ -25,4 +25,5 @@ public class SecDoctorMultipointServiceImpl implements SecDoctorMultipointServic
     public int addSecDoctorMultipointMapper(AddDoctor addDoctor) {
         return secDoctorMultipointMapper.addSecDoctorMultipointMapper(addDoctor);
     }
+
 }

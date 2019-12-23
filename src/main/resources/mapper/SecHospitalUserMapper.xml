@@ -7,6 +7,8 @@
       insert into sec_hospital_user(hospital_id,admin_id) values (#{hospitalId},#{id})
 
   </insert>
+
+    <!--修改-->
     <update id="updateSecHospitalRelation">
         update sec_hospital_user
         set hospital_id =#{hospitalId}
@@ -15,7 +17,7 @@
     </update>
     <!--
     /* *
-       * 功能概述：用户管理 添加医生 用户与医院关联表<br>
+       * 功能概述：用户管理 添加医生 用户与医院 关联 表<br>
        * <>
        * @Param: [addDoctor]
        * @Return: int

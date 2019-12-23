@@ -23,7 +23,7 @@ public interface SecDoctorService {
     //删除医生下对应的助理
     Boolean delete_zhu(Integer id);
     /* *
-     * 功能概述：//添加医生<br>
+     * 功能概述：添加医生<br>
      * <>
      * @Param: [doctor]
      * @Return: int

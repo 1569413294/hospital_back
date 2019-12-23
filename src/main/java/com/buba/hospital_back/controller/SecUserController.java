@@ -231,7 +231,7 @@ public class SecUserController {
         return false;
     }
     /* *
-     * 功能概述：后台管理-->用户管理<br>
+     * 功能概述：后台管理-->用户管理（展示）<br>
      * <>
      * @Param: []
      * @Return: java.util.List<com.buba.hospital_back.bean.SelectUrhdm>
@@ -298,6 +298,14 @@ public class SecUserController {
 
         return false;
     }
+    /* *   
+       * 功能概述：后台管理--用户管理-->修改<br>
+       * <>
+       * @Param: [selectUrhdm]     
+       * @Return: boolean  
+       * @Author: Administrator 
+       * @Date: 2019/12/23 19:52
+       */
     @RequestMapping("/updateUser")
     @ResponseBody
     public  boolean  updateUser(SelectUrhdm selectUrhdm){

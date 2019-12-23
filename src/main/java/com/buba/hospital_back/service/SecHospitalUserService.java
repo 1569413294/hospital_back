@@ -25,7 +25,7 @@ public interface SecHospitalUserService {
      */
     public  int updateSecHospitalRelation(SelectUrhdm selectUrhdm);
     /* *
-     * 功能概述：用户管理--添加医生--用户与医院关联表<br>
+     * 功能概述：用户管理--添加医生--用户与医院关联 表<br>
      * <>
      * @Param: [addDoctor]
      * @Return: int

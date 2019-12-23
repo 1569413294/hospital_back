@@ -69,7 +69,7 @@ public class SecUserServiceImpl implements SecUserService {
         return secUserMapper.updateUser(selectUrhdm);
     }
     /* *
-     * 功能概述：添加医生<br>
+     * 功能概述：添加 医生 <br>
      * <>
      * @Param: [addDoctor]
      * @Return: int

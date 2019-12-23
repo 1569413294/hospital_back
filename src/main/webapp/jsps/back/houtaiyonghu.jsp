@@ -141,7 +141,7 @@
                 }]
             });
         })
-        //  //点击添加时 出发模态框  同时加载 下拉框
+        //  //点击 添加时 出发模态框  同时加载 下拉框
             function addu(name,name2) {
             alert(123);
                 /*角色*/
@@ -192,7 +192,7 @@
                 });
 
             }
-        //设为有效
+        //设为 有效
         function sheWeiYouXiao(row) {
             var id=row.id;
             var disabled=row.disabled;
@@ -208,7 +208,7 @@
                 }
             })
         }
-        //修改模态框与赋值
+        //修改模态框 与 赋值
         function update(row) {
             $("#myModal1").modal("show");
             var name=$("#names1").val(row.username);

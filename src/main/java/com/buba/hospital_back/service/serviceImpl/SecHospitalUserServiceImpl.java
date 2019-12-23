@@ -15,7 +15,7 @@ public class SecHospitalUserServiceImpl implements SecHospitalUserService {
     private SecHospitalUserMapper secHospitalUserMapper;
 
     /* *
-     * 功能概述：添加用户关联表<br>
+     * 功能概述：添加用户 关联表<br>
      * <>
      * @Param: [secUser]
      * @Return: int
@@ -52,3 +52,4 @@ public class SecHospitalUserServiceImpl implements SecHospitalUserService {
         return secHospitalUserMapper.addDoctor(addDoctor);
     }
 }
+

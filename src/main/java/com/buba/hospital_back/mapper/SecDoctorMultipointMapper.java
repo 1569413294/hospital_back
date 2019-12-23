@@ -18,4 +18,5 @@ public interface SecDoctorMultipointMapper {
      * @Date: 2019/12/18 11:44
      */
     int addSecDoctorMultipointMapper(AddDoctor addDoctor);
+
 }
