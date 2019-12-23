@@ -237,7 +237,7 @@
     function answered(id){
         location.href="${pageContext.request.contextPath}/jsps/back/consul_reply.jsp?uid="+id+"";
     }
-    /*查看*/
+    /*查看未回答退款详情*/
     function look_unanswered(id){
         location.href="${pageContext.request.contextPath}/jsps/back/reply_details.jsp?uid="+id+"";
     }

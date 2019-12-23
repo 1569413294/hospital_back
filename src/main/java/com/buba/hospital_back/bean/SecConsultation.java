@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class SecConsultation {
     private Integer id;
@@ -46,6 +47,7 @@ public class SecConsultation {
     private Date refundStartTime;//退款时间
 
     private String orderNum;//订单号
+    private List<SecPic> secPic;//图片
 
     public Integer getId() {
         return id;
@@ -220,5 +222,13 @@ public class SecConsultation {
 
     public void setStatus1(String status1) {
         this.status1 = status1;
+    }
+
+    public List<SecPic> getSecPic() {
+        return secPic;
+    }
+
+    public void setSecPic(List<SecPic> secPic) {
+        this.secPic = secPic;
     }
 }

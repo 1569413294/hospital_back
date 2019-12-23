@@ -2,6 +2,7 @@ package com.buba.hospital_back.service.serviceImpl;
 
 import com.buba.hospital_back.bean.SecConsultation;
 import com.buba.hospital_back.bean.SecDoctor;
+import com.buba.hospital_back.bean.SecPic;
 import com.buba.hospital_back.mapper.SecConsulMapper;
 import com.buba.hospital_back.service.SecConsulService;
 import org.springframework.stereotype.Service;
@@ -22,22 +23,31 @@ public class SecConsulServiceimpl implements SecConsulService {
 
     //获取所有未回答
     @Override
-    public List<SecConsultation> unanswered_all(String phone) {
-        /*查询当前用户的职称*/
-        SecDoctor secDoctor=secConsulMapper.find_assistant(phone);
-        if (secDoctor!=null) {
-            List<SecConsultation> list = new ArrayList<>();
-            if (secDoctor.getAssistant()==false) {
-                //是医生助理获取所有未回答
-                list = secConsulMapper.unanswered_all1(phone);
-            } else if (secDoctor.getAssistant()==true) {
-                //是医生获取所有未回答
-                list = secConsulMapper.unanswered_all(phone);
+    public List<SecConsultation> unanswered_all(String phone,Integer roleId) {
+        List<SecConsultation> list = new ArrayList<>();
+        if (roleId==3){
+            /*查询当前用户的职称*/
+            SecDoctor secDoctor=secConsulMapper.find_assistant(phone);
+            if (secDoctor!=null) {
+                if (secDoctor.getAssistant()==false) {
+                    //是医生助理获取所有未回答
+                    list = secConsulMapper.unanswered_all1(phone);
+                } else if (secDoctor.getAssistant()==true) {
+                    //是医生获取所有未回答
+                    list = secConsulMapper.unanswered_all(phone);
+                }
+                return list;
+            }else {
+                return null;
             }
+        }else if (roleId==1||roleId==2){
+            //是管理员获取所有未回答
+            list = secConsulMapper.unanswered_all2();
             return list;
         }else {
             return null;
         }
+
     }
     //回答问题
     @Override
@@ -51,22 +61,35 @@ public class SecConsulServiceimpl implements SecConsulService {
     }
 
     @Override
-    public List<SecConsultation> answered_all(String phone) {
-        /*查询当前用户的职称*/
-        SecDoctor secDoctor=secConsulMapper.find_assistant(phone);
-        if (secDoctor!=null){
-            List<SecConsultation> list=new ArrayList<>();
-            if (secDoctor.getAssistant()==false){
-                //是医生助理获取所有已回答
-                list=secConsulMapper.answered_all(phone);
-            }else if (secDoctor.getAssistant()==true){
-                //是医生获取所有已回答
-                list=secConsulMapper.answered_all1(phone);
+    public List<SecConsultation> answered_all(String phone, Integer roleId) {
+        List<SecConsultation> list = new ArrayList<>();
+        if (roleId==3) {
+            /*查询当前用户的职称*/
+            SecDoctor secDoctor = secConsulMapper.find_assistant(phone);
+            if (secDoctor != null) {
+                if (secDoctor.getAssistant() == false) {
+                    //是医生助理获取所有已回答
+                    list = secConsulMapper.answered_all(phone);
+                } else if (secDoctor.getAssistant() == true) {
+                    //是医生获取所有已回答
+                    list = secConsulMapper.answered_all1(phone);
+                }
+                return list;
+            } else {
+                return null;
             }
+        }else if (roleId==1||roleId==2){
+            //是管理员获取所有回答
+            list = secConsulMapper.answered_all2();
             return list;
         }else {
             return null;
         }
 
+    }
+    //图片查询
+    @Override
+    public List<SecPic> answered_allpic(Integer id) {
+        return secConsulMapper.answered_allpic(id);
     }
 }

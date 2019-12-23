@@ -85,7 +85,7 @@
                 <div class="layui-col-xs10">
                     <div class="grid-demo">
                         <span style="font-size: 15px;width:400px; display:block;white-space:pre-wrap;" id="illnessDescription"></span>
-                        <div class="row">
+                        <div class="row" id="pic">
                             <div class="example col-xs-3 col-md-3">
                                 <p><img src="${pageContext.request.contextPath}/static/image/4.jpg" class="img-rounded" alt=""></p>
                             </div>
@@ -183,6 +183,15 @@
                         $("#payMoney1").html("￥"+data.payMoney);
                         var refundStartTime=changeDateFormat(data.refundStartTime);
                         $("#refundStartTime").html(refundStartTime);
+                        var str="";
+                        if (data.secPic.length>0){
+                            for (var i=0;i<data.secPic.length;i++){
+                                str+=" <div class=\"example col-xs-3 col-md-3\">\n" +
+                                    "         <p><img src="+data.secPic[i].picPath+" class=\"img-rounded\" alt=\"\"></p>\n" +
+                                    "                            </div>"
+                            }
+                        }
+                        $("#pic").html(str);
                         if (data.sex==2){
                             $("#sex").html("女");
                         }else if (data.sex==1) {

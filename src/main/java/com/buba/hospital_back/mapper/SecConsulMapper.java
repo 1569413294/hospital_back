@@ -2,6 +2,7 @@ package com.buba.hospital_back.mapper;
 
 import com.buba.hospital_back.bean.SecConsultation;
 import com.buba.hospital_back.bean.SecDoctor;
+import com.buba.hospital_back.bean.SecPic;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,10 @@ public interface SecConsulMapper {
     List<SecConsultation> answered_all1(String phone);
     /*查询当前用户的职称*/
     SecDoctor find_assistant(String phone);
+    //图片查询
+    List<SecPic> answered_allpic(Integer id);
+    //是管理员获取所有未回答
+    List<SecConsultation> unanswered_all2();
+    //是管理员获取所有回答
+    List<SecConsultation> answered_all2();
 }
