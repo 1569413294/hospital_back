@@ -2,7 +2,7 @@ package com.buba.hospital_back.bean;
 
 
 public class AssiVo {
-    //id测试
+    //id测试 反弹
     private Integer id;
     private Integer doctorId;
     private String name;
