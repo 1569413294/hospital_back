@@ -3,6 +3,7 @@ package com.buba.hospital_back.controller;
 import com.buba.hospital_back.bean.SecHospital;
 import com.buba.hospital_back.bean.SecRes;
 import com.buba.hospital_back.bean.SecUser;
+import com.buba.hospital_back.bean.SelectUrhdm;
 import com.buba.hospital_back.constant.Constants;
 import com.buba.hospital_back.service.SecUserService;
 import com.buba.hospital_back.utils.JSONUtils;
@@ -218,6 +219,48 @@ public class SecUserController {
         }
         return false;
     }
+    /* *
+     * 功能概述：后台管理-->用户管理<br>
+     * <>
+     * @Param: []
+     * @Return: java.util.List<com.buba.hospital_back.bean.SelectUrhdm>
+     * @Author: Administrator
+     * @Date: 2019/12/11 11:40
+     */
+    @RequestMapping("/selectUrhdms")
+    @ResponseBody
+    public List<SelectUrhdm> selectUrhdms(){
+        List<SelectUrhdm> selectUrhdms = secUserService.selectUrhdm();
+        for (SelectUrhdm s:selectUrhdms
+                ) {
+            System.out.println("用户管理："+s);
 
-
+        }
+        if (selectUrhdms!=null){
+            return  selectUrhdms;
+        }
+        return null;
+    }
+    /* *   
+       * 功能概述：设为有效<br>
+       * <>
+       * @Param: [id, disabled]     
+       * @Return: boolean  
+       * @Author: Administrator 
+       * @Date: 2019/12/23 15:24
+       */
+    @RequestMapping("/updateUserDisabled")
+    @ResponseBody
+    public  boolean updateUserDisabled(Integer id,Integer disabled){
+        if (disabled==0){
+            disabled=1;
+        }else {
+            disabled=0;
+        }
+        int i = secUserService.updateUserDisabled(id, disabled);
+        if (i!=0){
+            return true;
+        }
+        return false;
+    }
 }

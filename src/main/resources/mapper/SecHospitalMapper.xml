@@ -7,4 +7,11 @@
     <select id="hospital_change" resultType="com.buba.hospital_back.bean.SecSecondDepartment">
         select * from sec_second_department s1, sec_first_department s2 where s1.first_department_id = s2.id and s2.hospital_id  =#{hospitalId}
     </select>
+    <!--
+      所属医院
+      public List<SecHospital> allHospital();-->
+    <select id="allHospital" resultType="com.buba.hospital_back.bean.SecHospital">
+        SELECT *
+        FROM sec_hospital
+    </select>
 </mapper>
