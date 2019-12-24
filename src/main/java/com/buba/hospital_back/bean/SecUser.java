@@ -23,7 +23,8 @@ public class SecUser   {
     //角色id
     private Integer roleId;
     //医院id
-    private  Integer hospitalId; 
+    private  Integer hospitalId;
+
 
     public Integer getHospitalId() {
         return hospitalId;
