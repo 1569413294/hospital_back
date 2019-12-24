@@ -116,7 +116,7 @@
             //医院全称的校验
             $("#hospitalName").blur(function () {
                 var hospitalName=$("#hospitalName").val();
-               /* alert(hospitalName);*/
+
                 $.ajax({
                     url:"${pageContext.request.contextPath}/SecHospital/selecthospitalName",
                     dataType:"json",
@@ -134,7 +134,7 @@
             //医院简称的校验
             $("#hospitalSort").blur(function () {
                 var hospitalSort=$("#hospitalSort").val();
-               /* alert(hospitalSort);*/
+
                 $.ajax({
                     url:"${pageContext.request.contextPath}/SecHospital/selecthospitalSort",
                     dataType:"json",
@@ -162,11 +162,11 @@
         //修改医院
         function xiugai() {
             var hospitalName=  $("#hospitalName1").val();
-            alert(hospitalName)
+
             var hospitalSort=  $("#hospitalSort1").val();
-            alert(hospitalSort);
+
             var id=$("#ids").val();
-            alert(id)
+
             $.ajax({
                 url:"${pageContext.request.contextPath}/SecHospital/updateHospital",
                 dataType:"json",
@@ -188,9 +188,9 @@
         function  addhospital(a) {
 
             var hospitalName=$("#hospitalName").val();
-            alert(hospitalName);
+
             var hospitalSort=$("#hospitalSort").val();
-            alert(hospitalSort);
+
             $.ajax({
                 url:"${pageContext.request.contextPath}/SecHospital/addYiYuanGuanLi",
                 dataType:"json",

@@ -143,14 +143,14 @@
         })
         //  //点击 添加时 出发模态框  同时加载 下拉框
             function addu(name,name2) {
-            alert(123);
+
                 /*角色*/
                 $.ajax({
                     url:"${pageContext.request.contextPath}/secrole/allRole",
                     type:"post",
                     dataType:"json",
                     success:function(data){
-                        alert(data)
+
                         if(data){
                             /*所属医院*/
                             $.ajax({
@@ -222,17 +222,17 @@
         //修改
         function updateuser() {
             var id =$("#id").val();
-            alert(id)
+
             var username=$("#names1").val()
-            alert(username)
+
             var phone=$("#phone1").val();
-            alert(phone)
+
             var roleId=  $("#js1").val();
-            alert("角色id"+roleId)
+
             var hospitalId=  $("#yy").val();
-            alert("医院id"+hospitalId)
+
             var huId= $("#huId").val();
-            alert("用户关联表id"+huId)
+
                 $.ajax({
                     url:"${pageContext.request.contextPath}/user/updateUser",
                     dataType:"json",
@@ -255,7 +255,7 @@
             var name=$("#names").val()
             var phone=$("#phone").val();
             var juese=  $("select[name='jse']").change().val();
-            alert(juese);
+
             var seleyy=  $("select[name='seleyy']").change().val();
            if(juese!=3){
                $.ajax({
