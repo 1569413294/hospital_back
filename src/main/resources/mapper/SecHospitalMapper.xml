@@ -14,4 +14,60 @@
         SELECT *
         FROM sec_hospital
     </select>
+    <!--
+   修改-医院介绍
+   -->
+    <update id="updatehospitaljieshao" useGeneratedKeys="true" keyProperty="id" parameterType="com.buba.hospital_back.bean.SecHospitalArticle">
+        update sec_hospital
+      set hospital_address=#{hospitalAddress},hospital_tel=#{hospitalTel}
+      where id=#{id}
+    </update>
+    <!--
+         /* *
+      * 功能概述：用户管理<br>
+      * <>
+      * @Param: []
+      * @Return: java.util.List<com.buba.hospital_back.bean.SelectYygl>
+      * @Author: Administrator
+      * @Date: 2019/12/13 16:15
+      */
+   public  List<SelectYygl> allYongHugunLi();
+   -->
+    <select id="allYongHugunLi" resultType="com.buba.hospital_back.bean.SelectYygl">
+        SELECT
+            u.username,
+            h.hospital_name,
+            h.hospital_sort,
+            h.id,
+            (SELECT count(*) FROM sec_doctor_multipoint dm WHERE dm.hospital_id= h.id ) count
+        FROM
+            sec_user u,
+            sec_hospital h,
+            sec_hospital_user hu
+        WHERE
+            u.id = hu.admin_id
+        AND h.id = hu.hospital_id
+        and u.role_id =2
+    </select>
+    <!--添加-->
+    <insert id="addYiYuanGuanLi" keyProperty="id" useGeneratedKeys="true">
+        insert into sec_hospital(hospital_sort,hospital_name,creator) values (#{hospitalSort},#{hospitalName},#{id})
+    </insert>
+    <!--医院全称 校验 -->
+    <select resultType="string" id="seleSecHospital">
+        select hospital_name
+        from sec_hospital
+        where hospital_name=#{hospitalName}
+    </select>
+    <!--医院简称 校验 -->
+    <select resultType="string" id="selecthospitalSort">
+        select hospital_sort
+        from sec_hospital
+        where hospital_sort=#{hospitalSort}
+    </select>
+    <update id="updateHospital" parameterType="com.buba.hospital_back.bean.SecHospital" >
+      update sec_hospital
+      set hospital_name=#{hospitalName},hospital_sort=#{hospitalSort}
+      where id=#{id}
+    </update>
 </mapper>

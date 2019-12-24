@@ -35,7 +35,7 @@
     <!--添加医生 关联-->
 
     <insert id="addSecDoctorMultipointMapper" useGeneratedKeys="true" keyProperty="id" >
-        insert into  sec_doctor_multipoint(doctor_id,hospital_id) values (#{id},#{hospitalId})
+        insert into  sec_doctor_multipoint(createtime,doctor_id,hospital_id) values (now(),#{id},#{hospitalId})
     </insert>
 
 </mapper>

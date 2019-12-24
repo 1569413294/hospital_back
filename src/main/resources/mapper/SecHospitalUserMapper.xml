@@ -8,6 +8,7 @@
 
   </insert>
 
+
     <!--修改-->
     <update id="updateSecHospitalRelation">
         update sec_hospital_user

@@ -21,6 +21,24 @@ public class SecHospitalArticle {
     private Integer articleType;
     //医院id
     private Integer hospitalId;
+    private String  hospitalAddress;//医院地址
+    private  String  hospitalTel;//医院电话
+
+    public String getHospitalAddress() {
+        return hospitalAddress;
+    }
+
+    public void setHospitalAddress(String hospitalAddress) {
+        this.hospitalAddress = hospitalAddress;
+    }
+
+    public String getHospitalTel() {
+        return hospitalTel;
+    }
+
+    public void setHospitalTel(String hospitalTel) {
+        this.hospitalTel = hospitalTel;
+    }
 
     public Integer getId() {
         return id;

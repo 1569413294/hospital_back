@@ -24,8 +24,16 @@ public class SecHospital {
     private Double longitude;
 
     private Double latitude;
-
+    private  String hospitalSort;
     private Integer creator;
+
+    public String getHospitalSort() {
+        return hospitalSort;
+    }
+
+    public void setHospitalSort(String hospitalSort) {
+        this.hospitalSort = hospitalSort;
+    }
 
     public Integer getId() {
         return id;
