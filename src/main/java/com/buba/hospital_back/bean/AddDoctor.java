@@ -9,6 +9,7 @@ public class AddDoctor {
     private Integer hospitalId;//医院id
     private Integer roleId;
 
+
     public Integer getId() {
         return id;
     }
