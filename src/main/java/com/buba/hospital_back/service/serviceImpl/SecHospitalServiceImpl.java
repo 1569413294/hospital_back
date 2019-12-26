@@ -21,6 +21,7 @@ import java.util.List;
 public class SecHospitalServiceImpl implements SecHospitalService {
 
 
+
     @Autowired
     private SecHospitalMapper secHospitalMapper;
 

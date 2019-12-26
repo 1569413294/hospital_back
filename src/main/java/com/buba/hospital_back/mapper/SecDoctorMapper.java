@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface SecDoctorMapper {
+
     //查询所有医生信息
     List<DoctorVo> doctor_all();
     //查询所有医院信息

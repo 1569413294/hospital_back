@@ -7,6 +7,7 @@ public class SecHospitalUser {
 
     private Integer adminId;
 
+
     public Integer getId() {
         return id;
     }

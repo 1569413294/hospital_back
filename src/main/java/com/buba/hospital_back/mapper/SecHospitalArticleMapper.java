@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SecHospitalArticleMapper {
+
     //根据关键字获取医院所属的所有文章并进行分页
     List<SecHospitalArticleVo> queryAllData(@Param("page")int page, @Param("limit")int limit, @Param("keyWord")String keyWord, @Param("hospitalId")Integer hospitalId);
     //获取总条数

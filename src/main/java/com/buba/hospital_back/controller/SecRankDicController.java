@@ -21,4 +21,5 @@ public class SecRankDicController {
         return secRankDicService.rank_all();
     }
 
+
 }

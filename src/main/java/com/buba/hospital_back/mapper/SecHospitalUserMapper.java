@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SecHospitalUserMapper {
 
+
     //添加
     public  int  addSecHospitalRelation(SecUser secUser);
     /* *

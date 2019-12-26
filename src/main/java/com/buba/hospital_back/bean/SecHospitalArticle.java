@@ -11,6 +11,7 @@ public class SecHospitalArticle {
     //状态
     private String status;
 
+
     private Boolean disabled;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

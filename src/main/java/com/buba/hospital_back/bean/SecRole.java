@@ -9,6 +9,7 @@ public class SecRole {
 
     private Boolean disabled;
 
+
     private Date createtime;
 
     private String roleName;

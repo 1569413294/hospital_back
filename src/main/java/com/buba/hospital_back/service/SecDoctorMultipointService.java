@@ -4,6 +4,7 @@ import com.buba.hospital_back.bean.AddDoctor;
 import com.buba.hospital_back.bean.SecDoctorMultipoint;
 
 public interface SecDoctorMultipointService {
+
     /* *
      * 功能概述：添加医生与  医院的关联表<br>
      * <>

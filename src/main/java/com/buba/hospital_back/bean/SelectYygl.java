@@ -13,6 +13,7 @@ public class SelectYygl {
 
 
 
+
     public SelectYygl(Integer id, String hospitalName, String hospitalSort, String username, Integer count, String roleName, String creator) {
         this.id = id;
         this.hospitalName = hospitalName;

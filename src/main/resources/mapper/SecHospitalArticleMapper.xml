@@ -97,4 +97,5 @@
     <select id="getHospitalArticlePic" resultType="com.buba.hospital_back.bean.SecPic">
         select * from sec_pic where obj_type='article' and obj_id=#{id}
     </select>
+
 </mapper>

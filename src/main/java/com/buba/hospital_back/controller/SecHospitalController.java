@@ -166,6 +166,7 @@ public class SecHospitalController {
         for (SelectYygl s: selectYygls
                 ) {
             System.out.println("医院管理："+s);
+
         }
         if(selectYygls!=null){
             return selectYygls;

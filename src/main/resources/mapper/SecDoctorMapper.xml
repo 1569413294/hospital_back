@@ -144,4 +144,5 @@ WHERE
     <insert id="addDoctors" useGeneratedKeys="true" keyProperty="id" >
         insert into  sec_doctor(createtime,name,tel) values (now(),#{name},#{phone})
     </insert>
+
 </mapper>

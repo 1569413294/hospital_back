@@ -8,6 +8,7 @@ package com.buba.hospital_back.bean;
  **/
 public class SecHospitalArticleType {
 
+
     private Integer id;
 
     private String code;

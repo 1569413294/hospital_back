@@ -38,4 +38,5 @@
         insert into  sec_doctor_multipoint(createtime,doctor_id,hospital_id) values (now(),#{id},#{hospitalId})
     </insert>
 
+
 </mapper>

@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public interface SecUserService {
 
+
     //查询权限列表
     List<SecRes> selectRoleRes(Integer id);
     //登录

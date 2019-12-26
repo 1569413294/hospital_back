@@ -11,6 +11,7 @@ public class SecPic {
 
     private Date createtime;
 
+
     private String type;
 
     private Integer objId;

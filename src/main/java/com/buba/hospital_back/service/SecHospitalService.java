@@ -9,6 +9,7 @@ public interface SecHospitalService {
 
     //查询指定医院下的二级科室
     List<SecSecondDepartment> hospital_change(Integer hospitalId);
+
     /* *
      * 功能概述：//所属医院<br>
      * <>

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SecHospitalMapper {
 
+
     //查询指定医院下所有的二级科室
     List<SecSecondDepartment> hospital_change(Integer hospitalId);
     /* *

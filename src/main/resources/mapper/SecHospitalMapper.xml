@@ -70,4 +70,5 @@
       set hospital_name=#{hospitalName},hospital_sort=#{hospitalSort}
       where id=#{id}
     </update>
+
 </mapper>

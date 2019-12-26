@@ -25,6 +25,7 @@ import java.util.*;
 @RequestMapping("/hospitalArticle")
 public class SecHospitalArticleController {
 
+
     @Autowired
     private SecHospitalArticleService secHospitalArticleService;
     //查看医院所属文章

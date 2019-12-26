@@ -13,6 +13,7 @@
     <title>医院介绍页</title>
     <style type="text/css">
 
+
         .item {
             width: 620px;
             height: 210px;

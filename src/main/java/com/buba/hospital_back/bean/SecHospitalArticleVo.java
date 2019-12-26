@@ -7,6 +7,7 @@ package com.buba.hospital_back.bean;
  * @Version 1.0
  **/
 public class SecHospitalArticleVo {
+
     //主键
     private Integer id;
     //文章标题

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface SecDoctorService {
 
+
     //查询所有医生
     List<DoctorVo> doctor_all();
     //查询所有医院信息

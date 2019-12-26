@@ -14,6 +14,7 @@ public class SecHospitalUserServiceImpl implements SecHospitalUserService {
 @Autowired
     private SecHospitalUserMapper secHospitalUserMapper;
 
+
     /* *
      * 功能概述：添加用户  关联表<br>
      * <>

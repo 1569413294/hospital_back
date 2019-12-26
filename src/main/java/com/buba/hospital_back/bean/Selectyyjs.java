@@ -7,6 +7,7 @@ public class Selectyyjs {
     private Integer hospitalId;//医院 id
 
 
+
     public Integer getId() {
         return id;
     }

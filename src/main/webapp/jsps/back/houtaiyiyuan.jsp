@@ -94,14 +94,6 @@
                     field: "count",
                     title: "医生数量",
                     align: "center",
-                  /*  formatter: function (value, row, index) {
-                        if (value == "0") {
-                            return "无效";
-                        }else {
-                            return"有效";
-                        }
-
-                    }*/
                 }, {
                     field: "caozuo",
                     title: "操作",
@@ -116,7 +108,6 @@
             //医院全称的校验
             $("#hospitalName").blur(function () {
                 var hospitalName=$("#hospitalName").val();
-
                 $.ajax({
                     url:"${pageContext.request.contextPath}/SecHospital/selecthospitalName",
                     dataType:"json",
@@ -134,7 +125,6 @@
             //医院简称的校验
             $("#hospitalSort").blur(function () {
                 var hospitalSort=$("#hospitalSort").val();
-
                 $.ajax({
                     url:"${pageContext.request.contextPath}/SecHospital/selecthospitalSort",
                     dataType:"json",
@@ -162,11 +152,8 @@
         //修改医院
         function xiugai() {
             var hospitalName=  $("#hospitalName1").val();
-
             var hospitalSort=  $("#hospitalSort1").val();
-
             var id=$("#ids").val();
-
             $.ajax({
                 url:"${pageContext.request.contextPath}/SecHospital/updateHospital",
                 dataType:"json",
@@ -188,9 +175,9 @@
         function  addhospital(a) {
 
             var hospitalName=$("#hospitalName").val();
-
+            alert(hospitalName);
             var hospitalSort=$("#hospitalSort").val();
-
+            alert(hospitalSort);
             $.ajax({
                 url:"${pageContext.request.contextPath}/SecHospital/addYiYuanGuanLi",
                 dataType:"json",

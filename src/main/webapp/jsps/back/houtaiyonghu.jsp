@@ -208,6 +208,7 @@
                 }
             })
         }
+
         //修改模态框 与 赋值
         function update(row) {
             $("#myModal1").modal("show");
@@ -222,17 +223,11 @@
         //修改
         function updateuser() {
             var id =$("#id").val();
-
             var username=$("#names1").val()
-
             var phone=$("#phone1").val();
-
             var roleId=  $("#js1").val();
-
             var hospitalId=  $("#yy").val();
-
             var huId= $("#huId").val();
-
                 $.ajax({
                     url:"${pageContext.request.contextPath}/user/updateUser",
                     dataType:"json",
@@ -248,6 +243,7 @@
                     }
                 })
 
+
         }
 
         //添加管理员(有则修改，无则添加)
@@ -255,7 +251,6 @@
             var name=$("#names").val()
             var phone=$("#phone").val();
             var juese=  $("select[name='jse']").change().val();
-
             var seleyy=  $("select[name='seleyy']").change().val();
            if(juese!=3){
                $.ajax({

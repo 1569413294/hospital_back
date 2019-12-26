@@ -7,14 +7,14 @@ public class SelectUrhdm {
     //用户id
     private  Integer id;
     //用户名
-private  String username;
+    private  String username;
 //状态码
 private  Integer disabled;
 //医院全称
 private  String hospitalName;
 //角色
     private String roleName;
-//用户表id
+//用户手机号
     private  String phone;
 //医院与用户关联表id
     private Integer huId;
@@ -22,6 +22,10 @@ private  String hospitalName;
     private Integer roleId;
  //医院id
     private Integer hospitalId;
+  /*  //医生id
+    private  Integer doctorId;
+    //医生医院id
+    private  Integer doctorHospitalId;*/
 
     public SelectUrhdm(Integer id, String username, Integer disabled, String hospitalName, String roleName, String phone, Integer huId, Integer roleId, Integer hospitalId) {
         this.id = id;

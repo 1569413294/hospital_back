@@ -31,4 +31,5 @@
          insert into sec_hospital_user(hospital_id,admin_id) values (#{hospitalId},#{id})
     </insert>
 
+
 </mapper>

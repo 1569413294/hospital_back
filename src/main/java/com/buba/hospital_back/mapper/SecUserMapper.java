@@ -20,6 +20,7 @@ import java.util.List;
 
 public interface SecUserMapper {
 
+
     //查询权限列表
     List<SecRes> selectRoleRes(Integer id);
     //登录 查看用户信息

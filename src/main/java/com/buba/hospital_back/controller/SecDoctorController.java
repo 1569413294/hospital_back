@@ -24,6 +24,7 @@ import java.util.List;
 public class SecDoctorController {
 
 
+
     @Autowired
     private SecDoctorService secDoctorService;
     @Autowired

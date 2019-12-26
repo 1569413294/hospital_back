@@ -5,6 +5,7 @@ import com.buba.hospital_back.bean.SecRes;
 import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.bean.SelectUrhdm;
 import com.buba.hospital_back.constant.Constants;
+import com.buba.hospital_back.service.SecHospitalUserService;
 import com.buba.hospital_back.service.SecUserService;
 import com.buba.hospital_back.utils.JSONUtils;
 import com.buba.hospital_back.utils.MD5Util;
@@ -43,25 +44,30 @@ public class SecUserController {
     private SecUserService secUserService;
     @Autowired
     private RedisUtils redisUtils;
+    /* *
+     * 功能概述：用户-医院（关联表）<br>
+     * <>
+     * @Param:
+     * @Return:
+     * @Author: Administrator
+     * @Date: 2019/12/12 15:31
+     */
+    @Autowired
+    protected SecHospitalUserService secHospitalUserService;
 
     //获取手机验证吗
     @ResponseBody
     @RequestMapping("/getPhoneMsg")
-    public Map<String,Integer> getPhoneMsg(String phone,HttpSession session) {
-        //定义map用户储存返回验证码
-        Map<String, Integer> map = new HashMap<>();
-        map.put("result",0);
+    public boolean getPhoneMsg(String phone,HttpSession session) {
         //随机生成6位数
         int mobileCodes=(int)((Math.random()*9+1)*100000);
         boolean b = redisUtils.set(phone,mobileCodes);
         if(b){
             redisUtils.expire(phone,60);
         }
-        //储存验证码
-        map.put("result",mobileCodes);
         System.out.println(mobileCodes);
         //boolean sendMSM = SendSMSUtils.sendMSM(mobile, String.valueOf(mobileCodes));
-        return map;
+        return b;
     }
     //验证验证码
     @ResponseBody
@@ -83,7 +89,7 @@ public class SecUserController {
     //登录
     @ResponseBody
     @RequestMapping("/login")
-    public Boolean login(String phone, boolean auto_login, HttpServletResponse response, HttpSession session) {
+    public boolean login(String phone, boolean auto_login, HttpServletResponse response, HttpSession session) {
         SecUser secUser = secUserService.login(phone);
         if(secUser!=null){
             session.setAttribute("user",secUser);
@@ -265,6 +271,44 @@ public class SecUserController {
         int i = secUserService.updateUserDisabled(id, disabled);
         if (i!=0){
             return true;
+        }
+        return false;
+    }
+    /**
+     * 功能概述：添加用户--医院关联表<br>
+     * <>
+     * @Param: [session, secUser]
+     * @Return: boolean
+     * @Author: Administrator
+     * @Date: 2019/12/12 15:40
+     */
+    @RequestMapping("/adduser")
+    @ResponseBody
+    public  boolean  adduser(HttpSession session,SecUser secUser){
+        System.out.println("添加用户获取："+secUser);
+        if (secUser!=null){
+            int i = secUserService.addUser(secUser);
+            if (i!=0){
+                int i1 = secHospitalUserService.addSecHospitalRelation(secUser);
+                if (i1!=0){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    @RequestMapping("/updateUser")
+    @ResponseBody
+    public  boolean  updateUser(SelectUrhdm selectUrhdm){
+        if (selectUrhdm!=null){
+            int i = secUserService.updateUser(selectUrhdm);
+            if (i!=0){
+                int i1 = secHospitalUserService.updateSecHospitalRelation(selectUrhdm);
+                if (i1!=0){
+                    return true;
+                }
+            }
         }
         return false;
     }
