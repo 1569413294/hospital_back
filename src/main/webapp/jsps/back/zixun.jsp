@@ -82,7 +82,11 @@
                 {
                     title: "提问时间",
                     field: 'createtime',
-                    align: 'center' // 居中显示
+                    align: 'center', // 居中显示
+                    formatter: function (value, row, index) {
+                        var time = changeDateFormat(value);
+                        return time;
+                    },
                 },
                 {
                     title: "署名医生",
@@ -94,13 +98,13 @@
                     field: 'payMoney',
                     align: 'center', // 居中显示
                     formatter:function(value,row,index){
-                        var status = row.paymentStatus;
+                        var status = row.status1;
                         var payMoney = row.payMoney;
                         var str = "";
-                        if (status=="0"){
+                        if (status=="5"){
                             str+=payMoney+"";
                         }
-                        if (status=="2"){
+                        if (status=="1"){
                             str+=payMoney+"";
                         }
                         return str
@@ -109,22 +113,24 @@
                     title: "退款倒计时",
                     field: '',
                     formatter: function (value, row, index) {
-                        var time=changeDateFormat(row.refundStartTime);
-                        var str="";
-                        if (time!=null){
-                            str=TimeDown(time);
-                            var t=1;
-                            //延迟一秒执行自己
-                            t=setTimeout(function () {
-                                $("#unanswered_table").bootstrapTable('refresh');
-                            }, 10000)
-                            if (str==0){
-                                clearTimeout(t);
+                        var time=null;
+                        var str=0;
+                        if (row.status1=="1") {
+                           time=changeDateFormat(row.refundStartTime);
+                            if (time!=null){
+                                str=TimeDown(time);
+                                var t=1;
+                                //延迟一秒执行自己
+                                t=setTimeout(function () {
+                                    $("#unanswered_table").bootstrapTable('refresh');
+                                }, 10000);
+                                if (str==0){
+                                    clearTimeout(t);
+                                }
+                                if (str==0&&row.status1=="1"){
+                                    updestatus(row.orderId)
+                                }
                             }
-                            if (str==0&&row.paymentStatus=="0"){
-                                updestatus(row.id)
-                            }
-
                         }
                         return str;
                     },
@@ -256,10 +262,12 @@
 
     //倒计时
     function TimeDown(endDateStr) {
+
         //结束时间
         var endDate = new Date(endDateStr);
         //当前时间
         var nowDate = new Date();
+
         if(endDate.getTime() >= nowDate.getTime()){
             //相差的总秒数
             var totalSeconds = parseInt((endDate - nowDate) / 1000);
@@ -277,6 +285,7 @@
             //输出到页面
             return  days + "天" + hours + "：" + minutes + "：" + seconds;
         } else {
+            alert(endDate.getTime()+"mm"+nowDate.getTime())
             return 0; //第二个大
         }
     }

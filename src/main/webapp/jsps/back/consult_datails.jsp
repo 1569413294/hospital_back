@@ -28,7 +28,7 @@
         margin: 20px;
     }
 </style>
-<body>
+<body style="height: 100%;">
 <div class="layui-card" style="height: 97%;width: 99%;border: 10px;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
         <a><span style="font-size: 20px;color: #1094fa">首页</span></a>
@@ -37,7 +37,7 @@
         &nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;
         <a><span style="font-size: 20px;color: #1094fa">咨询详情</span></a>
     </div>
-    <div class="layui-card-body" style="height: 94%;width: 100%;">
+    <div class="layui-card-body" style="height: 91%;width: 100%;overflow: auto">
         <div class="layui-container">
             <div class="layui-row">
                 <div class="layui-col-xs2">
@@ -189,7 +189,7 @@
     })
     //图片放大
     $('.example img').zoomify();
-    //回答详情回显
+    //已回答详情回显
     function answered(id,qf) {
         if (id){
             $.ajax({
@@ -221,6 +221,7 @@
                             }
                         }
                         $("#pic").html(str);
+                        $('.example img').zoomify();
                         if (data.sex==2){
                             $("#sex").html("女");
                         }else if (data.sex==1) {
@@ -237,6 +238,9 @@
     //下一条
     function xiayitiao() {
         var id=$("#id").val();
+        $('.layui-card-body').animate({
+            scrollTop: '0'
+        }, 1000);
         answered(id,2);
 
     }

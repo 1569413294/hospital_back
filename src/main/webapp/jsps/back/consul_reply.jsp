@@ -206,6 +206,7 @@
                             }
                         }
                         $("#pic").html(str);
+                        $('.example img').zoomify();
                         if (data.sex==2){
                             $("#sex").html("女");
                         }else if (data.sex==1) {

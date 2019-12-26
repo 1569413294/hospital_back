@@ -60,7 +60,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <!--//修改退款状态
     boolean updestatus(Integer id);-->
     <update id="updestatus">
-        update his_order set status1=2 where id=#{id}
+        update his_order set status=5 where id=#{id}
     </update>
 
 
