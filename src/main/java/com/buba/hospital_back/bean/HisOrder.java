@@ -10,7 +10,8 @@ public class HisOrder {
     private Integer id;
 
     private Boolean disabled;
-
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     private String orderName;
@@ -21,16 +22,16 @@ public class HisOrder {
 
     private String medicalCardNumber;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date payStartTime;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date payStartTime2;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date refundStartTime;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date refundStartTime2;
 
     private Double payMoney;
@@ -150,5 +151,25 @@ public class HisOrder {
 
     public void setRefundStartTime2(Date refundStartTime2) {
         this.refundStartTime2 = refundStartTime2;
+    }
+
+    @Override
+    public String toString() {
+        return "HisOrder{" +
+                "id=" + id +
+                ", disabled=" + disabled +
+                ", createtime=" + createtime +
+                ", orderName='" + orderName + '\'' +
+                ", orderNum='" + orderNum + '\'' +
+                ", orderPlacer=" + orderPlacer +
+                ", medicalCardNumber='" + medicalCardNumber + '\'' +
+                ", payStartTime=" + payStartTime +
+                ", payStartTime2=" + payStartTime2 +
+                ", refundStartTime=" + refundStartTime +
+                ", refundStartTime2=" + refundStartTime2 +
+                ", payMoney=" + payMoney +
+                ", payWay='" + payWay + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
