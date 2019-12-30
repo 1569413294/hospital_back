@@ -46,21 +46,22 @@
             <table align="center">
                 <tr>
                     <td class="td1">支付开始时间：</td>
-                    <td><input type="text" name="payStartTime" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input readonly name="payStartTime" id="text1"  placeholder="请输入支付开始时间"  class="layui-input"></td>
                     <td class="td1">退款开始时间：</td>
-                    <td><input type="text" name="refundStartTime" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
-                    <td class="td1"><button onclick="billQuery_onclick()" class="layui-btn layui-btn-radius layui-btn-normal">查询</button></td>
+                    <td><input readonly  name="refundStartTime"  id="text2"   placeholder="请输入退款开始时间"  class="layui-input"></td>
+                    <td class="td1"><button onclick="billQuery_onclick()" type="button" class="layui-btn layui-btn-radius layui-btn-normal">查询</button></td>
                 </tr>
                 <tr>
                     <td class="td1">支付结束时间：</td>
-                    <td><input type="text" name="payStartTime2" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input readonly  name="payStartTime2"   id="text3" placeholder="请输入标题"  class="layui-input"></td>
                     <td class="td1">退款结束时间：</td>
-                    <td><input type="text" name="refundStartTime2" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"></td>
+                    <td><input readonly  name="refundStartTime2"  id="text4"  placeholder="请输入标题"  class="layui-input"></td>
                 </tr>
                 <tr>
                     <td class="td1">订单项目：</td>
                     <td>
-                        <select name="city" lay-verify="required" class="select_orderItem">
+                        <select name="orderName" lay-verify="required" class="select_orderItem">
+                            <option value="">--请选择--</option>
                             <option value="预约挂号">预约挂号</option>
                             <option value="在线咨询">在线咨询</option>
                             <option value="门诊缴费">门诊缴费</option>
@@ -82,6 +83,30 @@
 </table>
 </body>
 <script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+//执行一个laydate实例
+        laydate.render({
+            elem: '#text1'//指定元素，
+            //format:'yyyy-MM-dd HH:mm:ss'
+        });
+        laydate.render({
+            elem: '#text2'//指定元素，
+            //format:'yyyy-MM-dd HH:mm:ss'
+        });
+        laydate.render({
+            elem: '#text3'//指定元素，
+            //format:'yyyy-MM-dd HH:mm:ss'
+        });
+        laydate.render({
+            elem: '#text4'//指定元素，
+            //format:'yyyy-MM-dd HH:mm:ss'
+        });
+    });
+
+
+
     $(function () {
         billQuery_find();
     })
@@ -139,13 +164,33 @@
                     field: '',
                     title: '退款金额',
                     formatter:function(value,row,index){
-                        if(row.status=='已退款'){
+                        if(row.status==5){
                             return row.payMoney
                         }
                     }
                 }, {
                     field: 'status',
-                    title: '订单状态'
+                    title: '订单状态',
+                    formatter:function(value,row,index){
+                        if(row.status==0){
+                            return '未支付'
+                        }
+                        if(row.status==1){
+                            return '已支付'
+                        }
+                        if(row.status==2){
+                            return '未到诊'
+                        }
+                        if(row.status==3){
+                            return '已到诊'
+                        }
+                        if(row.status==4){
+                            return '已取消'
+                        }
+                        if(row.status==5){
+                            return '已退款'
+                        }
+                    }
                 }
             ]
         })

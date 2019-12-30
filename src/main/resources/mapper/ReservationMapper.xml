@@ -19,24 +19,9 @@
             d. NAME doctorName,
             h.hospital_name hospitalName,
             f.department_name departmentName,
-            (
-                SELECT
-                    sec_doctor_appointmenttime.appointment_time
-                FROM
-                    sec_doctor_appointmenttime
-                WHERE
-                    id in(
-                        SELECT
-                            t.appointmenttime_id
-                        FROM
-                            sec_reservation r,
-                            sec_doctor_appointmenttime_timeframe t
-                        WHERE
-                            r.timeframe_id = t.id
-                    )
-            ) AS appointmentTime
+            a.appointment_time appointmentTime
         FROM
-            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor d, sec_hospital h,sec_first_department f
+            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor_appointmenttime a,sec_doctor d, sec_hospital h,sec_first_department f
         where r.patient_id = p.id and r.order_id = o.id and o.`status` !='已取消'
         and r.timeframe_id = t.id and r.doctor_id = d.id and r.hospital_id = h.id and r.department_id = f.id
 
@@ -44,23 +29,23 @@
     <!--List<HisOrder> find_hisOrder(HisOrder hisOrder);-->
     <select id="find_hisOrder" resultType="com.buba.hospital_back.bean.HisOrder">
         SELECT o.*,p.patient_medicalCardNumber medicalCardNumber from his_order o,sec_patient p where o.order_placer=p.id
-        <if test="payStartTime!=null and payStartTime!=''">
-            and pay_start_time = #{payStartTime}
+        <if test="payStartTime!=null and payStartTime2==null">
+            and pay_start_time between  #{payStartTime} and  date_sub(#{payStartTime},interval -1 day)
         </if>
-        <if test="payStartTime2!=null and payStartTime2!=''">
-            and pay_start_time = #{payStartTime2}
+        <if test="payStartTime2!=null and payStartTime==null ">
+            and pay_start_time between  #{payStartTime2} and  date_sub(#{payStartTime2},interval -1 day)
         </if>
-        <if test="refundStartTime!=null and refundStartTime!=''">
-            and refund_start_time = #{refundStartTime}
+        <if test="refundStartTime!=null and refundStartTime2==null">
+            and refund_start_time between #{refundStartTime} and  date_sub(#{refundStartTime},interval -1 day)
         </if>
-        <if test="refundStartTime2!=null and refundStartTime2!=''">
-            and refund_start_time = #{refundStartTime2}
+        <if test="refundStartTime2!=null and refundStartTime==null">
+            and refund_start_time between #{refundStartTime2} and  date_sub(#{refundStartTime2},interval -1 day)
         </if>
-        <if test="payStartTime!=null and payStartTime!='' and payStartTime2!=null and payStartTime2!=''">
-            between pay_start_time = #{payStartTime} and pay_start_time = #{payStartTime2}
+        <if test="payStartTime!=null and payStartTime2!=null">
+            and  pay_start_time between   #{payStartTime} and  #{payStartTime2}
         </if>
-        <if test="refundStartTime!=null and refundStartTime!='' and refundStartTime2!=null and refundStartTime2!=''">
-            between refund_start_time = #{refundStartTime} and refund_start_time = #{refundStartTime2}
+        <if test="refundStartTime!=null and refundStartTime2!=null">
+            and refund_start_time between #{refundStartTime} and  #{refundStartTime2}
         </if>
         <if test="orderName!=null and orderName!=''">
             and order_name=#{orderName}
@@ -84,32 +69,17 @@
             d. NAME doctorName,
             h.hospital_name hospitalName,
             f.department_name departmentName,
-            (
-                SELECT
-                    sec_doctor_appointmenttime.appointment_time
-                FROM
-                    sec_doctor_appointmenttime
-                WHERE
-                    id in(
-                        SELECT
-                            t.appointmenttime_id
-                        FROM
-                            sec_reservation r,
-                            sec_doctor_appointmenttime_timeframe t
-                        WHERE
-                            r.timeframe_id = t.id
-                    )
-            ) AS appointmentTime
+            a.appointment_time appointmentTime
         FROM
-            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor d, sec_hospital h,sec_first_department f
+            sec_reservation r, sec_patient p,his_order o, sec_doctor_appointmenttime_timeframe t ,sec_doctor_appointmenttime a,sec_doctor d, sec_hospital h,sec_first_department f
         where r.patient_id = p.id and r.id=#{id} and r.order_id = o.id
         and r.timeframe_id = t.id and r.doctor_id = d.id and r.hospital_id = h.id and r.department_id = f.id
     </select>
-<!--boolean updataOrder(Integer id);
+    <!--boolean updataOrder(Integer id);
 
-    boolean updataReservatio(Integer id);-->
+        boolean updataReservatio(Integer id);-->
     <update id="updataOrder">
-        update his_order set status='已取消' where id=#{id}
+        update his_order set status='已取消',refund_start_time=now() where id=#{id}
     </update>
 
     <update id="updataReservatio">
