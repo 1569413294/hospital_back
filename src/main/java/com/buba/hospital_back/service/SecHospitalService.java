@@ -73,4 +73,13 @@ public interface SecHospitalService {
      * @Date: 2019/12/18 19:31
      */
     int updateHospital(SecHospital secHospital);
+    /* *
+     * 功能概述：医院介绍 ---获取首页医院<br>
+     * <>
+     * @Param: [hospitalId]
+     * @Return: java.lang.String
+     * @Author: Administrator
+     * @Date: 2019/12/30 9:24
+     */
+    String gitHospitalName(Integer hospitalId);
 }

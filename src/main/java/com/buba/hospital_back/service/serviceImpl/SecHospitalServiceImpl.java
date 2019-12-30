@@ -118,4 +118,16 @@ public class SecHospitalServiceImpl implements SecHospitalService {
     public int updateHospital(SecHospital secHospital) {
         return secHospitalMapper.updateHospital(secHospital);
     }
+    /* *
+     * 功能概述：医院介绍 ---获取首页医院<br>
+     * <>
+     * @Param: [hospitalId]
+     * @Return: java.lang.String
+     * @Author: Administrator
+     * @Date: 2019/12/30 9:24
+     */
+    @Override
+    public String gitHospitalName(Integer hospitalId) {
+        return secHospitalMapper.gitHospitalName(hospitalId);
+    }
 }

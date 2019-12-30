@@ -7,9 +7,9 @@ import com.buba.hospital_back.service.SecHospitalArticleService;
 import com.buba.hospital_back.service.SecHospitalService;
 import com.buba.hospital_back.service.SecHospitalUserService;
 import com.buba.hospital_back.utils.OSSUtil;
+import com.buba.hospital_back.utils.TemplateExcelUtil;
 import com.buba.hospital_back.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.buba.hospital_back.utils.DateToExcelUtil.getExcel;
 
 
 @RestController
@@ -163,11 +164,7 @@ public class SecHospitalController {
     @ResponseBody
     public  List<SelectYygl> allYongHugunLi(){
         List<SelectYygl> selectYygls = secHospitalService.allYongHugunLi();
-        for (SelectYygl s: selectYygls
-                ) {
-            System.out.println("医院管理："+s);
 
-        }
         if(selectYygls!=null){
             return selectYygls;
         }
@@ -175,6 +172,24 @@ public class SecHospitalController {
         return  null;
 
     }
+    /* *   
+       * 功能概述：后台管理--医院管理--导出<br>
+       * <>
+       * @Param: []     
+       * @Return: java.lang.String  
+       * @Author: Administrator 
+       * @Date: 2019/12/30 15:11
+       */
+    @RequestMapping("/Daochu")
+    @ResponseBody
+    public  String daoChuwwww(){
+        List<SelectYygl> selectYygls =secHospitalService.allYongHugunLi();
+        System.out.println("jihe-------"+selectYygls);
+        String excel = getExcel(selectYygls);
+        return excel;
+    }
+
+
     /* *
      * 功能概述：添加医院<br>
      * <>
@@ -253,5 +268,20 @@ public class SecHospitalController {
             return true;
         }
         return false;
+    }
+    @RequestMapping("/githospitalName")
+    @ResponseBody
+    public  String gitHospitalName(Integer hospitalId){
+        System.out.println(hospitalId+"***");
+        if (hospitalId!=0){
+            String s = secHospitalService.gitHospitalName(hospitalId);
+            if (s!=null){
+                System.out.println("获取的医院为："+s);
+                return s;
+            }else {
+                System.out.println("**："+s);
+            }
+        }
+        return null ;
     }
 }

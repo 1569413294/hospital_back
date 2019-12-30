@@ -8,7 +8,7 @@ public class SelectYygl {
     private String hospitalSort;//医院简称
     private String username;//管理员
     private Integer count;//医生数量
-    private  String roleName;
+    private  String roleName;//角色
     private String creator;//登陆者id
 
 
@@ -26,14 +26,6 @@ public class SelectYygl {
 
     public SelectYygl() {
         super();
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
     }
 
     public Integer getId() {
@@ -74,6 +66,22 @@ public class SelectYygl {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     @Override
