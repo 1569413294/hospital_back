@@ -103,8 +103,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="button" onclick="back_mark()" class="layui-btn layui-btn-radius">退号</button>
+                    <div class="col-sm-offset-2 col-sm-10" id="mark">
+
                     </div>
                 </div>
             </form>
@@ -162,6 +162,26 @@
                 }, {
                     field: 'orderStatus',
                     title: '订单状态',
+                    formatter:function(value,row,index) {
+                        if (row.status == 0) {
+                            return '未支付'
+                        }
+                        if (row.status == 1) {
+                            return '已支付'
+                        }
+                        if (row.status == 2) {
+                            return '未到诊'
+                        }
+                        if (row.status == 3) {
+                            return '已到诊'
+                        }
+                        if (row.status == 4) {
+                            return '已取消'
+                        }
+                        if (row.status == 5) {
+                            return '已退款'
+                        }
+                    }
                 }, {
                     field: '',
                     title: '订单操作',
@@ -176,6 +196,7 @@
         })
     }
     function picture_find(id) {
+        alert(id);
         $("#register_table").hide();
         $.ajax({
             url:"/reservation/picture_find",
@@ -196,6 +217,14 @@
                 $("#payWay").val(data.payWay);
                 $("#payStartTime").val(data.payStartTime);
                 $("#orderStatus").val(data.orderStatus);
+                var str='';
+                if(data.orderStatus==4 && data.orderStatus==5){
+                    str+= "<button type='button' onclick='back()' class='layui-btn layui-btn-radius layui-btn-primary'>取消</button>";
+                }else{
+                    str+="<button type='button' onclick='back_mark()' class='layui-btn layui-btn-radius'>退号</button>" +
+                        "<button type='button' onclick='back()' class='layui-btn layui-btn-radius layui-btn-primary'>取消</button>";
+                }
+                $("#mark").prepend(str);
             }
         })
         $("#line_item").show();
@@ -217,6 +246,9 @@
 
             }
         })
+    }
+    function back() {
+        window.location.reload();
     }
 </script>
 </html>
