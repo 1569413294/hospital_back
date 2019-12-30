@@ -83,16 +83,31 @@
     </style>
 </head>
 <body>
-
+<script>
+    $(function () {
+        var hospitalId=${hospitalId};
+        $.ajax({
+            url:"${pageContext.request.contextPath}/SecHospital/githospitalName",
+            type:"post",
+            //dataType:"json",
+            data:{"hospitalId":hospitalId},
+            success:function (data) {
+                alert("当前医院"+data);
+            },error:function () {
+                alert("网络维护中.......")
+            }
+        })
+    })
+</script>
 
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body" style="padding: 15px;">
             <form class="layui-form" action="" lay-filter="component-form-group">
-                <div class="layui-form-item">
+                <div class="layui-form-item" hidden="hidden">
                     <label class="layui-form-label">医院名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="hospitalId" lay-verify="title" autocomplete="off" placeholder="${hospitalId}" class="layui-input">
+                        <input type="text" name="hospitalId" lay-verify="title" autocomplete="off" placeholder="${hospitalId}" class="layui-input" value="">
                     </div>
                 </div>
                 <div class="layui-form-item">

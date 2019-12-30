@@ -139,9 +139,36 @@
                     }
                 })
             })
+          /*  //导出医生
+            $("#daochu").click(function () {
+                alert(hailou);
+                $.ajax({
+                    url:"/SecHospital/Daochu",
+                    type:"post",
+                    success:function (data) {
+                        if (data!=null){
+                            alert("导出成功,导出路径是："+data);
+                        }
+                    }
+                })
+
+            })
+*/
         })
 
-
+    //导出医院
+        function daochu() {
+            alert(10);
+            $.ajax({
+                url:"${pageContext.request.contextPath}/SecHospital/Daochu",
+                type:"post",
+                success:function (data) {
+                    if (data!=null){
+                        alert("导出成功,导出路径是："+data);
+                    }
+                }
+            })
+        }
         //修改模态框
         function update(row) {
             $("#myModal1").modal("show");
@@ -209,7 +236,8 @@
                 <div class="col-md-12 column">
                     <!-- 按钮触发模态框 -->
                     <button type="button"  class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加医院</button>
-                    <button type="button"  class="btn btn-primary btn-lg" >导出医院</button>
+                    <button type="button"  class="btn btn-primary btn-lg"  id="daochu" onclick="daochu()">导出医院</button>
+
                     <!--用户列表-->
                     <table id="orderDetailTable"></table>
 
