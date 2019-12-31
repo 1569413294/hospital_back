@@ -229,6 +229,7 @@
                         }
                     } else {
                         alert("没有下一条了！！");
+                        location.href="${pageContext.request.contextPath}/jsps/back/zixun.jsp"
                     }
                 }
             });

@@ -61,7 +61,7 @@ public class SecConsulController {
                             s.setPayMoney(list.get(i).getPayMoney());
                             s.setRefundStartTime(list.get(i).getRefundStartTime());
                         return s;
-                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getStatus1().equals("1")) {
+                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("0")&&list.get(i).getStatus1().equals("1")) {
                         //图片查询
                         List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
                         if (secPics.size()>0){
@@ -75,7 +75,7 @@ public class SecConsulController {
                         s.setPayMoney(list.get(i).getPayMoney());
                         s.setRefundStartTime(list.get(i).getRefundStartTime());
                         return s;
-                    }else if(qf==3&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getStatus1().equals("5")) {
+                    }else if(qf==3&&id<list.get(i).getId()&&list.get(i).getStatus().equals("0")&&list.get(i).getStatus1().equals("5")) {
                         //图片查询
                         List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
                         if (secPics.size()>0){
@@ -158,7 +158,7 @@ public class SecConsulController {
                         s.setName(list.get(i).getName());
                         s.setResponse(list.get(i).getResponse());
                         return s;
-                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("0")) {
+                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")) {
                         //图片查询
                         List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
                         if (secPics.size()>0){

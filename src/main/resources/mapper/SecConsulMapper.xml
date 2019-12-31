@@ -17,7 +17,8 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='1'
+and cs.`status`='0'
+and oc.status in('1','5')
 and cs.doctor_id in(SELECT seda.assistant_id assistant_id
 from sec_doctor_assistant seda,sec_doctor secd
 WHERE seda.doctor_id=secd.id and
@@ -42,7 +43,8 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='1'
+and cs.`status`='0'
+and oc.status in('1','5')
 and cs.doctor_id in(SELECT seda.doctor_id doctor_id
 from sec_doctor_assistant seda,sec_doctor secd
 WHERE seda.assistant_id=secd.id and
@@ -54,7 +56,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <!-- //回答问题
     boolean answered_hd(@Param("id") Integer id,@Param("response") String response);-->
     <update id="answered_hd">
-        update sec_consultation set response=#{response},response_id=1,response_time=now(),status=0 where id=#{id}
+        update sec_consultation set response=#{response},response_id=1,response_time=now(),status=1 where id=#{id}
     </update>
 
     <!--//修改退款状态
@@ -80,7 +82,7 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='0'
+and cs.`status`='1'
 and cs.response_id=dc1.id
 and cs.doctor_id in(SELECT seda.assistant_id assistant_id
 from sec_doctor_assistant seda,sec_doctor secd
@@ -107,7 +109,7 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='0'
+and cs.`status`='1'
 and cs.response_id=dc1.id
 and cs.doctor_id in(SELECT seda.doctor_id doctor_id
 from sec_doctor_assistant seda,sec_doctor secd
@@ -146,7 +148,8 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='1'
+and cs.`status`='0'
+and oc.status in('1','5')
     </select>
 
     <!--//是管理员获取所有回答
@@ -164,6 +167,6 @@ where
 cs.doctor_id=dc.id
 and oc.id=cs.order_id
 and cs.disabled=0
-and cs.`status`='0'
+and cs.`status`='1'
     </select>
 </mapper>

@@ -9,12 +9,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/bootstrap-table.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/bootstrap-table.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.js"></script>
+    <script src="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/bootstrap-table.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.js"></script>
-    <script src="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/bootstrap-table.js"></script>
-    <script src="${pageContext.request.contextPath}/static/bootstrap-3.3.7-dist/table/locale/bootstrap-table-zh-CN.js"></script>
 </head>
 <body>
 <div class="layui-card" style="height: 97%;width: 99%;">
@@ -31,10 +31,10 @@
                 <li>已回答</li>
             </ul>
             <div class="layui-tab-content" style="overflow: auto">
-                <div class="layui-tab-item layui-show">
+                <div class="layui-tab-item layui-show" style="height:500px;height: 100%;overflow: auto">
                     <table id="unanswered_table"></table>
                 </div>
-                <div class="layui-tab-item">
+                <div class="layui-tab-item" style="height:500px;height: 100%;overflow: auto">
                     <table id="answered_table"></table>
                 </div>
             </div>
@@ -54,12 +54,10 @@
         $("#unanswered_table").bootstrapTable('destroy');
         $("#unanswered_table").bootstrapTable({ // 对应table标签的id
             url:"${pageContext.request.contextPath}/consul/unanswered_all",
+            pagination:true,//分页的开关，默认是关闭的
             sidePagination:"client",//client客户端分  server服务器
-            pagination: true, // 在表格底部显示分页组件，默认false
-            pageList: [5, 10, 15, 20], // 设置页面可以显示的数据条数
-            pageSize: 5, // 页面数据条数
-            sortName: 'id', // 要排序的字段
-            pageNumber: 1, // 首页页码
+            pageList:[5,10,20],		 //设置每页几行的下拉框
+            pageSize: 10, // 页面数据条数
             columns: [
                 {
                     align:'center',
@@ -159,12 +157,10 @@
         $("#answered_table").bootstrapTable('destroy');
         $("#answered_table").bootstrapTable({ // 对应table标签的id
             url:"${pageContext.request.contextPath}/consul/answered_all",
+            pagination:true,//分页的开关，默认是关闭的
             sidePagination:"client",//client客户端分  server服务器
-            pagination: true, // 在表格底部显示分页组件，默认false
-            pageList: [5, 10, 15, 20], // 设置页面可以显示的数据条数
-            pageSize: 5, // 页面数据条数
-            sortName: 'id', // 要排序的字段
-            pageNumber: 1, // 首页页码
+            pageList:[5,10,20],		 //设置每页几行的下拉框
+            pageSize: 10, // 页面数据条数
             columns: [
                 {
                     align:'center',
@@ -231,7 +227,7 @@
                     field: 'id',
                     formatter: function (value, row, index) {
                         var str = "";
-                        str += " <button class='btn btn-primary' type='button' onclick=\"look_answered(\'" + row.orderId + "\')\">查看</button>";
+                        str += " <button class='btn btn-primary' type='button' onclick=\"look_answered(\'" + row.id + "\')\">查看</button>";
                         return str;
                     },
                     align: 'center' // 居中显示
