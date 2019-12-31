@@ -17,8 +17,8 @@ public class ReservationVo {
     private String patientTel;//手机号
     private String patientMedicalcardnumber;//就诊卡号
     private String timeframe;//时间段
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date appointmentTime;//预约时间
     private String doctorName;//医生
     private String departmentName;//科室名称
@@ -27,6 +27,8 @@ public class ReservationVo {
     private String orderName;//订单名称
     private double payMoney;//订单金额
     private String payWay;//支付方式
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH-mm-ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date payStartTime;//支付时间
     private String orderStatus;//订单状态
 
@@ -148,5 +150,26 @@ public class ReservationVo {
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationVo{" +
+                "id=" + id +
+                ", patientName='" + patientName + '\'' +
+                ", patientTel='" + patientTel + '\'' +
+                ", patientMedicalcardnumber='" + patientMedicalcardnumber + '\'' +
+                ", timeframe='" + timeframe + '\'' +
+                ", appointmentTime=" + appointmentTime +
+                ", doctorName='" + doctorName + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", hospitalName='" + hospitalName + '\'' +
+                ", orderNum='" + orderNum + '\'' +
+                ", orderName='" + orderName + '\'' +
+                ", payMoney=" + payMoney +
+                ", payWay='" + payWay + '\'' +
+                ", payStartTime=" + payStartTime +
+                ", orderStatus='" + orderStatus + '\'' +
+                '}';
     }
 }
