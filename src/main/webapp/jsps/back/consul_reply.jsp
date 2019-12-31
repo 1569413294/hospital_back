@@ -28,7 +28,7 @@
         margin: 20px;
     }
 </style>
-<body>
+<body style="height: 100%;">
 <div class="layui-card" style="height: 97%;width: 99%;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
         <a><span style="font-size: 20px;color: #1094fa">首页</span></a>
@@ -85,7 +85,7 @@
                 <div class="layui-col-xs10">
                     <div class="grid-demo">
                         <span style="font-size: 15px;width:400px; display:block;white-space:pre-wrap;" id="illnessDescription"></span>
-                        <div class="row">
+                        <div class="row" id="pic">
                             <div class="example col-xs-3 col-md-3">
                                 <p><img src="${pageContext.request.contextPath}/static/image/4.jpg" class="img-rounded" alt=""></p>
                             </div>
@@ -143,7 +143,7 @@
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="grid-demo">
-                        <textarea id="response" cols="100" rows="20" style="border-radius: 10px;background-color: #eeeeee"></textarea>
+                        <textarea id="response" cols="100" rows="10" style="border-radius: 10px;background-color: #eeeeee"></textarea>
                     </div>
                 </div>
             </div>
@@ -196,6 +196,17 @@
                         }else {
                            $("#refundStartTime").hide();
                         }
+                        var str="";
+                        if (data.secPic.length>0){
+                            for (var i=0;i<data.secPic.length;i++){
+                               var pic=data.secPic[i].picPath;
+                                str+=" <div class=\"example col-xs-3 col-md-3\">\n" +
+                                    "         <p><img src="+pic+" class=\"img-rounded\" alt=\"\"></p>\n" +
+                                    "                            </div>"
+                            }
+                        }
+                        $("#pic").html(str);
+                        $('.example img').zoomify();
                         if (data.sex==2){
                             $("#sex").html("女");
                         }else if (data.sex==1) {
@@ -203,7 +214,6 @@
                         }
                     } else {
                         alert("没有下一条了！！");
-                        window.location.href='${pageContext.request.contextPath}/jsps/back/zixun.jsp';
                     }
                 }
             });
@@ -242,7 +252,11 @@
     //下一条
     function xiayitiao() {
         var id=$("#id").val();
+        $('.layui-card-body').animate({
+            scrollTop: '0'
+        }, 1000);
         answered(id,2);
+
     }
     //提交回答
     function answered_tj() {

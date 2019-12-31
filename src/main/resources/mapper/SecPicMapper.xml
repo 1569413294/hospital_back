@@ -5,8 +5,26 @@
     <!--    //添加头像信息
     void insert_head(SecPic secPic);-->
     <insert id="insert_head">
-        insert into sec_pic(status,disabled,createtime,type,obj_id,obj_type,pic_name,pic_size,pic_path
-        ) values (1,0,now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath})
+        insert into sec_pic(id,status,disabled,createtime,type,obj_id,obj_type,pic_name,pic_size,pic_path
+        ) values (#{id},1,0,now(),#{type},#{objId},#{objType},#{picName},#{picSize},#{picPath})
+        ON DUPLICATE KEY UPDATE
+        id=#{id},
+        status=1,
+        disabled=0,
+        createtime=now(),
+        type=#{type},
+        obj_id=#{objId},
+        obj_type=#{objType},
+        pic_name=#{picName},
+        pic_size=#{picSize},
+        pic_path=#{picPath}
     </insert>
+
+
+    <!--  //获取要删除的头像路径
+    String picselectgetone(Integer pid);-->
+    <select id="picselectgetone" resultType="String">
+         select pic_path from sec_pic where id=#{pid}
+    </select>
 
 </mapper>

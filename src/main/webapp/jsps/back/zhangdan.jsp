@@ -120,7 +120,7 @@
             dataType:"json",
             data:$("#order_form").serialize(),
             success:function (data) {
-                alert("文件已导入到您的桌面!!!");
+                alert(data);
             }
         })
     }

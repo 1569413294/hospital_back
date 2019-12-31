@@ -5,6 +5,7 @@ import java.util.Date;
 public class SecDoctorMultipoint {
     private Integer id;
 
+
     private String status;
 
     private Boolean disabled;

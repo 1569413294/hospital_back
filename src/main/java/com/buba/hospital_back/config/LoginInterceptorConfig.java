@@ -28,6 +28,7 @@ public  class LoginInterceptorConfig  implements WebMvcConfigurer {
 
 
     //增加拦截器方法
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(createLoginInterceptor());
         //接受所有的访问
@@ -142,6 +143,7 @@ public  class LoginInterceptorConfig  implements WebMvcConfigurer {
     public MessageCodesResolver getMessageCodesResolver() {
         return null;
     }
+
 }
 
 

@@ -491,26 +491,6 @@
                 $("#t12").text(vi2);
 
             }
-            if(b==".two"){
-                let name = $("#form input[name='name']").val().trim();
-                let tel =$("#form input[name='tel']").val().trim();
-                let img =  $("#img_echo").attr("src");
-                if(name==null || name==""){
-                    alert("姓名为必填项");
-                    return false;
-                }
-                if(tel==null || tel==""){
-                    alert("手机号为必填项");
-                    return Ffalse;
-                }
-                if(img==null ||img==""){
-                    alert("头像为必填项");
-                    return false;
-                }
-
-            }
-
-
             $(a).hide();
             $(b).show();
             $('body,html').animate({'scrollTop': 0}, 0);
@@ -554,6 +534,21 @@
 
         //提交医生信息
         function submit_doctor() {
+            let name = $("#form input[name='name']").val().trim();
+            let tel =$("#form input[name='tel']").val().trim();
+            let img =  $("#img_echo").attr("src");
+            if(name==null || name==""){
+                alert("姓名为必填项");
+                return false;
+            }
+            if(tel==null || tel==""){
+                alert("手机号为必填项");
+                return Ffalse;
+            }
+            if(img==null ||img==""){
+                alert("头像为必填项");
+                return false;
+            }
 
             var hos_de = [];
             var zhucc = [];
@@ -597,7 +592,7 @@
 
 
 
-          var index2 = parent.layer.msg(' 信息保存中...', {
+            var index2 = parent.layer.msg(' 信息保存中...', {
                 icon: 11,
                 shade: 0.01,
                 time: 0
@@ -716,7 +711,7 @@
                             <%--第一页时间线--%>
                             <img src="${pageContext.request.contextPath}/static/images/1.jpg"/>
                             <div class="form-group" style="margin-top: 3%;">
-                                <label class="col-sm-2 control-label">姓名<span style="color: red">*</span></label>
+                                <label class="col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-4">
                                     <input type="hidden" name="id" class="form-control"/>
                                     <input type="hidden" name="muid" class="form-control"/>
@@ -751,13 +746,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">手机号<span style="color: red">*</span></label>
+                                <label class="col-sm-2 control-label">手机号</label>
                                 <div class="col-sm-4">
-                                    <input type="number" oninput="if(value.length>11)value=value.slice(0,11)" name="tel" class="form-control"/>
+                                    <input type="tel" maxlength="11" name="tel" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">医生照片<span style="color: red">*</span></label>
+                                <label class="col-sm-2 control-label">医生照片</label>
                                 <img width="100" style=";margin-left: 15px" height="100" id="img_echo">
                             </div>
                             <div class="form-group" style="margin-bottom: 30px;margin-left: 17%;">

@@ -5,8 +5,38 @@
 <!-- //添加医生医院科室关联表
     Integer add_ho_de(SecDoctorMultipoint secDoctorMultipoint);-->
     <insert id="add_ho_de">
-        insert into sec_doctor_multipoint(status,disabled,createtime,doctor_id,hospital_id,department_id)
-        values (1,0,now(),#{doctorId},#{hospitalId},#{departmentId})
+      INSERT INTO sec_doctor_multipoint
+        (
+            id,
+            STATUS,
+            disabled,
+            createtime,
+            doctor_id,
+            hospital_id,
+            department_id
+        )
+        VALUES
+    	(
+		#{id},1,0,now(),#{doctorId},#{hospitalId},#{departmentId})
+		ON DUPLICATE KEY UPDATE id = #{id},
+		STATUS = 1,
+		disabled = 0,
+		createtime = now(),
+		doctor_id = #{doctorId},
+		hospital_id = #{hospitalId},
+		department_id = #{departmentId}
     </insert>
+
+    <!--  //删除医生对应的医院以及科室信息
+    Boolean delete_h_d(Integer id);-->
+    <delete id="delete_h_d">
+        delete from sec_doctor_multipoint  where id=#{id}
+    </delete>
+    <!--添加医生 关联-->
+
+    <insert id="addSecDoctorMultipointMapper" useGeneratedKeys="true" keyProperty="id" >
+        insert into  sec_doctor_multipoint(createtime,doctor_id,hospital_id) values (now(),#{id},#{hospitalId})
+    </insert>
+
 
 </mapper>

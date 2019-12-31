@@ -28,7 +28,7 @@
         margin: 20px;
     }
 </style>
-<body>
+<body style="height: 100%;">
 <div class="layui-card" style="height: 97%;width: 99%;border: 10px;">
     <div class="layui-card-header" style="height: 6%;width: 100%;">
         <a><span style="font-size: 20px;color: #1094fa">首页</span></a>
@@ -37,7 +37,7 @@
         &nbsp;&nbsp;<span style="font-size: 20px">></span>&nbsp;&nbsp;
         <a><span style="font-size: 20px;color: #1094fa">在线咨询详情</span></a>
     </div>
-    <div class="layui-card-body" style="height: 94%;width: 100%;">
+    <div class="layui-card-body" style="height: 91%;width: 100%;overflow: auto">
         <div class="layui-container">
             <div class="layui-row">
                 <div class="layui-col-xs2">
@@ -85,7 +85,7 @@
                 <div class="layui-col-xs10">
                     <div class="grid-demo">
                         <span style="font-size: 15px;width:400px; display:block;white-space:pre-wrap;" id="illnessDescription"></span>
-                        <div class="row">
+                        <div class="row" id="pic">
                             <div class="example col-xs-3 col-md-3">
                                 <p><img src="${pageContext.request.contextPath}/static/image/4.jpg" class="img-rounded" alt=""></p>
                             </div>
@@ -183,6 +183,16 @@
                         $("#payMoney1").html("￥"+data.payMoney);
                         var refundStartTime=changeDateFormat(data.refundStartTime);
                         $("#refundStartTime").html(refundStartTime);
+                        var str="";
+                        if (data.secPic.length>0){
+                            for (var i=0;i<data.secPic.length;i++){
+                                str+=" <div class=\"example col-xs-3 col-md-3\">\n" +
+                                    "         <p><img src="+data.secPic[i].picPath+" class=\"img-rounded\" alt=\"\"></p>\n" +
+                                    "                            </div>"
+                            }
+                        }
+                        $("#pic").html(str);
+                        $('.example img').zoomify();
                         if (data.sex==2){
                             $("#sex").html("女");
                         }else if (data.sex==1) {
@@ -190,7 +200,6 @@
                         }
                     } else {
                         alert("没有下一条了！！");
-                        window.location.href='${pageContext.request.contextPath}/jsps/back/zixun.jsp'
                     }
                 }
             });
@@ -200,7 +209,11 @@
     //下一条
     function xiayitiao() {
         var id=$("#id").val();
+        $('.layui-card-body').animate({
+            scrollTop: '0'
+        }, 1000);
         answered(id,3);
+
     }
     //修改——转换日期格式(时间戳转换为datetime格式)
     function changeDateFormat(cellval) {

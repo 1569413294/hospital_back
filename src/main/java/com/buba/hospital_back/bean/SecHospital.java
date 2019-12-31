@@ -10,6 +10,7 @@ public class SecHospital {
 
     private String status;
 
+
     private Boolean disabled;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -24,8 +25,16 @@ public class SecHospital {
     private Double longitude;
 
     private Double latitude;
-
+    private  String hospitalSort;
     private Integer creator;
+
+    public String getHospitalSort() {
+        return hospitalSort;
+    }
+
+    public void setHospitalSort(String hospitalSort) {
+        this.hospitalSort = hospitalSort;
+    }
 
     public Integer getId() {
         return id;

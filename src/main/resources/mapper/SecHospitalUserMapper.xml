@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buba.hospital_back.mapper.SecHospitalUserMapper">
+
+
+    <insert id="addSecHospitalRelation" parameterType="com.buba.hospital_back.bean.SecUser">
+      insert into sec_hospital_user(hospital_id,admin_id) values (#{hospitalId},#{id})
+
+  </insert>
+
+
+    <!--修改-->
+    <update id="updateSecHospitalRelation">
+        update sec_hospital_user
+        set hospital_id =#{hospitalId}
+            ,admin_id=#{id}
+        where id=#{huId}
+    </update>
+    <!--
+    /* *
+       * 功能概述：用户管理 添加医生 用户与医院 关联 表<br>
+       * <>
+       * @Param: [addDoctor]
+       * @Return: int
+       * @Author: Administrator
+       * @Date: 2019/12/18 14:56
+       */
+    int addDoctor(AddDoctor addDoctor);
+    -->
+    <insert id="addDoctor">
+         insert into sec_hospital_user(hospital_id,admin_id) values (#{hospitalId},#{id})
+    </insert>
+
+
+</mapper>

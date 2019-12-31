@@ -29,10 +29,9 @@
             });
             //点击放弃 跳转到首页
             $("#abandon").click(function () {
-                window.location.reload();
-                // $("#add_one_department").css("display", "");
-                // $("#office_add").hide();
-                // $("#tableparent").show();
+                $("#add_one_department").css("display", "");
+                $("#office_add").hide();
+                $("#tableparent").show();
             });
             //给保存绑定点击事件
             $("#save").click(function () {
@@ -152,13 +151,11 @@
                     //调用校验一级科室信息
                   //  b = jy_two_departmentName(b);
                     //如果c为ture 代表一级科室没有重复
-                    //if (b) {
-                        if (is_one_two == 2) {
-                            add_two();
-                            return;
-                        }
-                        add_office();
-                    //}
+                    if (is_one_two == 2) {
+                        add_two();
+                        return;
+                    }
+                    add_office();
                 }
             }
             //3代表继续添加二级科室操作
@@ -229,10 +226,6 @@
                 $("#form textarea[name='secondDepartmentCommont']").val(row.secondDepartmentCommont);
                 return;
             }
-            else {
-                $("#form input[name='sta']").val(1);
-            }
-
             $("#office_add").show();
             $("#tableparent").hide();
             $("#form input[name='departmentName']").val("").removeAttr("disabled");

@@ -48,7 +48,6 @@ public class LoginInterceptor  implements HandlerInterceptor {
             //还有，有效。
             if(secUser != null){
                 System.out.println("session未失效");
-                System.out.println("1");
                 return true;
             }else{
                 String struuid=null;

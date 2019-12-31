@@ -7,6 +7,7 @@
     <select id="unanswered_all" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
 oc.refund_start_time refundStartTime
@@ -31,6 +32,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="unanswered_all1" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
 oc.refund_start_time refundStartTime
@@ -58,7 +60,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <!--//修改退款状态
     boolean updestatus(Integer id);-->
     <update id="updestatus">
-        update sec_consultation set payment_status=2 where id=#{id}
+        update his_order set status=5 where id=#{id}
     </update>
 
 
@@ -67,6 +69,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="answered_all1" resultType="secConsultation">
        SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_way payWay,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
@@ -93,6 +96,7 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     <select id="answered_all" resultType="secConsultation">
       SELECT cs.*,dc.`name` `name`,dc1.`name` name1,
 oc.order_num orderNum,
+oc.status status1,
 oc.pay_way payWay,
 oc.pay_money payMoney,
 oc.pay_start_time payStartTime,
@@ -117,5 +121,49 @@ secd.id=(SELECT sd.id FROM sec_doctor sd,sec_user su where su.phone=sd.tel and s
     SecDoctor find_assistant(String phone);-->
     <select id="find_assistant" resultType="secDoctor">
       select assistant from sec_doctor where tel=#{phone}
+    </select>
+
+    <!-- //图片查询
+    List<SecPic> answered_allpic(Integer id);-->
+    <select id="answered_allpic" resultType="secPic">
+        SELECT sp.pic_path FROM sec_pic sp,his_order oc
+where sp.obj_id=oc.id and oc.id=#{id}
+and sp.obj_type="患者" and sp.type="consultation" and sp.disabled=0
+    </select>
+
+    <!-- //是管理员获取所有未回答
+    List<SecConsultation> unanswered_all2();-->
+    <select id="unanswered_all2" resultType="secConsultation">
+SELECT cs.*,dc.`name` `name`,
+oc.order_num orderNum,
+oc.status status1,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='1'
+    </select>
+
+    <!--//是管理员获取所有回答
+    List<SecConsultation> answered_all2();-->
+    <select id="answered_all2" resultType="secConsultation">
+SELECT cs.*,dc.`name` `name`,
+oc.order_num orderNum,
+oc.status status1,
+oc.pay_money payMoney,
+oc.pay_start_time payStartTime,
+oc.refund_start_time refundStartTime
+ FROM
+sec_consultation cs,sec_doctor dc,his_order oc
+where
+cs.doctor_id=dc.id
+and oc.id=cs.order_id
+and cs.disabled=0
+and cs.`status`='0'
     </select>
 </mapper>

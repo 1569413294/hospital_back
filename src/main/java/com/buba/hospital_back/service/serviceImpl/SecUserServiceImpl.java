@@ -1,8 +1,6 @@
 package com.buba.hospital_back.service.serviceImpl;
 
-import com.buba.hospital_back.bean.SecHospital;
-import com.buba.hospital_back.bean.SecRes;
-import com.buba.hospital_back.bean.SecUser;
+import com.buba.hospital_back.bean.*;
 import com.buba.hospital_back.mapper.SecUserMapper;
 import com.buba.hospital_back.service.SecUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,11 @@ import java.util.List;
 @Service
 public class SecUserServiceImpl implements SecUserService {
 
+
     @Autowired
     private SecUserMapper secUserMapper;
 
-    /*
+    /**
      * 功能描述:查询权限列表
      * @Param: []
      * @Return: java.util.List<com.buba.hospital_back.bean.SecRes>
@@ -49,5 +48,37 @@ public class SecUserServiceImpl implements SecUserService {
     @Override
     public List<SecHospital> getOfHospitalById(Integer id) {
         return secUserMapper.getOfHospitalById(id);
+    }
+
+    @Override
+    public List<SelectUrhdm> selectUrhdm() {
+        return secUserMapper.selectUrhdm();
+    }
+
+    @Override
+    public int updateUserDisabled(Integer id, Integer disabled) {
+        return secUserMapper.updateUserDisabled(id,disabled);
+    }
+
+    @Override
+    public int addUser(SecUser secUser) {
+        return secUserMapper.addUser(secUser);
+    }
+
+    @Override
+    public int updateUser(SelectUrhdm selectUrhdm) {
+        return secUserMapper.updateUser(selectUrhdm);
+    }
+    /* *
+     * 功能概述：添加 医生 <br>
+     * <>
+     * @Param: [addDoctor]
+     * @Return: int
+     * @Author: Administrator
+     * @Date: 2019/12/18 14:30
+     */
+    @Override
+    public int addDoctor(AddDoctor addDoctor) {
+        return secUserMapper.addDoctor(addDoctor);
     }
 }

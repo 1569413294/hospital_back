@@ -163,22 +163,22 @@
                     field: 'orderStatus',
                     title: '订单状态',
                     formatter:function(value,row,index) {
-                        if (row.orderStatus == 0) {
+                        if (row.status == 0) {
                             return '未支付'
                         }
-                        if (row.orderStatus == 1) {
+                        if (row.status == 1) {
                             return '已支付'
                         }
-                        if (row.orderStatus == 2) {
+                        if (row.status == 2) {
                             return '未到诊'
                         }
-                        if (row.orderStatus == 3) {
+                        if (row.status == 3) {
                             return '已到诊'
                         }
-                        if (row.orderStatus == 4) {
+                        if (row.status == 4) {
                             return '已取消'
                         }
-                        if (row.orderStatus == 5) {
+                        if (row.status == 5) {
                             return '已退款'
                         }
                     }
@@ -215,34 +215,15 @@
                 $("#payMoney").val(data.payMoney);
                 $("#payWay").val(data.payWay);
                 $("#payStartTime").val(data.payStartTime);
-                if (data.orderStatus == 0) {
-                    $("#orderStatus").val('未支付');
-                }
-                if (data.orderStatus == 1) {
-                    $("#orderStatus").val('已支付');
-                }
-                if (data.orderStatus == 2) {
-                    $("#orderStatus").val('未到诊');
-                }
-                if (data.orderStatus == 3) {
-                    $("#orderStatus").val('已到诊');
-                }
-                if (data.orderStatus == 4) {
-                    $("#orderStatus").val('已取消');
-                }
-                if (data.orderStatus == 5) {
-                    $("#orderStatus").val('已退款');
-                }
-
-                $("#mark").html();
+                $("#orderStatus").val(data.orderStatus);
                 var str='';
-                if(data.orderStatus== 4 || data.orderStatus== 5){
+                if(data.orderStatus==4 && data.orderStatus==5){
                     str+= "<button type='button' onclick='back()' class='layui-btn layui-btn-radius layui-btn-primary'>取消</button>";
                 }else{
                     str+="<button type='button' onclick='back_mark()' class='layui-btn layui-btn-radius'>退号</button>" +
                         "<button type='button' onclick='back()' class='layui-btn layui-btn-radius layui-btn-primary'>取消</button>";
                 }
-                $("#mark").html(str)
+                $("#mark").prepend(str);
             }
         })
         $("#line_item").show();
@@ -250,7 +231,6 @@
     
     function back_mark() {
       var id=$("#rid").val();
-      alert(id);
         $.ajax({
             url:"/reservation/back_mark",
             dataType:"json",
@@ -258,7 +238,6 @@
             data:{id:id},
             success:function (data) {
                 if(data){
-                    alert("成功！！！！！")
                     window.location.reload();
                 }else {
                     alert("失败！")

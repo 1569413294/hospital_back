@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.swing.filechooser.FileSystemView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,14 +28,13 @@ public class ReservationController {
     @Resource
     private ReservationService reservationService;
     //预约账单查询
-    @RequestMapping("/find_reservation")
+    @RequestMapping("find_reservation")
     @ResponseBody
     public List<ReservationVo> find_reservation(){
         List<ReservationVo> l=reservationService.find_reservation();
-
         return l;
     }
-    //账单查询
+    //预约账单查询
     @RequestMapping("find_hisOrder")
     @ResponseBody
     public List<HisOrder> find_hisOrder(HisOrder hisOrder){
@@ -47,14 +45,12 @@ public class ReservationController {
     @RequestMapping("outExecel")
     @ResponseBody
     public boolean outExecel(HttpSession session,HisOrder hisOrder){
-        FileSystemView fsv = FileSystemView.getFileSystemView();  //注意了，这里重要的一句
-
         SecUser user = (SecUser) session.getAttribute("user");
         SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String d= sf.format(new Date());
         //if(user!=null){
         //设置导出文件路径
-        String target=fsv.getHomeDirectory()+"\\"+"账单"+d+".xlsx";
+        String target="D:"+"账单"+d+".xlsx";
         //模板名称
         String temp="\\hisOrder.xlsx";
         //模板路径
@@ -82,6 +78,7 @@ public class ReservationController {
         pro.add("refundStartTime");
         pro.add("payMoney");
         pro.add("medicalCardNumber");
+        System.out.println("sss");
         return pro;
     }
 //预约详情
