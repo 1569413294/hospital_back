@@ -335,6 +335,17 @@
                                 <input style="outline:0;" type="text" id="phone" name="">
                             </td><br/>
                         </tr>
+                        <script>
+                            $("#phone").blur(function () {
+                                var hospitalTel=$("#phone").val();
+                                var hospitalTels=/^1[3-9]+\d{9}$/;
+                                if (hospitalTels.test(hospitalTel)){
+                                    layer.msg('合格手机号');
+                                }else {
+                                    layer.msg('非法手机号').css("size-color","red");
+                                }
+                            })
+                        </script>
                         <tr>
                             <td>
                                 <span>所属医院：</span>
@@ -387,6 +398,17 @@
                                 <input style="outline:0;" type="text" id="phone1" name="">
                             </td><br/>
                         </tr>
+                        <script>
+                            $("#phone1").blur(function () {
+                                var hospitalTel=$("#phone1").val();
+                                var hospitalTels=/^1[3-9]+\d{9}$/;
+                                if (hospitalTels.test(hospitalTel)){
+                                    layer.msg('合格手机号');
+                                }else {
+                                    layer.msg('非法手机号').css("size-color","red");
+                                }
+                            })
+                        </script>
                         <tr>
                             <td>
                                 <span>所属医院：</span>

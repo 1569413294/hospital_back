@@ -32,12 +32,13 @@
             cursor: pointer;
         }
         .preview,.preBlock{
+
             position: absolute;
             display: block;
-            width: 620px;
+            width: 650px;
             height: 210px;
-            left: 0;
-            top: 0;
+            margin-left:15px ;
+            top: 0px;
         }
         .delete {
             width: 30px;
@@ -48,6 +49,7 @@
             display: none;
         }
         .preBlock img {
+
             display: block;
             width: 620px;
             height: 210px;
@@ -92,14 +94,17 @@
             //dataType:"json",
             data:{"hospitalId":hospitalId},
             success:function (data) {
-                alert("当前医院"+data);
+                layer.msg('当前医院:'+data);
             },error:function () {
-                alert("网络维护中.......")
+                layer.msg("网络维护中.......");
             }
         })
     })
 </script>
-
+<p style="color: #99ffeb"><img src="${pageContext.request.contextPath}/static/images/xlb.png" style="width: 25px;height: 25px">
+        <span style="color: red">友情提示：</span>内容框与图片框只可添加与末尾，记得
+    预存方便灵感一现呦！~~~~~
+</p>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body" style="padding: 15px;">
@@ -120,18 +125,25 @@
                     <label class="layui-form-label">电话</label>
                     <div class="layui-input-block">
                         <input type="text" name="hospitalTel" lay-verify="title" autocomplete="off" placeholder="请输入电话" class="layui-input" />
-                       <%-- <select name="articleType" lay-filter="aihao">
-
-                        </select>--%>
                     </div>
                 </div>
-
+                <script>
+                    $("input[name='hospitalTel']").blur(function () {
+                        var hospitalTel=$("input[name='hospitalTel']").val();
+                        var hospitalTels=/^1[3-9]+\d{9}$/;
+                           if (hospitalTels.test(hospitalTel)){
+                               layer.msg('合格手机号');
+                           }else {
+                               layer.msg('非法手机号');
+                           }
+                    })
+                </script>
 
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">内容</label>
                     <div class="layui-input-block" id="infoList">
                         <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <textarea id="articleInfo" name="articleInfo" placeholder="请输入内容" class="layui-textarea" maxlength="300" rows="9" style="width: 620px;height: 210px"></textarea>
+                            <textarea id="articleInfo" name="articleInfo" placeholder="请输入内容" class="layui-textarea" maxlength="300" rows="9" style="width: 650px;height: 210px"></textarea>
                             <i class="layui-icon layui-icon-delete"   style="position:relative;float: left;margin-top: -28px;font-size:30px;color: red"></i>
                             <i style="position:relative;float: left;margin-top: -24px;margin-left: 575px;"><span class="count-change">0</span>/300</i>
                         </div>
@@ -162,9 +174,10 @@
 <br/><br/>
 <div id="bom" style="background: #AAAAAA;height: 54px;padding: 10px;" class="col-sm-12">
     <button  onclick="submitArticle()"  class="layui-btn" style="margin-left: 240px;width: 150px;">保存</button>
-    <button  class="layui-btn layui-btn-danger" style="width: 150px;" >放弃</button>
+    <button  class="layui-btn layui-btn-danger" style="width: 150px;" onclick="javascript:window.location.href=window.location.href;" >放弃</button>
 </div>
 <script>
+
     layui.config({
         base: '/static/layuiadmin/' //静态资源所在路径
     }).extend({
@@ -219,7 +232,7 @@
 
             $("#infoList").append("   <div style=\"margin-top: 20px;margin-bottom: 20px;\">\n" +
                 "\n" +
-                "                            <textarea name=\"articleInfo\" placeholder=\"请输入内容\" class=\"layui-textarea\" maxlength=\"300\" rows=\"9\" style=\"width: 620px;height: 210px\"></textarea>\n" +
+                "                            <textarea name=\"articleInfo\" placeholder=\"请输入内容\" class=\"layui-textarea\" maxlength=\"300\" rows=\"9\" style=\"width: 650px;height: 210px\"></textarea>\n" +
                 "                            <i class=\"layui-icon layui-icon-delete\" onclick=\"deleteLable(this)\" style=\"position:relative;float: left;margin-top: -28px;font-size:30px;color: red\"></i>\n" +
                 "                            <i style=\"position:relative;float: left;margin-top: -24px;margin-left: 575px;\"><span class=\"count-change\">0</span>/300</i>\n" +
                 "                        </div>\n");
@@ -227,12 +240,12 @@
 
         $("#addImgBtn").click(function(){
             //添加图片框
-            $("#infoList").append(" <div class=\"item\" >\n" +
-                "                            <i class=\"layui-icon layui-icon-delete\"  onclick=\"deleteLable(this)\"  style=\"margin-top: -32px;font-size:30px;color: red\"></i>\n" +
+            $("#infoList").append(" <div class=\"item\" style=\"border:none\">\n" +
+                "                            <span class=\"layui-icon layui-icon-delete\"  onclick=\"deleteLables(this)\"  style=\"margin-top: -32px;font-size:30px;color: red\"></span>\n" +
                 "                            <img class=\"icon addImg\"  onclick=\"clickImg(this);\" src=\"/static/images/addImg.png\">\n" +
                 "                            <input name=\"url\" type=\"file\" class=\"upload_input\" onchange=\"change(this)\">\n" +
-                "                            <div class=\"preBlock\">\n" +
-                "                                <img  class=\"preview\" alt=\"\" name=\"pic\" width=\"620\" height=\"210\">\n" +
+                "                            <div class=\"preBlock\" style=' border:1px solid transparent'>\n" +
+                "                                <img  class=\"preview\" alt=\"\" name=\"pic\" width=\"520\" height=\"180\" >\n" +
                 "                            </div>\n" +
                 "                            <img class=\"delete\" onclick=\"deleteImg(this)\" src=\"/static/images/delete.png\">\n" +
                 "                        </div>");
@@ -253,7 +266,17 @@
         $(obj).hide();
         $(obj).parent().find('.addImg').show();
     }
+    //删除 添加的文本
 
+    var deleteLable=function (obj) {
+        $(obj).parent().remove();
+        layer.msg("已删除文本框.......");
+    }
+//删除图片框
+    var deleteLables=function (obj) {
+        $(obj).parent().remove();
+        layer.msg("已删除图片框.......");
+    }
     //选择图片
     function change(file) {
         //预览
@@ -363,14 +386,17 @@
         });
 
         var hospitalAddress = $("input[name='hospitalAddress']").val();
-        var hospitalTel = $("select[name='hospitalTel'] option:selected").val();
+        var hospitalTel = $("input[name='hospitalTel']").val();
         var articleInfo = $("#articleInfo").val();
 
         if(hospitalAddress.length < 1){
             layer.msg('地址不能为空');
             return;
-        }else if(!articleInfo){
-            layer.msg('文章内容至少一条');
+        }else if(hospitalTel.length < 11){
+            layer.msg('非法手机号');
+            return;
+        } else if(!articleInfo){
+            layer.msg('第一条必须是文字');
             return;
         }else{
             var formData = new FormData();
