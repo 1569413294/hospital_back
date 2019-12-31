@@ -9,7 +9,6 @@ public class SecUser   {
 
     private String status;
 
-
     private Boolean disabled;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -23,17 +22,6 @@ public class SecUser   {
     private String password;
     //角色id
     private Integer roleId;
-    //医院id
-    private  Integer hospitalId;
-
-
-    public Integer getHospitalId() {
-        return hospitalId;
-    }
-
-    public void setHospitalId(Integer hospitalId) {
-        this.hospitalId = hospitalId;
-    }
 
     public Integer getId() {
         return id;
@@ -101,6 +89,7 @@ public class SecUser   {
     }
 
 
+
     @Override
     public String toString() {
         return "SecUser{" +
@@ -112,7 +101,6 @@ public class SecUser   {
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", roleId=" + roleId +
-                ", hospitalId=" + hospitalId +
                 '}';
     }
 }

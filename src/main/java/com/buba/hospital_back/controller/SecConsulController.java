@@ -1,7 +1,6 @@
 package com.buba.hospital_back.controller;
 
 import com.buba.hospital_back.bean.SecConsultation;
-import com.buba.hospital_back.bean.SecPic;
 import com.buba.hospital_back.bean.SecUser;
 import com.buba.hospital_back.service.SecConsulService;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,7 @@ public class SecConsulController {
         SecUser user = (SecUser) session.getAttribute("user");
         if (user!=null){
             String phone = user.getPhone();
-            List<SecConsultation> List=secConsulService.unanswered_all(phone,user.getRoleId());
+            List<SecConsultation> List=secConsulService.unanswered_all(phone);
             return List;
         }else {
             return null;
@@ -42,17 +41,12 @@ public class SecConsulController {
         SecUser user = (SecUser) session.getAttribute("user");
         if (user!=null){
             String phone = user.getPhone();
-            List<SecConsultation> list=secConsulService.unanswered_all(phone,user.getRoleId());
+            List<SecConsultation> list=secConsulService.unanswered_all(phone);
             SecConsultation s=null;
             if (list!=null){
                 s=new SecConsultation();
                 for (int i=0;i<list.size();i++){
                     if (qf==1&&id==list.get(i).getId()){
-                        //图片查询
-                        List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
-                        if (secPics.size()>0){
-                            s.setSecPic(secPics);
-                        }
                             s.setId(list.get(i).getId());
                             s.setOrderNum(list.get(i).getOrderNum());
                             s.setQuestionTitle(list.get(i).getQuestionTitle());
@@ -61,12 +55,7 @@ public class SecConsulController {
                             s.setPayMoney(list.get(i).getPayMoney());
                             s.setRefundStartTime(list.get(i).getRefundStartTime());
                         return s;
-                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getStatus1().equals("1")) {
-                        //图片查询
-                        List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
-                        if (secPics.size()>0){
-                            s.setSecPic(secPics);
-                        }
+                    }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getPaymentStatus().equals("0")) {
                         s.setOrderNum(list.get(i).getOrderNum());
                         s.setId(list.get(i).getId());
                         s.setQuestionTitle(list.get(i).getQuestionTitle());
@@ -75,12 +64,7 @@ public class SecConsulController {
                         s.setPayMoney(list.get(i).getPayMoney());
                         s.setRefundStartTime(list.get(i).getRefundStartTime());
                         return s;
-                    }else if(qf==3&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getStatus1().equals("5")) {
-                        //图片查询
-                        List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
-                        if (secPics.size()>0){
-                            s.setSecPic(secPics);
-                        }
+                    }else if(qf==3&&id<list.get(i).getId()&&list.get(i).getStatus().equals("1")&&list.get(i).getPaymentStatus().equals("2")) {
                         s.setOrderNum(list.get(i).getOrderNum());
                         s.setQuestionTitle(list.get(i).getQuestionTitle());
                         s.setId(list.get(i).getId());
@@ -121,7 +105,7 @@ public class SecConsulController {
         SecUser user = (SecUser) session.getAttribute("user");
         if (user!=null){
             String phone = user.getPhone();
-            List<SecConsultation> List=secConsulService.answered_all(phone, user.getRoleId());
+            List<SecConsultation> List=secConsulService.answered_all(phone);
             return List;
         }else {
             return null;
@@ -137,17 +121,12 @@ public class SecConsulController {
         SecUser user = (SecUser) session.getAttribute("user");
         if (user!=null){
             String phone = user.getPhone();
-            List<SecConsultation> list=secConsulService.answered_all(phone,user.getRoleId());
+            List<SecConsultation> list=secConsulService.answered_all(phone);
             SecConsultation s=null;
             if (list!=null){
                 s=new SecConsultation();
                 for (int i=0;i<list.size();i++){
                     if (qf==1&&id==list.get(i).getId()){
-                        //图片查询
-                        List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
-                        if (secPics.size()>0){
-                            s.setSecPic(secPics);
-                        }
                         s.setId(list.get(i).getId());
                         s.setOrderNum(list.get(i).getOrderNum());
                         s.setQuestionTitle(list.get(i).getQuestionTitle());
@@ -159,11 +138,6 @@ public class SecConsulController {
                         s.setResponse(list.get(i).getResponse());
                         return s;
                     }else if(qf==2&&id<list.get(i).getId()&&list.get(i).getStatus().equals("0")) {
-                        //图片查询
-                        List<SecPic> secPics=secConsulService.answered_allpic(list.get(i).getOrderId());
-                        if (secPics.size()>0){
-                            s.setSecPic(secPics);
-                        }
                         s.setOrderNum(list.get(i).getOrderNum());
                         s.setId(list.get(i).getId());
                         s.setQuestionTitle(list.get(i).getQuestionTitle());

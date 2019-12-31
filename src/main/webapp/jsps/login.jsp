@@ -302,8 +302,7 @@
             error:function(error){
                 alert("短信发送失败！");
             },success:function(data){
-                if(data.result>0){
-                    console.log(data.result);
+                if(data){
                     countdownHandler();
                     alert("短信发送成功，请查收！");
                 }else{

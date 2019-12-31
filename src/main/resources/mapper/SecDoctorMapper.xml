@@ -4,64 +4,15 @@
     <!--查询每个医生对应的多个医院-->
     <resultMap id="hospitals" type="com.buba.hospital_back.bean.DoctorVo">
         <id column="id" property="id"/>
-        <collection property="hospitals" ofType="String" select="get_hospitals" column="id">
+        <collection property="hospitals" ofType="String " select="get_hospitals" column="id">
         </collection>
     </resultMap>
-    <!--查询对应的助理以及对应的多点执业信息-->
-    <resultMap id="echo_doctor" type="com.buba.hospital_back.bean.DoctorVo2">
-        <id column="id" property="id"/>
-        <!--查询科室医院-->
-        <collection property="mlist" ofType="com.buba.hospital_back.bean.MultVo" select="get_m"
-                    column="id">
-        </collection>
-        <!--查询助理-->
-        <collection property="alist" ofType="com.buba.hospital_back.bean.AssiVo" select="get_a"
-                    column="id">
-        </collection>
 
-    </resultMap>
-
-    <!--get_m 查询医生对应的科室医院-->
-    <select id="get_m" resultType="com.buba.hospital_back.bean.MultVo">
-       SELECT
-       s1.id,
-	s1.doctor_id,
-	s1.hospital_id,
-	s2.hospital_name,
-	s1.department_id,
-	s3.second_department_name
-FROM
-	sec_doctor_multipoint s1,
-	sec_hospital s2,
-	sec_second_department s3
-WHERE
-	s1.hospital_id = s2.id
-AND s1.department_id = s3.id
-AND s1.doctor_id = #{id}
-    </select>
-
-    <!--get_a 查询医生对应的助理-->
-    <select id="get_a" resultType="com.buba.hospital_back.bean.AssiVo">
-     select s1.id,s1.doctor_id,s2.`name`,s1.assistant_id from  sec_doctor_assistant s1,sec_doctor s2  where  s1.assistant_id = s2.id and  s1.doctor_id =#{id}
-    </select>
-
-    <!--//查询医生回显数据
-    List<SecDoctor> doctor_xq(Integer id);-->
-    <select id="doctor_xq" resultMap="echo_doctor">
-       SELECT
-	s1.*, s2.pic_path,s2.id as pid,s2.pic_path
-FROM
-	sec_doctor s1
-LEFT JOIN sec_pic s2 ON s1.id = s2.obj_id
-WHERE
-	s1.id =#{id}
-    </select>
 
     <!--    //添加医生信息
       Integer add_doctor(SecDoctor secDoctor);-->
     <insert id="add_doctor" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sec_doctor (
-                id,
                 STATUS,
                 disabled,
                 createtime,
@@ -81,7 +32,6 @@ WHERE
                     )
         VALUES
             (
-                #{id},
                 1,
                 0,
                 now(),
@@ -99,26 +49,6 @@ WHERE
                 #{price},
                 #{creator}
             )
-          ON DUPLICATE KEY UPDATE
-          id=#{id},
-          STATUS =1,
-          disabled=0,
-          createtime=now(),
-          name=#{name},
-          assistant=#{assistant},
-          display=#{display},
-          tel=#{tel},
-          rank=#{rank},
-          visitplaces=#{visitplaces},
-          visitaddress=#{visitaddress},
-          introduce=#{introduce},
-          adeptat=#{adeptat},
-          onlineconsultant=#{onlineconsultant},
-          IsPremium=#{ispremium},
-          price=#{price},
-          creator=#{creator}
-
-
     </insert>
 
     <!-- //查询所有医生信息
@@ -138,11 +68,6 @@ WHERE
     List<DoctorVo> hospital_all();-->
     <select id="hospital_all" resultType="com.buba.hospital_back.bean.SecHospital">
         select id,hospital_name from sec_hospital where id!=#{hospitalId}
+
     </select>
-    <!--添加医生-->
-
-    <insert id="addDoctors" useGeneratedKeys="true" keyProperty="id" >
-        insert into  sec_doctor(createtime,name,tel) values (now(),#{name},#{phone})
-    </insert>
-
 </mapper>

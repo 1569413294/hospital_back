@@ -30,6 +30,7 @@
 
     </div>
 </div>
+<script src="${pct}/static/js/common/homepage.js"></script>
 <script>
     layui.config({
         base: '/static/layuiadmin/' //静态资源所在路径

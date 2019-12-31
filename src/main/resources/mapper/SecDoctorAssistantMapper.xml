@@ -5,17 +5,7 @@
     <!--  //添加助理信息
     Integer add_as(SecDoctorAssistant secDoctorAssistant);-->
     <insert id="add_as">
-        insert into sec_doctor_assistant(id,status,disabled,createtime,doctor_id,assistant_id)
-        values(#{id},1,0,now(),#{doctorId},#{assistantId})
-       ON DUPLICATE KEY UPDATE id=#{id},status=1,disabled=0,createtime=now(),doctor_id=#{doctorId},assistant_id=#{assistantId}
+        insert into sec_doctor_assistant(status,disabled,createtime,doctor_id,assistant_id)
+        values(1,0,now(),#{doctorId},#{assistantId})
     </insert>
-
-
-    <!--//删除医生下对应的助理
-    Boolean delete_zhu(Integer id);-->
-
-    <delete id="delete_zhu">
-        delete from  sec_doctor_assistant where id=#{id}
-
-    </delete>
 </mapper>

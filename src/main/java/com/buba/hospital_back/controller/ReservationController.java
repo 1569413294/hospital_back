@@ -34,10 +34,11 @@ public class ReservationController {
         List<ReservationVo> l=reservationService.find_reservation();
         return l;
     }
-    //预约账单查询
+    //账单查询
     @RequestMapping("find_hisOrder")
     @ResponseBody
     public List<HisOrder> find_hisOrder(HisOrder hisOrder){
+        System.out.println(hisOrder);
         List<HisOrder> l=reservationService.find_hisOrder(hisOrder);
         return l;
     }

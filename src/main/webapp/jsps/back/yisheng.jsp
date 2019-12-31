@@ -10,7 +10,6 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layuiadmin/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/add_office.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/bootstrap/css/bootstrap-table.css">
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/jquery-2.2.1.min.js"></script>
@@ -18,8 +17,6 @@
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap-table.js"></script>
     <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap-table-zh-CN.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/layuiadmin/layui/layui.all.js"></script>
-
     <script>
         var doctor_al;
         //储存医院信息
@@ -27,6 +24,7 @@
         $(function () {
             //调用查询所有医院
             doctor_all();
+
             //回显图片
             $("#uploadImgBtn").click(function () {
                 //触发上传图片点击
@@ -63,9 +61,17 @@
                 hospital_all();
                 //展示职称
                 rank_all();
-                //二级科室信息
-                two_de();
-
+                $.ajax({
+                    type: "post",
+                    url: "${pageContext.request.contextPath}/SecHospital/now_hospital",
+                    success: function (data) {
+                        let str = "<option value='0'>请选择</option>";
+                        for (let i = 0; i < data.length; i++) {
+                            str += "<option value=" + data[i].id + ">" + data[i].secondDepartmentName + "</option>";
+                        }
+                        $("#departmentIds").html(str);
+                    }
+                });
                 $("#tableparent").hide();
                 $("#add_doctor").hide();
                 $("#office_add").show();
@@ -113,11 +119,12 @@
             $("#add_doctor_assistant").click(function () {
                 let count = $(".three select[name='assistant']").length;
                 count = parseInt(count) + 1;
+
                 let str = "   <div class=\"assistant\">\n" +
                     "                                <div class=\"form-group\">\n" +
-                    "                                    <label class=\"col-sm-2 control-label\">关联医生助理" + count + "</label>\n" +
+                    "                                    <label class=\"col-sm-2 control-label\">关联医生助理</label>\n" +
                     "                                    <div class=\"col-sm-4\">\n" +
-                    "                                        <select type=\"text\" onchange='verify_assistant(this)'  name=\"assistant\" class=\"form-control\">" + doctor_al + "</select>\n" +
+                    "                                        <select type=\"text\" onchange='verify_assistant(this)' id='assistant" + count + "' name=\"assistant\" class=\"form-control\">" + doctor_al + "</select>\n" +
                     "                                    </div>\n" +
                     "                                    <div class=\"col-sm-2\">\n" +
                     "                                        <button type=\"button\" class=\"btn btn-danger\">删除</button>\n" +
@@ -151,47 +158,23 @@
                     $(".assistant").hide();
                 }
             });
-            //是否咨询收费
-            $("input[name='ispremium']").change(function () {
-                if ($(this).val() == "false") {
-                    $("#ber_assistant").hide();
-                    $('input[name="price"]').val("");
-                } else {
-                    $("#ber_assistant").show();
-                }
-            })
         });
-
-        //二级科室信息
-        function two_de() {
-            $.ajax({
-                type: "post",
-                url: "${pageContext.request.contextPath}/SecHospital/now_hospital",
-                success: function (data) {
-                    let str = "<option value='0'>请选择</option>";
-                    for (let i = 0; i < data.length; i++) {
-                        str += "<option value=" + data[i].id + ">" + data[i].secondDepartmentName + "</option>";
-                    }
-                    $("#departmentIds").html(str);
-                }
-            });
-        }
 
         //展示所有医生职称
         function rank_all() {
             $.ajax({
-                type: "post",
-                url: "${pageContext.request.contextPath}/SecRankDic/rank_all",
-                success: function (data) {
+                type:"post",
+                url:"${pageContext.request.contextPath}/SecRankDic/rank_all",
+                success:function (data) {
                     var str = "<option value='0'>请选择</option>";
                     for (let i = 0; i < data.length; i++) {
-                        str += "<option value=" + data[i].id + ">" + data[i].rankName + "</option>"
+                        str+="<option value="+data[i].id+">"+data[i].rankName+"</option>"
                     }
                     $("#rank").html(str);
                 }
             })
         }
-
+        
         //查询所有医生信息
         function do_all() {
             $.ajax({
@@ -267,121 +250,22 @@
                         field: 'id',
                         title: '操作',
                         formatter: function (value, row, index) {
-                            return "<button type=\"button\" onclick='doctor_xq(" + row.id + ")' class=\"btn btn-primary\">编辑</button>"
+                            return "<button type=\"button\" onclick='update_doctor(" + row.id + ")' class=\"btn btn-primary\">编辑</button>"
                         }
                     }
 
                 ]
             });
         }
-
-        //回显医生数据
-        function doctor_xq(id) {
-            //查询所有医生
-            do_all();
-            //调用医院信息
-            hospital_all();
-            //展示职称
-            rank_all();
-            //二级科室展示
-            two_de();
+        //修改医生信息
+      /*  function update_doctor(id) {
             $.ajax({
-                type: "post",
-                url: "${pageContext.request.contextPath}/SecDoctor/doctor_xq",
-                data: {"id": id},
-                success: function (data) {
-                    $("#form input[name='id']").val(data.id);
-                    $("#t6").attr("src", data.picPath);
-                    $("#img_echo").attr("src", data.picPath);
-                    $("#form input[name='pid']").val(data.pid);
-                    $("#form input[name='name']").val(data.name);
-                    $("#form input[name='assistant'][value=" + data.assistant + "]").prop("checked", "checked");
-                    if (data.assistant == false) {
-                        $("#add_doctor_assistant").show();
-                        $(".assistant").show();
-                    }
-                    $("#form input[name='display'][value=" + data.display + "]").prop("checked", "checked");
-                    $("#form input[name='tel']").val(data.tel);
-                    $("#form select[name='rank'] option[value=" + data.rank + "]").prop("selected", "selected");
-                    var mlist = data.mlist;
-                    var alist = data.alist;
-                    $(".two .multipoint").remove();
-                    var count = 0;
-                    var str = "";
-                    //循环医院科室
-                    for (let i = 0; i < mlist.length; i++) {
-                        if (mlist[i].hospitalId == ${hospitalId}) {
-                            $("#form input[name='muid']").val(mlist[i].id);
-                            $("#form select[name='departmentId'] option[value=" + mlist[i].departmentId + "]").prop("selected", "selected");
-                        } else {
-                            count++;
-                            str += "<div class=\"multipoint\">\n" +
-                                "                                <div class=\"form-group\">" +
-                                " <input type='hidden' value=" + mlist[i].id + ">\n" +
-                                "                                    <label class=\"col-sm-2 control-label\">所在医院" + count + "</label>\n" +
-                                "                                    <div class=\"col-sm-4\">\n" +
-                                "                                        <select onchange=\"hospital_change(this)\" name=\"hospitalId\" class=\"form-control\">" + doctor_zhi(mlist[i].hospitalId) + "</select>\n" +
-                                "                                    </div>\n" +
-                                "                                </div>\n" +
-                                "                                <div class=\"form-group\">\n" +
-                                "                                    <label class=\"col-sm-2 control-label\">科室" + count + "</label>\n" +
-                                "                                    <div class=\"col-sm-4\">\n" +
-                                "                                        <select onchange=\"verify_department(this)\" id='departmentId"+count+"' name=\"departmentId\"\n" +
-                                "                                              class=\"form-control\">" + doctor_zhi2(mlist[i].hospitalId,mlist[i].departmentId) + "</select>\n" +
-                                "                                    </div>\n" +
-                                "                                </div>\n" +
-                                "                                <div class=\"form-group\" style=\"margin-bottom: 30px;margin-left: 28%;\">\n" +
-                                "                                    <button type=\"button\" onclick=\"delete_di(this)\"\n" +
-                                "                                            style=\"width: 100px;\"\n" +
-                                "                                            class=\"btn btn-danger\">删除\n" +
-                                "                                    </button>\n" +
-                                "                                </div>\n" +
-                                "                            </div>"
-
-                        }
-                    }
-
-                    $("#two_img").after(str);
-                    str = "";
-                    //循环助手
-                    var count2 = 0;
-                    $(".three .assistant").remove();
-                    for (let i = 0; i < alist.length; i++) {
-                        count2++;
-                        str += "  <div class=\"assistant\" id=\"ass\">\n" +
-                            "                                <div class=\"form-group\">\n" +
-                            "                                    <label class=\"col-sm-2 control-label\">关联医生助理" + count2 + "</label>\n" +
-                            "                                    <div class=\"col-sm-4\">" +
-                            "<input type='hidden' value=" + alist[i].id + ">\n" +
-                            "                                        <select type=\"text\" name=\"assistant\" \n" +
-                            "                                                class=\"form-control\">" +
-                            " <option value=" + alist[i].assistantId + ">" + alist[i].name + "</option>\n" +
-                            "                                        </select>\n" +
-                            "                                    </div>\n" +
-                            "                                    <div class=\"col-sm-2\">\n" +
-                            "                                        <button type=\"button\" onclick=\"delete_d(this)\" class=\"btn btn-danger\">删除\n" +
-                            "                                        </button>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>\n" +
-                            "                            </div>"
-
-                    }
-                    $("#ber_assistant").after(str);
-
-                    $("#form input[name='departmentId']").val(data.departmentId);
-                    $("#form input[name='visitplaces']").val(data.visitplaces);
-                    $("#form input[name='visitaddress']").val(data.visitaddress);
-                    $("#form textarea[name='introduce']").val(data.introduce);
-                    $("#form textarea[name='adeptat']").val(data.adeptat);
-                    $("#tableparent").hide();
-                    $("#add_doctor").hide();
-                    $("#office_add").show();
-
-
-                }
+                type:"post",
+                url:""
             })
 
-        }
+        }*/
+
 
         //删除多点
         function delete_di(th) {
@@ -395,67 +279,21 @@
                 let dd = $(this).parent().prev().text();
                 //截取最后一位
                 dd = parseInt(dd.charAt(dd.length - 1));
+
                 if (dd > de) {
                     dd = dd - 1;
                     $(this).parents(".form-group").next().children("label").text("科室" + dd);
                     $(this).parent().prev().text("所在医院" + dd);
                 }
             });
-            var s = $(th).parent().prev().prev().children("input").val();
-            if (s != undefined) {
-                $.ajax({
-                    type: "post",
-                    url: "${pageContext.request.contextPath}/SecDoctor/delete_h_d",
-                    data: {"id": s},
-                    success: function (data) {
-                        if (data) {
-                            $(th).parent().parent().remove();
-                            return;
-                        }
-                        return false;
-                    }
-                });
-            }
+
             $(th).parent().parent().remove();
         }
 
         //删除助理
         function delete_d(th) {
-            //获取当前要删除的表示数
-            let de = $(th).parents(".form-group").children("label").text();
-
-            //截取最后一位
-            de = parseInt(de.charAt(de.length - 1));
-            //循环所有多点执业信息
-            $("select[name='assistant']").each(function () {
-                //获取当前标识数
-                let dd = $(this).parents(".form-group").children("label").text();
-                //截取最后一位
-                dd = parseInt(dd.charAt(dd.length - 1));
-                if (dd > de) {
-                    dd = dd - 1;
-                    $(this).parents(".form-group").children("label").text("关联医生助理" + dd);
-                }
-            });
-            var s = $(th).parents(".form-group").children("div").children("input").val();
-            alert(s);
-            if (s != undefined) {
-                $.ajax({
-                    type: "post",
-                    url: "${pageContext.request.contextPath}/SecDoctor/delete_zhu",
-                    data: {"id": s},
-                    success: function (data) {
-                        if (data) {
-                            $(th).parent().parent().remove();
-                            return;
-                        }
-                        return false;
-                    }
-                });
-            }
             $(th).parents(".assistant").remove();
         }
-
 
         //点击下一步 或上一步
         function downs(a, b) {
@@ -526,32 +364,22 @@
 
         //提交医生信息
         function submit_doctor() {
+            console.log($("#form").serialize());
             var hos_de = [];
             var zhucc = [];
             //储存多点执业信息
-            var muid = "";
-            muid = $("#form input[name='muid']").val();
-
-            hos_de.push(muid + "|" + ${hospitalId}+"@" + $("#departmentIds").val());
-
             $(".two select[name='hospitalId']").each(function () {
                 let hos = $(this).val();
-                let muid = $(this).parent().prev().prev().val();
-                if (muid == undefined) {
-                    muid = "";
-                }
                 let se = $(this).parents(".form-group").next().children().children("select").val();
                 if (hos != 0 && se != 0) {
-                    hos_de.push(muid + "|" + hos + "@" + se);
+                    hos_de.push(hos + "@" + se);
                 }
+
             });
             //储存助理信息
             $(".three select[name='assistant']").each(function () {
-                let id = "";
-                id = $(this).prev().val();
-
                 if ($(this).val() != 0) {
-                    zhucc.push(id + "@" + $(this).val());
+                    zhucc.push($(this).val());
                 }
             });
             $(".two select[name='hospitalId']").val("0");
@@ -563,12 +391,6 @@
             formdata.append("file", document.getElementById("file"));
             formdata.append("hos_de", hos_de);
             formdata.append("zhucc", zhucc);
-
-            layer.msg(' 信息保存中...', {
-                icon: 11,
-                shade: 0.01,
-                time: 0
-            });
             $.ajax({
                 type: "post",
                 url: "${pageContext.request.contextPath}/SecDoctor/add_doctor",
@@ -576,7 +398,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    alert("保存成功");
+                    alert("添加成功");
                     window.location.reload();
                 }
             })
@@ -591,7 +413,7 @@
                 let idd = $(this).attr("id");
                 if (idd != id) {
                     let ss1 = $(this).val();
-                    if (ss1 == s1 && ss1 != "0") {
+                    if (ss1 == s1) {
                         alert("不能选择同一个助手");
                         $(th).val("0");
                         return false;
@@ -600,56 +422,6 @@
                 }
 
             })
-        }
-
-
-        //查询指定医院
-        function doctor_zhi(idd) {
-            var str = "";
-            //查询所有医生信息
-            $.ajax({
-                type: "post",
-                url: "${pageContext.request.contextPath}/SecDoctor/hospital_all",
-                async: false,
-                success: function (data) {
-                    str = "<option value='0'>请选择</option>";
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i].id == idd) {
-                            str += "<option value=" + data[i].id + " selected=\"selected\">" + data[i].hospitalName + "</option>";
-                        } else {
-                            str += "<option value=" + data[i].id + ">" + data[i].hospitalName + "</option>";
-
-                        }
-                    }
-                }
-            });
-            return str;
-        }
-
-        //查询对应的二级医院
-        function doctor_zhi2(idd, idd2) {
-            var str = "";
-            //查询所有医生信息
-            $.ajax({
-                type: "post",
-                url: "${pageContext.request.contextPath}/SecHospital/hospital_change",
-                data: {"hospitalId": idd},
-                async: false,
-                success: function (data) {
-                    str = "<option value='0'>请选择</option>";
-                    for (let i = 0; i < data.length; i++) {
-                        if (idd2 == data[i].id) {
-                            str += "<option selected=\"selected\" value=" + data[i].id + ">" + data[i].secondDepartmentName + "</option>";
-
-                        } else {
-                            str += "<option value=" + data[i].id + ">" + data[i].secondDepartmentName + "</option>";
-
-                        }
-
-                    }
-                }
-            });
-            return str;
         }
 
     </script>
@@ -684,9 +456,6 @@
                             <div class="form-group" style="margin-top: 3%;">
                                 <label class="col-sm-2 control-label">姓名</label>
                                 <div class="col-sm-4">
-                                    <input type="hidden" name="id" class="form-control"/>
-                                    <input type="hidden" name="muid" class="form-control"/>
-                                    <input type="hidden" name="pid" class="form-control"/>
                                     <input type="text" name="name" class="form-control"/>
                                 </div>
                             </div>
@@ -719,7 +488,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">手机号</label>
                                 <div class="col-sm-4">
-                                    <input type="tel" maxlength="11" name="tel" class="form-control"/>
+                                    <input type="text" name="tel" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -734,7 +503,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">职称</label>
                                 <div class="col-sm-4">
-                                    <select name="rank" class="form-control" id="rank">
+                                    <select name="rank"  class="form-control" id="rank">
 
                                     </select>
                                 </div>
@@ -785,7 +554,7 @@
                         </div>
                         <%--第二页--%>
                         <div class="two" style="display: none">
-                            <img id="two_img" style="margin-bottom: 3%"
+                            <img style="margin-bottom: 3%"
                                  src="${pageContext.request.contextPath}/static/images/2.png"/>
                             <%--1--%>
                             <div class="multipoint">
@@ -892,9 +661,9 @@
                                 </div>
                             </div>
 
-                            <div class="assistant" id="ass" style="display: none">
+                            <div class="assistant" style="display: none">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">关联医生助理1</label>
+                                    <label class="col-sm-2 control-label">关联医生助理</label>
                                     <div class="col-sm-4">
                                         <select type="text" name="assistant" onchange="verify_assistant(this)"
                                                 id="assistant1" class="form-control">
@@ -908,7 +677,7 @@
                             </div>
                             <div class="assistant" style="display: none">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">关联医生助理2</label>
+                                    <label class="col-sm-2 control-label">关联医生助理</label>
                                     <div class="col-sm-4">
                                         <select type="text" onchange="verify_assistant(this)" name="assistant"
                                                 id="assistant2" class="form-control">

@@ -33,7 +33,6 @@ public class AutoLoginFilter  implements Filter {
     /**
      * @see Filter#destroy()
      */
-    @Override
     public void destroy() {
         System.out.println("Filter销毁中");
     }
@@ -41,7 +40,6 @@ public class AutoLoginFilter  implements Filter {
     /**
      * @see Filter#
      */
-    @Override
     public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         try {
@@ -85,7 +83,6 @@ public class AutoLoginFilter  implements Filter {
     /**
      * @see Filter#init(FilterConfig)
      */
-    @Override
     public void init(FilterConfig fConfig) throws ServletException {
         	System.out.println("Filter初始化中");
     }

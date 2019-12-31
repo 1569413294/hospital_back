@@ -1,16 +1,12 @@
 #配置视图解析器和数据库
 spring:
-  http:
-    multipart:
-      max-request-size: 20Mb
-      max-file-size: 20Mb
   mvc:
     view:
       prefix: /jsps/
       suffix: .jsp
     static-path-pattern: /static/**
   datasource:
-    url: jdbc:mysql://59.110.139.4:3306/hospital?&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://59.110.139.4/hospital?&allowMultiQueries=true&useSSL=false
     password: root
     username: root
     driver-class-name: com.mysql.jdbc.Driver
