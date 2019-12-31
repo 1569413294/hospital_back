@@ -38,7 +38,8 @@ public class LoginInterceptor  implements HandlerInterceptor {
 
     //获取前端塞在请求头header里面的accessToken字段的值，然后进行验证与解析
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 
         try {

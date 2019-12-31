@@ -298,7 +298,7 @@
             type:"post",
             url:"/user/getPhoneMsg",
             data:{"phone":phone},
-            dataType:"json",
+           // dataType:"json",
             error:function(error){
                 alert("短信发送失败！");
             },success:function(data){

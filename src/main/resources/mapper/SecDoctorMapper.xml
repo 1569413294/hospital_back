@@ -52,7 +52,7 @@ AND s1.doctor_id = #{id}
 	s1.*, s2.pic_path,s2.id as pid,s2.pic_path
 FROM
 	sec_doctor s1
-LEFT JOIN sec_pic s2 ON s1.id = s2.obj_id
+LEFT JOIN sec_pic s2 ON s1.id = s2.obj_id and s2.obj_type = 'doctor'
 WHERE
 	s1.id =#{id}
     </select>

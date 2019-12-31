@@ -196,7 +196,6 @@
         })
     }
     function picture_find(id) {
-        alert(id);
         $("#register_table").hide();
         $.ajax({
             url:"/reservation/picture_find",

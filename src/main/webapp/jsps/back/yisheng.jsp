@@ -308,65 +308,73 @@
                     $(".two .multipoint").remove();
                     var count = 0;
                     var str = "";
-                    //循环医院科室
-                    for (let i = 0; i < mlist.length; i++) {
-                        if (mlist[i].hospitalId == ${hospitalId}) {
-                            $("#form input[name='muid']").val(mlist[i].id);
-                            $("#form select[name='departmentId'] option[value=" + mlist[i].departmentId + "]").prop("selected", "selected");
-                        } else {
-                            count++;
-                            str += "<div class=\"multipoint\">\n" +
-                                "                                <div class=\"form-group\">" +
-                                " <input type='hidden' value=" + mlist[i].id + ">\n" +
-                                "                                    <label class=\"col-sm-2 control-label\">所在医院" + count + "</label>\n" +
-                                "                                    <div class=\"col-sm-4\">\n" +
-                                "                                        <select onchange=\"hospital_change(this)\" name=\"hospitalId\" class=\"form-control\">" + doctor_zhi(mlist[i].hospitalId) + "</select>\n" +
-                                "                                    </div>\n" +
-                                "                                </div>\n" +
-                                "                                <div class=\"form-group\">\n" +
-                                "                                    <label class=\"col-sm-2 control-label\">科室" + count + "</label>\n" +
-                                "                                    <div class=\"col-sm-4\">\n" +
-                                "                                        <select onchange=\"verify_department(this)\" id='departmentId"+count+"' name=\"departmentId\"\n" +
-                                "                                              class=\"form-control\">" + doctor_zhi2(mlist[i].hospitalId,mlist[i].departmentId) + "</select>\n" +
-                                "                                    </div>\n" +
-                                "                                </div>\n" +
-                                "                                <div class=\"form-group\" style=\"margin-bottom: 30px;margin-left: 28%;\">\n" +
-                                "                                    <button type=\"button\" onclick=\"delete_di(this)\"\n" +
-                                "                                            style=\"width: 100px;\"\n" +
-                                "                                            class=\"btn btn-danger\">删除\n" +
-                                "                                    </button>\n" +
-                                "                                </div>\n" +
-                                "                            </div>"
+                    if(mlist!=undefined && mlist.length>0){
+                        //循环医院科室
+                        for (let i = 0; i < mlist.length; i++) {
+                            if (mlist[i].hospitalId == ${hospitalId}) {
+                                $("#form input[name='muid']").val(mlist[i].id);
+                                $("#form select[name='departmentId'] option[value=" + mlist[i].departmentId + "]").prop("selected", "selected");
+                            } else {
+                                count++;
+                                str += "<div class=\"multipoint\">\n" +
+                                    "                                <div class=\"form-group\">" +
+                                    " <input type='hidden' value=" + mlist[i].id + ">\n" +
+                                    "                                    <label class=\"col-sm-2 control-label\">所在医院" + count + "</label>\n" +
+                                    "                                    <div class=\"col-sm-4\">\n" +
+                                    "                                        <select onchange=\"hospital_change(this)\" name=\"hospitalId\" class=\"form-control\">" + doctor_zhi(mlist[i].hospitalId) + "</select>\n" +
+                                    "                                    </div>\n" +
+                                    "                                </div>\n" +
+                                    "                                <div class=\"form-group\">\n" +
+                                    "                                    <label class=\"col-sm-2 control-label\">科室" + count + "</label>\n" +
+                                    "                                    <div class=\"col-sm-4\">\n" +
+                                    "                                        <select onchange=\"verify_department(this)\" id='departmentId"+count+"' name=\"departmentId\"\n" +
+                                    "                                              class=\"form-control\">" + doctor_zhi2(mlist[i].hospitalId,mlist[i].departmentId) + "</select>\n" +
+                                    "                                    </div>\n" +
+                                    "                                </div>\n" +
+                                    "                                <div class=\"form-group\" style=\"margin-bottom: 30px;margin-left: 28%;\">\n" +
+                                    "                                    <button type=\"button\" onclick=\"delete_di(this)\"\n" +
+                                    "                                            style=\"width: 100px;\"\n" +
+                                    "                                            class=\"btn btn-danger\">删除\n" +
+                                    "                                    </button>\n" +
+                                    "                                </div>\n" +
+                                    "                            </div>"
 
+                            }
                         }
+
+                        $("#two_img").after(str);
                     }
 
-                    $("#two_img").after(str);
                     str = "";
                     //循环助手
                     var count2 = 0;
                     $(".three .assistant").remove();
-                    for (let i = 0; i < alist.length; i++) {
-                        count2++;
-                        str += "  <div class=\"assistant\" id=\"ass\">\n" +
-                            "                                <div class=\"form-group\">\n" +
-                            "                                    <label class=\"col-sm-2 control-label\">关联医生助理" + count2 + "</label>\n" +
-                            "                                    <div class=\"col-sm-4\">" +
-                            "<input type='hidden' value=" + alist[i].id + ">\n" +
-                            "                                        <select type=\"text\" name=\"assistant\" \n" +
-                            "                                                class=\"form-control\">" +
-                            " <option value=" + alist[i].assistantId + ">" + alist[i].name + "</option>\n" +
-                            "                                        </select>\n" +
-                            "                                    </div>\n" +
-                            "                                    <div class=\"col-sm-2\">\n" +
-                            "                                        <button type=\"button\" onclick=\"delete_d(this)\" class=\"btn btn-danger\">删除\n" +
-                            "                                        </button>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>\n" +
-                            "                            </div>"
+                    if(alist!=undefined && alist.length>0){
+                        for (let i = 0; i < alist.length; i++) {
+                            count2++;
+                            str += "  <div class=\"assistant\" id=\"ass\">\n" +
+                                "                                <div class=\"form-group\">\n" +
+                                "                                    <label class=\"col-sm-2 control-label\">关联医生助理" + count2 + "</label>\n" +
+                                "                                    <div class=\"col-sm-4\">" +
+                                "<input type='hidden' value=" + alist[i].id + ">\n" +
+                                "                                        <select type=\"text\" name=\"assistant\" \n" +
+                                "                                                class=\"form-control\">" +
+                                " <option value=" + alist[i].assistantId + ">" + alist[i].name + "</option>\n" +
+                                "                                        </select>\n" +
+                                "                                    </div>\n" +
+                                "                                    <div class=\"col-sm-2\">\n" +
+                                "                                        <button type=\"button\" onclick=\"delete_d(this)\" class=\"btn btn-danger\">删除\n" +
+                                "                                        </button>\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>"
 
+                        }
+                        $("#ber_assistant").after(str);
                     }
-                    $("#ber_assistant").after(str);
+
+
+
 
                     $("#form input[name='departmentId']").val(data.departmentId);
                     $("#form input[name='visitplaces']").val(data.visitplaces);
@@ -483,6 +491,26 @@
                 $("#t12").text(vi2);
 
             }
+            if(b==".two"){
+                let name = $("#form input[name='name']").val().trim();
+                let tel =$("#form input[name='tel']").val().trim();
+                let img =  $("#img_echo").attr("src");
+                if(name==null || name==""){
+                    alert("姓名为必填项");
+                    return false;
+                }
+                if(tel==null || tel==""){
+                    alert("手机号为必填项");
+                    return Ffalse;
+                }
+                if(img==null ||img==""){
+                    alert("头像为必填项");
+                    return false;
+                }
+
+            }
+
+
             $(a).hide();
             $(b).show();
             $('body,html').animate({'scrollTop': 0}, 0);
@@ -526,6 +554,7 @@
 
         //提交医生信息
         function submit_doctor() {
+
             var hos_de = [];
             var zhucc = [];
             //储存多点执业信息
@@ -564,7 +593,11 @@
             formdata.append("hos_de", hos_de);
             formdata.append("zhucc", zhucc);
 
-            layer.msg(' 信息保存中...', {
+
+
+
+
+          var index2 = parent.layer.msg(' 信息保存中...', {
                 icon: 11,
                 shade: 0.01,
                 time: 0
@@ -576,6 +609,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    parent.layer.close(index2);
                     alert("保存成功");
                     window.location.reload();
                 }
@@ -682,7 +716,7 @@
                             <%--第一页时间线--%>
                             <img src="${pageContext.request.contextPath}/static/images/1.jpg"/>
                             <div class="form-group" style="margin-top: 3%;">
-                                <label class="col-sm-2 control-label">姓名</label>
+                                <label class="col-sm-2 control-label">姓名<span style="color: red">*</span></label>
                                 <div class="col-sm-4">
                                     <input type="hidden" name="id" class="form-control"/>
                                     <input type="hidden" name="muid" class="form-control"/>
@@ -717,13 +751,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">手机号</label>
+                                <label class="col-sm-2 control-label">手机号<span style="color: red">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="tel" maxlength="11" name="tel" class="form-control"/>
+                                    <input type="number" oninput="if(value.length>11)value=value.slice(0,11)" name="tel" class="form-control"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">医生照片</label>
+                                <label class="col-sm-2 control-label">医生照片<span style="color: red">*</span></label>
                                 <img width="100" style=";margin-left: 15px" height="100" id="img_echo">
                             </div>
                             <div class="form-group" style="margin-bottom: 30px;margin-left: 17%;">
