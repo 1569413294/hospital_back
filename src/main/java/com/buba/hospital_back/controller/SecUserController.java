@@ -46,16 +46,18 @@ public class SecUserController {
     //获取手机验证吗
     @ResponseBody
     @RequestMapping("/getPhoneMsg")
-    public boolean getPhoneMsg(String phone,HttpSession session) {
+    public Map<String,Integer> getPhoneMsg(String phone,HttpSession session) {
+        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
         //随机生成6位数
         int mobileCodes=(int)((Math.random()*9+1)*100000);
+        stringIntegerHashMap.put("result",mobileCodes);
         boolean b = redisUtils.set(phone,mobileCodes);
         if(b){
             redisUtils.expire(phone,60);
         }
         System.out.println(mobileCodes);
         //boolean sendMSM = SendSMSUtils.sendMSM(mobile, String.valueOf(mobileCodes));
-        return b;
+        return stringIntegerHashMap;
     }
     //验证验证码
     @ResponseBody

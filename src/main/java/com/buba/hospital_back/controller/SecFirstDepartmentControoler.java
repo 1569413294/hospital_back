@@ -52,7 +52,7 @@ public class SecFirstDepartmentControoler {
         //获取医院id
         Integer attribute = (Integer) session.getAttribute("hospitalId");
         //校验医院id是否存在
-        if (attribute > 0 && sta > 0) {
+        if (attribute !=null && sta !=null) {
             //如果id==2为修改状态  说明是修改二级科室操作
             if (sta == 2) {
                 //校验对象是否为null
