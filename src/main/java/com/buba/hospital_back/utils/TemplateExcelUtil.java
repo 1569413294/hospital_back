@@ -90,7 +90,7 @@ public class TemplateExcelUtil<T> {
         cell20.setCellValue(string20);//设置值
         
         //得到表格的样式
-        XSSFCellStyle cellStyle = sheet.getRow(3).getCell(0).getCellStyle();
+        XSSFCellStyle cellStyle = sheet.getRow(2).getCell(0).getCellStyle();
         
         XSSFRow row=null;
         XSSFCell cell=null;

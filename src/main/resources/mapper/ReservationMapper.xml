@@ -5,40 +5,39 @@
 
     <select id="find_reservation" resultType="com.buba.hospital_back.bean.ReservationVo">
          SELECT
-	r.id id,
-	p.patient_name patientName,
-	p.patient_medicalCardNumber patientMedicalcardnumber,
-	p.patient_tel patientTel,
-	o.order_num orderNum,
-	o.order_name orderName,
-	o.pay_start_time payStartTime,
-	o.pay_money payMoney,
-	o.pay_way payWay,
-	o. STATUS orderStatus,
-	t.timeframe timeframe,
-	d. NAME doctorName,
-	h.hospital_name hospitalName,
-	f.department_name departmentName,
-	a.appointment_time appointmentTime
-FROM
-	sec_reservation r,
-	sec_patient p,
-	his_order o,
-	sec_doctor_appointmenttime_timeframe t,
-	sec_doctor_appointmenttime a,
-	sec_doctor d,
-	sec_hospital h,
-	sec_first_department f
-WHERE
-	r.patient_id = p.id
-AND r.order_id = o.id
-AND o.order_name = '预约挂号'
-AND r.timeframe_id = t.id
-AND r.doctor_id = d.id
-AND r.hospital_id = h.id
-AND r.department_id = f.id
-and a.id=t.appointmenttime_id
-
+		o.id id,
+		p.patient_name patientName,
+		p.patient_medicalCardNumber patientMedicalcardnumber,
+		p.patient_tel patientTel,
+		o.order_num orderNum,
+		o.order_name orderName,
+		o.pay_start_time payStartTime,
+		o.pay_money payMoney,
+		o.pay_way payWay,
+		o. STATUS orderStatus,
+		t.timeframe timeframe,
+		d. NAME doctorName,
+		h.hospital_name hospitalName,
+		f.department_name departmentName,
+		a.appointment_time appointmentTime
+	FROM
+		sec_reservation r,
+		sec_patient p,
+		his_order o,
+		sec_doctor_appointmenttime_timeframe t,
+		sec_doctor_appointmenttime a,
+		sec_doctor d,
+		sec_hospital h,
+		sec_first_department f
+	WHERE
+		r.patient_id = p.id
+	AND r.order_id = o.id
+	AND o.order_name = '预约挂号'
+	AND r.timeframe_id = t.id
+	AND r.doctor_id = d.id
+	AND r.hospital_id = h.id
+	AND r.department_id = f.id
+	and a.id=t.appointmenttime_id
     </select>
     <!--List<HisOrder> find_hisOrder(HisOrder hisOrder);-->
     <select id="find_hisOrder" resultType="com.buba.hospital_back.bean.HisOrder">
@@ -70,49 +69,49 @@ and a.id=t.appointmenttime_id
     <!--ReservationVo picture_find(Integer id);-->
     <select id="picture_find" resultType="com.buba.hospital_back.bean.ReservationVo">
             SELECT
-	r.id id,
-	p.patient_name patientName,
-	p.patient_medicalCardNumber patientMedicalcardnumber,
-	p.patient_tel patientTel,
-	o.order_num orderNum,
-	o.order_name orderName,
-	o.pay_start_time payStartTime,
-	o.pay_money payMoney,
-	o.pay_way payWay,
-	o. STATUS orderStatus,
-	t.timeframe timeframe,
-	d. NAME doctorName,
-	h.hospital_name hospitalName,
-	f.department_name departmentName,
-	a.appointment_time appointmentTime
-FROM
-	sec_reservation r,
-	sec_patient p,
-	his_order o,
-	sec_doctor_appointmenttime_timeframe t,
-	sec_doctor_appointmenttime a,
-	sec_doctor d,
-	sec_hospital h,
-	sec_first_department f
-WHERE
-	r.patient_id = p.id
-AND r.order_id = o.id
-AND o.order_name = '预约挂号'
-AND r.timeframe_id = t.id
-AND r.doctor_id = d.id
-AND r.hospital_id = h.id
-AND r.department_id = f.id
-and a.id=t.appointmenttime_id
-and r.id=#{id}
+			o.id id,
+			p.patient_name patientName,
+			p.patient_medicalCardNumber patientMedicalcardnumber,
+			p.patient_tel patientTel,
+			o.order_num orderNum,
+			o.order_name orderName,
+			o.pay_start_time payStartTime,
+			o.pay_money payMoney,
+			o.pay_way payWay,
+			o. STATUS orderStatus,
+			t.timeframe timeframe,
+			d. NAME doctorName,
+			h.hospital_name hospitalName,
+			f.department_name departmentName,
+			a.appointment_time appointmentTime
+		FROM
+			sec_reservation r,
+			sec_patient p,
+			his_order o,
+			sec_doctor_appointmenttime_timeframe t,
+			sec_doctor_appointmenttime a,
+			sec_doctor d,
+			sec_hospital h,
+			sec_first_department f
+		WHERE
+			r.patient_id = p.id
+		AND r.order_id = o.id
+		AND o.order_name = '预约挂号'
+		AND r.timeframe_id = t.id
+		AND r.doctor_id = d.id
+		AND r.hospital_id = h.id
+		AND r.department_id = f.id
+		and a.id=t.appointmenttime_id
+		and o.id=#{id}
     </select>
     <!--boolean updataOrder(Integer id);
 
         boolean updataReservatio(Integer id);-->
     <update id="updataOrder">
-        update his_order set status='已取消',refund_start_time=now() where id=#{id}
+        update his_order set status=5,refund_start_time=now() where id=#{id}
     </update>
 
     <update id="updataReservatio">
-        update sec_reservation set order_status=4  where id=#{id}
+        update sec_reservation set order_status=4  where order_id=#{id}
     </update>
 </mapper>
